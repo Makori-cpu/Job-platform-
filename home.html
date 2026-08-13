@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canopy — Good work, found properly</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#121512; --ink-soft:#4a514a; --paper:#f7f5f0; --card:#ffffff;
+  --hunter:#355e3b; --hunter-deep:#24422a; --hunter-tint:#e7efe5;
+  --line:#ddd8cd; --muted:#7a807a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+/* subtle paper grain so it doesn't feel sterile/AI */
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
+h1,h2,h3,.serif{font-family:'Fraunces',serif}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+
+/* ---------- header ---------- */
+header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50}
+.nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:650}
+.logo .mark{width:30px;height:30px;border-radius:50%;background:var(--hunter);display:grid;place-items:center;color:#fff;font-size:.8rem}
+.nav nav{display:flex;gap:22px;margin-left:auto;font-size:.9rem}
+.nav nav a{opacity:.85}.nav nav a:hover{opacity:1;color:#a9c9a9}
+.btn{border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:.88rem;transition:.15s}
+.btn-green{background:var(--hunter);color:#fff}.btn-green:hover{background:var(--hunter-deep)}
+.btn-ghost{background:transparent;color:var(--paper);border:1px solid #555}.btn-ghost:hover{border-color:#999}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:#000}
+.btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-line:hover{border-color:var(--hunter)}
+
+/* ---------- hero ---------- */
+.hero{padding:72px 0 40px}
+.kicker{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hunter);font-weight:700}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.08;margin:14px 0 10px;max-width:760px}
+.hero h1 em{font-style:italic;color:var(--hunter)}
+.hero p.sub{color:var(--ink-soft);max-width:560px;margin-bottom:28px}
+.searchbar{background:var(--card);border:1px solid var(--line);border-radius:14px;display:flex;flex-wrap:wrap;box-shadow:0 8px 24px rgba(18,21,18,.07)}
+.searchbar input{border:none;outline:none;padding:16px 18px;font-size:.95rem;background:transparent;flex:1;min-width:140px}
+.searchbar input + input{border-left:1px solid var(--line)}
+.searchbar .btn{margin:8px;border-radius:10px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-size:.82rem;color:var(--ink-soft)}
+.chip.on{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
+.trust{display:flex;gap:26px;flex-wrap:wrap;margin-top:22px;font-size:.83rem;color:var(--muted)}
+.trust b{color:var(--ink)}
+
+/* ---------- ticker ---------- */
+.ticker{background:var(--hunter-deep);color:#dfe9dd;overflow:hidden;padding:9px 0;font-size:.82rem}
+.ticker span{display:inline-block;white-space:nowrap;animation:tick 40s linear infinite;padding-left:100%}
+@keyframes tick{to{transform:translateX(-100%)}}
+
+/* ---------- sections ---------- */
+section{padding:64px 0}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:28px;flex-wrap:wrap}
+.sec-head h2{font-size:clamp(1.6rem,3vw,2.2rem)}
+.sec-head a{color:var(--hunter);font-weight:600;font-size:.9rem}
+
+/* jobs */
+.jobs{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px}
+.job{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;position:relative;transition:.15s}
+.job:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(18,21,18,.09)}
+.job:nth-child(odd){transform:rotate(-.3deg)}.job:nth-child(odd):hover{transform:rotate(0) translateY(-3px)}
+.job .top{display:flex;justify-content:space-between;align-items:start}
+.job h3{font-size:1.12rem;margin-bottom:2px}
+.job .co{font-size:.86rem;color:var(--ink-soft)}
+.save{background:none;border:none;font-size:1.15rem;color:var(--muted)}.save.on{color:var(--hunter)}
+.job .meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.tag{font-size:.74rem;border-radius:6px;padding:4px 9px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+.tag.green{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
+.job .salary{font-weight:700;font-size:.95rem}
+.job .foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.job .ago{font-size:.78rem;color:var(--muted)}
+.report{font-size:.75rem;color:var(--muted);text-decoration:underline;margin-left:10px}
+
+/* categories */
+.cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px}
+.cat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;text-align:left;transition:.15s}
+.cat:hover{border-color:var(--hunter);background:var(--hunter-tint)}
+.cat .n{font-size:1.35rem}
+.cat .t{font-weight:600;font-size:.92rem;margin-top:8px}
+.cat .c{font-size:.78rem;color:var(--muted)}
+
+/* dashboards */
+.dash-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:20px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px}
+.panel.dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.panel h3{font-size:1.15rem;margin-bottom:14px}
+.meter{height:8px;background:var(--paper);border:1px solid var(--line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.meter i{display:block;height:100%;background:var(--hunter)}
+.small{font-size:.8rem;color:var(--muted)}
+.drop{border:2px dashed var(--line);border-radius:12px;padding:18px;text-align:center;font-size:.86rem;color:var(--ink-soft);margin:14px 0;background:var(--paper)}
+.skills{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+th{text-align:left;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:8px 6px;border-bottom:1px solid var(--line)}
+td{padding:9px 6px;border-bottom:1px solid var(--paper)}
+.status{font-size:.72rem;font-weight:700;border-radius:6px;padding:3px 8px}
+.st-int{background:var(--hunter);color:#fff}.st-view{background:var(--hunter-tint);color:var(--hunter-deep)}
+.st-short{background:var(--ink);color:#fff}.st-app{background:var(--paper);color:var(--ink-soft);border:1px solid var(--line)}
+.rowline{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--paper);font-size:.88rem}
+.switch{width:40px;height:22px;border-radius:99px;background:var(--hunter);position:relative;border:none}
+.switch::after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff}
+.switch.off{background:var(--line)}.switch.off::after{right:auto;left:3px}
+.msg{background:var(--hunter-tint);border-radius:12px;padding:12px 14px;font-size:.85rem;margin-top:12px}
+
+/* employer pipeline */
+.pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+.pcol{background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:10px;min-height:150px}
+.pcol h4{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
+.cand{background:#fff;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-size:.78rem;margin-bottom:8px}
+.cand b{display:block;font-size:.8rem}
+.match{color:var(--hunter);font-weight:700}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.formgrid input,.formgrid select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-size:.86rem;background:#fff}
+.formgrid .full{grid-column:1/-1}
+
+/* admin strip */
+.admin{background:var(--ink);color:var(--paper);border-radius:18px;padding:28px;display:grid;grid-template-columns:1.2fr .8fr;gap:28px}
+.admin h3{color:#fff}
+.q{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #2c312c;font-size:.86rem}
+.q .acts button{margin-left:6px;padding:5px 12px;font-size:.75rem;border-radius:6px;border:none;font-weight:600}
+.ok{background:var(--hunter);color:#fff}.no{background:#3a3f3a;color:#ccc}.ft{background:#fff;color:var(--ink)}
+.stat{display:flex;gap:14px}
+.stat div{flex:1;background:#1c211c;border-radius:12px;padding:16px}
+.stat b{font-size:1.5rem;display:block;color:#a9c9a9}
+
+/* tools */
+.tools{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.tool{border:1px solid var(--line);background:#fff;border-radius:12px;padding:20px}
+.tool .n{font-size:1.3rem}
+.tool h4{margin:10px 0 4px;font-size:.98rem}
+.tool p{font-size:.82rem;color:var(--ink-soft)}
+
+/* pricing */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start}
+.plan{background:#fff;border:1px solid var(--line);border-radius:16px;padding:26px}
+.plan.hot{background:var(--hunter);color:#fff;border-color:var(--hunter);transform:rotate(.4deg)}
+.plan h3{font-size:1.1rem}.plan .price{font-size:2rem;font-weight:700;margin:8px 0 2px;font-family:'Fraunces',serif}
+.plan ul{list-style:none;margin:16px 0 22px;font-size:.87rem}
+.plan li{padding:6px 0;border-bottom:1px dashed var(--line)}
+.plan.hot li{border-color:#4d7a52}
+
+/* testimonials */
+.quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.quote{background:#fff;border:1px solid var(--line);border-radius:14px;padding:24px}
+.quote:nth-child(2){transform:rotate(.5deg)}
+.quote p{font-family:'Fraunces',serif;font-size:1.02rem;line-height:1.5}
+.quote .who{margin-top:16px;font-size:.82rem;color:var(--muted)}
+.quote .who b{color:var(--ink);display:block}
+
+/* footer */
+footer{background:var(--ink);color:#c9cec9;margin-top:40px}
+.fgrid{display:grid;grid-template-columns:1.4fr repeat(4,1fr);gap:28px;padding:52px 0}
+.fgrid h5{color:#fff;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+.fgrid a{display:block;font-size:.85rem;padding:4px 0;opacity:.8}.fgrid a:hover{opacity:1;color:#a9c9a9}
+.news{display:flex;margin-top:14px;border:1px solid #444;border-radius:10px;overflow:hidden}
+.news input{flex:1;background:transparent;border:none;outline:none;color:#fff;padding:10px 14px;font-size:.85rem}
+.news button{background:var(--hunter);color:#fff;border:none;padding:0 18px;font-weight:600}
+.fbot{border-top:1px solid #2c312c;padding:18px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.78rem;opacity:.7}
+
+/* modal + toast */
+.modal{position:fixed;inset:0;background:rgba(10,12,10,.55);display:none;place-items:center;z-index:100}
+.modal.open{display:grid}
+.modal .box{background:#fff;border-radius:16px;max-width:480px;width:92%;padding:28px}
+.modal h3{margin-bottom:6px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:900px){.dash-grid,.admin,.plans,.quotes{grid-template-columns:1fr}.fgrid{grid-template-columns:1fr 1fr}.pipe{grid-template-columns:1fr 1fr}.nav nav{display:none}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="logo" href="#"><span class="mark">✦</span>Canopy</a>
+  <nav>
+    <a href="#jobs">Find Jobs</a><a href="#employers">Companies</a><a href="#tools">Salaries & Tools</a>
+    <a href="#seekers">Career Tools</a><a href="#pricing">Pricing</a>
+  </nav>
+  <button class="btn btn-ghost" onclick="toast('Login & sign-up connect to your auth provider (see notes below).')">Log in</button>
+  <button class="btn btn-ghost" onclick="toast('Sign-up: choose Job Seeker or Employer account.')">Sign up</button>
+  <button class="btn btn-green" onclick="document.getElementById('employers').scrollIntoView({behavior:'smooth'})">Post a Job</button>
+</div></header>
+
+<div class="ticker"><span>NOW HIRING → Senior Frontend Engineer at Fern & Field · Product Designer at Mossworks (Berlin) · Data Analyst at Greenline Logistics · Customer Success Lead, remote · Field Ops Manager at Trellis Farms · Junior UX Researcher at Paperbark (London) · 1,286 open roles this week · every listing shows its salary range ·</span></div>
+
+<section class="hero"><div class="wrap">
+  <div class="kicker">The honest job board</div>
+  <h1>Good work, found properly. <em>No black holes,</em> no ghosting.</h1>
+  <p class="sub">Canopy connects job seekers with verified employers. Every listing shows salary, every application gets a status, and your profile stays private until you say otherwise.</p>
+  <div class="searchbar">
+    <input id="q" placeholder="Job title or keyword" oninput="filterJobs()">
+    <input placeholder="City or ‘remote’">
+    <button class="btn btn-green" onclick="filterJobs();toast('Showing matches — filters applied.')">Search Jobs</button>
+  </div>
+  <div class="chips">
+    <button class="chip on" onclick="this.classList.toggle('on')">Remote</button>
+    <button class="chip" onclick="this.classList.toggle('on')">Full-time</button>
+    <button class="chip" onclick="this.classList.toggle('on')">Part-time</button>
+    <button class="chip" onclick="this.classList.toggle('on')">Contract</button>
+    <button class="chip" onclick="this.classList.toggle('on')">Internship</button>
+    <button class="chip" onclick="this.classList.toggle('on')">Salary $60k+</button>
+    <button class="chip" onclick="this.classList.toggle('on')">Entry level</button>
+    <button class="chip" onclick="this.classList.toggle('on')">Saved searches</button>
+  </div>
+  <div class="trust"><span><b>412</b> verified employers</span><span><b>1,286</b> open roles</span><span><b>94%</b> of applications get a reply</span><span>🔒 candidates stay private</span></div>
+</div></section>
+
+<section id="jobs" style="padding-top:20px"><div class="wrap">
+  <div class="sec-head"><h2>Open roles this week</h2><a href="#" onclick="toast('Full listings page with all filters ships with the backend.')">Browse all 1,286 jobs →</a></div>
+  <div class="jobs" id="jobGrid">
+    <div class="job"><div class="top"><div><h3>Senior Frontend Engineer</h3><div class="co">Fern & Field Studio</div></div><button class="save" onclick="saveJob(this)">♡</button></div>
+      <div class="meta"><span class="tag green">✓ Verified</span><span class="tag green">Remote</span><span class="tag">Full-time</span><span class="tag">Senior</span></div>
+      <div class="salary">$120k – $150k</div>
+      <div class="foot"><span class="ago">Posted 2d ago</span><span><button class="btn btn-dark" onclick="apply('Senior Frontend Engineer')">Apply</button><a class="report" href="#" onclick="toast('Reported. Our trust & safety team reviews within 24h.');return false;">report</a></span></div></div>
+    <div class="job"><div class="top"><div><h3>Product Designer</h3><div class="co">Mossworks · Berlin, DE</div></div><button class="save" onclick="saveJob(this)">♡</button></div>
+      <div class="meta"><span class="tag green">✓ Verified</span><span class="tag">Hybrid</span><span class="tag">Full-time</span></div>
+      <div class="salary">€70k – €85k</div>
+      <div class="foot"><span class="ago">Posted 5h ago</span><span><button class="btn btn-dark" onclick="apply('Product Designer')">Apply</button><a class="report" href="#" onclick="toast('Reported. Our trust & safety team reviews within 24h.');return false;">report</a></span></div></div>
+    <div class="job"><div class="top"><div><h3>Data Analyst</h3><div class="co">Greenline Logistics · Austin, TX</div></div><button class="save" onclick="saveJob(this)">♡</button></div>
+      <div class="meta"><span class="tag green">✓ Verified</span><span class="tag">On-site</span><span class="tag">Mid level</span></div>
+      <div class="salary">$78k – $92k</div>
+      <div class="foot"><span class="ago">Posted 1d ago</span><span><button class="btn btn-dark" onclick="apply('Data Analyst')">Apply</button><a class="report" href="#" onclick="toast('Reported. Our trust & safety team reviews within 24h.');return false;">report</a></span></div></div>
+    <div class="job"><div class="top"><div><h3>Customer Success Lead</h3><div class="co">Canopy Health · Remote (US)</div></div><button class="save" onclick="saveJob(this)">♡</button></div>
+      <div class="meta"><span class="tag green">✓ Verified</span><span class="tag green">Remote</span><span class="tag">Full-time</span></div>
+      <div class="salary">$65k – $80k</div>
+      <div class="foot"><span class="ago">Posted 3d ago</span><span><button class="btn btn-dark" onclick="apply('Customer Success Lead')">Apply</button><a class="report" href="#" onclick="toast('Reported. Our trust & safety team reviews within 24h.');return false;">report</a></span></div></div>
+    <div class="job"><div class="top"><div><h3>Field Operations Manager</h3><div class="co">Trellis Farms · Fresno, CA</div></div><button class="save" onclick="saveJob(this)">♡</button></div>
+      <div class="meta"><span class="tag">On-site</span><span class="tag">Full-time</span><span class="tag">Manager</span></div>
+      <div class="salary">$70k – $88k</div>
+      <div class="foot"><span class="ago">Posted 4d ago</span><span><button class="btn btn-dark" onclick="apply('Field Operations Manager')">Apply</button><a class="report" href="#" onclick="toast('Reported. Our trust & safety team reviews within 24h.');return false;">report</a></span></div></div>
+    <div class="job"><div class="top"><div><h3>Junior UX Researcher</h3><div class="co">Paperbark · London, UK</div></div><button class="save" onclick="saveJob(this)">♡</button></div>
+      <div class="meta"><span class="tag green">✓ Verified</span><span class="tag">Entry level</span><span class="tag">Hybrid</span></div>
+      <div class="salary">£32k – £40k</div>
+      <div class="foot"><span class="ago">Posted 6h ago</span><span><button class="btn btn-dark" onclick="apply('Junior UX Researcher')">Apply</button><a class="report" href="#" onclick="toast('Reported. Our trust & safety team reviews within 24h.');return false;">report</a></span></div></div>
+  </div>
+
+  <div class="sec-head" style="margin-top:56px"><h2>Browse by category</h2></div>
+  <div class="cats">
+    <button class="cat"><div class="n"></div><div class="t">Technology</div><div class="c">214 open roles</div></button>
+    <button class="cat"><div class="n">✎</div><div class="t">Design</div><div class="c">96 open roles</div></button>
+    <button class="cat"><div class="n">◉</div><div class="t">Marketing</div><div class="c">121 open roles</div></button>
+    <button class="cat"><div class="n">∑</div><div class="t">Finance</div><div class="c">87 open roles</div></button>
+    <button class="cat"><div class="n">✚</div><div class="t">Healthcare</div><div class="c">143 open roles</div></button>
+    <button class="cat"><div class="n">❐</div><div class="t">Education</div><div class="c">76 open roles</div></button>
+    <button class="cat"><div class="n">▲</div><div class="t">Construction</div><div class="c">58 open roles</div></button>
+    <button class="cat"><div class="n">☏</div><div class="t">Customer Support</div><div class="c">104 open roles</div></button>
+  </div>
+</div></section>
+
+<section id="seekers" style="background:var(--hunter-tint)"><div class="wrap">
+  <div class="sec-head"><h2>Your side of the desk</h2><span class="small">Job seeker dashboard preview</span></div>
+  <div class="dash-grid">
+    <div class="panel">
+      <h3>Amara Diallo — Product Designer</h3>
+      <div class="small">Profile strength: <b style="color:var(--hunter)">78%</b> · add a portfolio link to reach “Complete”</div>
+      <div class="meter"><i style="width:78%"></i></div>
+      <div class="drop">⬆ Drop your resume / CV here (PDF, DOCX) — parsed automatically</div>
+      <div class="skills"><span class="tag green">Figma</span><span class="tag green">User Research</span><span class="tag green">Prototyping</span><span class="tag">SQL</span><span class="tag">Design Systems</span></div>
+      <table><tr><th>Application</th><th>Company</th><th>Status</th></tr>
+        <tr><td>Senior Frontend Engineer</td><td>Fern & Field</td><td><span class="status st-int">Interview</span></td></tr>
+        <tr><td>Product Designer</td><td>Mossworks</td><td><span class="status st-short">Shortlisted</span></td></tr>
+        <tr><td>Data Analyst</td><td>Greenline</td><td><span class="status st-view">Viewed</span></td></tr>
+        <tr><td>UX Researcher</td><td>Paperbark</td><td><span class="status st-app">Applied</span></td></tr>
+      </table>
+      <div class="rowline" style="margin-top:14px"><span>🔔 Job alerts — “Product Designer, remote, $70k+”</span><button class="switch" onclick="this.classList.toggle('off');toast(this.classList.contains('off')?'Alerts paused.':'Alerts on — we’ll email & WhatsApp you.')"></button></div>
+      <div class="msg"><b>Maya (Mossworks):</b> “Loved your case studies — free for a 30-min intro call Thursday?” <a href="#" style="color:var(--hunter);font-weight:600" onclick="toast('Chat & interview scheduling open here.');return false;">Reply / pick a slot →</a></div>
+    </div>
+    <div class="panel">
+      <h3>Picked for you <span class="small">· AI match, 90%+</span></h3>
+      <div class="rowline"><span><b>Product Designer</b><br><span class="small">Mossworks · €70–85k</span></span><span class="match">96%</span></div>
+      <div class="rowline"><span><b>UX Designer</b><br><span class="small">Canopy Health · remote</span></span><span class="match">92%</span></div>
+      <div class="rowline"><span><b>Design Lead</b><br><span class="small">Paperbark · London</span></span><span class="match">90%</span></div>
+      <button class="btn btn-green" style="width:100%;margin-top:16px" onclick="apply('Product Designer (one-click)')">⚡ One-click apply with my profile</button>
+      <div class="small" style="margin-top:14px">Career tools included free:</div>
+      <div class="skills" style="margin-top:8px"><span class="tag">Resume builder</span><span class="tag">Salary comparison</span><span class="tag">Skill tests</span><span class="tag">Interview prep</span></div>
+    </div>
+  </div>
+</div></section>
+
+<section id="employers"><div class="wrap">
+  <div class="sec-head"><h2>Hiring? Run it all from one desk.</h2><span class="small">Employer dashboard preview</span></div>
+  <div class="dash-grid">
+    <div class="panel">
+      <h3>Post a job <span class="small">· live in minutes after admin review</span></h3>
+      <div class="formgrid">
+        <input class="full" placeholder="Job title, e.g. Backend Engineer (Node)">
+        <select><option>Category: Technology</option><option>Design</option><option>Marketing</option><option>Finance</option><option>Healthcare</option></select>
+        <select><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Internship</option></select>
+        <input placeholder="Salary min ($)"> <input placeholder="Salary max ($)">
+        <select><option>Remote</option><option>Hybrid</option><option>On-site</option></select>
+        <input type="date" title="Application deadline">
+        <textarea class="full" rows="3" placeholder="Description, responsibilities, requirements, screening questions…" style="grid-column:1/-1;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font-family:inherit;font-size:.86rem"></textarea>
+      </div>
+      <button class="btn btn-green" style="margin-top:14px" onclick="toast('Job submitted for admin approval ✓')">Submit for approval</button>
+    </div>
+    <div class="panel">
+      <h3>Applicant pipeline — Backend Engineer <span class="small">· 23 applicants</span></h3>
+      <div class="pipe">
+        <div class="pcol"><h4>New (9)</h4><div class="cand"><b>Jonas M.</b>Node, AWS · 4y <span class="match">88%</span></div><div class="cand"><b>Ada O.</b>Go, Postgres · 6y</div></div>
+        <div class="pcol"><h4>Shortlisted (5)</h4><div class="cand"><b>Kenji T.</b>Node, Redis · 5y <span class="match">92%</span></div></div>
+        <div class="pcol"><h4>Interview (2)</h4><div class="cand"><b>Lina S.</b>Thu 10:00 scheduled</div></div>
+        <div class="pcol"><h4>Rejected (7)</h4><div class="cand" style="opacity:.55"><b>—</b>auto-reply sent</div></div>
+      </div>
+      <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-line" onclick="toast('Candidate profile + resume opened.')">View profile</button>
+        <button class="btn btn-line" onclick="toast('Message sent to candidate.')">Message</button>
+        <button class="btn btn-green" onclick="toast('Moved to shortlist ✓')">Shortlist</button>
+        <button class="btn btn-line" onclick="toast('Rejected with a kind auto-email.')">Reject</button>
+      </div>
+      <div class="small" style="margin-top:14px">✓ Company verified badge · team accounts · job boosting · resume downloads · CSV export</div>
+    </div>
+  </div>
+
+  <div class="admin" style="margin-top:20px">
+    <div><h3>Trust & safety — admin queue</h3>
+      <div class="q"><span><b>New:</b> “Warehouse Lead” — Trellis Farms (first post)</span><span class="acts"><button class="ok" onclick="toast('Approved & published.')">Approve</button><button class="no" onclick="toast('Rejected, employer notified.')">Reject</button><button class="ft" onclick="toast('Featured on homepage for 7 days.')">Feature</button></span></div>
+      <div class="q"><span><b>Flagged:</b> “Data entry, $40/hr, no experience” — spam score 91%</span><span class="acts"><button class="no" onclick="toast('Removed. Employer warned.')">Remove</button></span></div>
+      <div class="q"><span><b>Report:</b> user complaint #4411 — contact info requested off-platform</span><span class="acts"><button class="ok" onclick="toast('Case opened with trust & safety.')">Open case</button></span></div>
+    </div>
+    <div class="stat">
+      <div><b>1,286</b>live jobs</div><div><b>38</b>pending review</div><div><b>12</b>spam blocked today</div><div><b>4.8★</b>seeker rating</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="tools" style="background:#fff"><div class="wrap">
+  <div class="sec-head"><h2>Career tools that come free with your profile</h2></div>
+  <div class="tools">
+    <div class="tool"><div class="n">✍</div><h4>Resume builder</h4><p>Guided templates that pass ATS filters, export to PDF.</p></div>
+    <div class="tool"><div class="n">≷</div><h4>Salary comparison</h4><p>Real ranges from 12k+ listings, filtered by role & city.</p></div>
+    <div class="tool"><div class="n">✓</div><h4>Skill assessments</h4><p>Short verified tests — badges appear on your profile.</p></div>
+    <div class="tool"><div class="n">☰</div><h4>Interview prep</h4><p>Role-specific question banks and mock answers.</p></div>
+    <div class="tool"><div class="n">✦</div><h4>Job match AI</h4><p>Weekly digest of roles that actually fit your profile.</p></div>
+  </div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <div class="sec-head"><h2>Simple pricing for employers</h2><span class="small">Job seekers always free</span></div>
+  <div class="plans">
+    <div class="plan"><h3>Free</h3><div class="price">$0</div><span class="small">per month</span>
+      <ul><li>1 job post / month</li><li>30-day listing</li><li>Basic applicant inbox</li><li>Email support</li></ul>
+      <button class="btn btn-line" style="width:100%" onclick="toast('Free account created — post your first job.')">Start free</button></div>
+    <div class="plan hot"><h3>Standard · most picked</h3><div class="price">$29</div><span style="opacity:.8;font-size:.8rem">per month</span>
+      <ul><li>5 job posts / month</li><li>Applicant pipeline & tracking</li><li>Resume downloads</li><li>Job alerts to matching candidates</li><li>Verified company badge</li></ul>
+      <button class="btn" style="width:100%;background:#fff;color:var(--hunter-deep);font-weight:700" onclick="toast('Checkout via Stripe / Paystack opens here.')">Choose Standard</button></div>
+    <div class="plan"><h3>Premium</h3><div class="price">$59</div><span class="small">per month</span>
+      <ul><li>Unlimited posts</li><li>Featured placement on homepage</li><li>Full candidate database search</li><li>Team accounts (5 seats)</li><li>Priority support</li></ul>
+      <button class="btn btn-dark" style="width:100%" onclick="toast('Checkout via Stripe / Paystack opens here.')">Choose Premium</button></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <div class="sec-head"><h2>People who found their people</h2></div>
+  <div class="quotes">
+    <div class="quote"><p>“Applied on a Tuesday, interviewed Friday, signed the following week. No black hole, actual updates the whole way.”</p><div class="who"><b>Dana Okafor</b>Marketing Lead · hired through Canopy</div></div>
+    <div class="quote"><p>“We filled two engineering roles in 19 days. The pipeline view alone is worth the subscription.”</p><div class="who"><b>Priya Raman</b>Head of Talent, Mossworks</div></div>
+    <div class="quote"><p>“Salary ranges on every listing saved me weeks of pointless calls. That’s the whole reason I switched.”</p><div class="who"><b>Tomás Alvarez</b>Data Analyst · Austin</div></div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><a class="logo" href="#" style="color:#fff"><span class="mark">✦</span>Canopy</a>
+      <p style="font-size:.85rem;margin-top:12px;opacity:.8">Good work, found properly. A job marketplace where every listing shows its salary and every application gets an answer.</p>
+      <div class="news"><input placeholder="Weekly jobs digest, no spam"><button onclick="toast('Subscribed — first digest lands Friday.')">Join</button></div>
+    </div>
+    <div><h5>Company</h5><a href="#">About us</a><a href="#">Careers</a><a href="#">Blog</a><a href="#">Press kit</a><a href="#">Contact</a></div>
+    <div><h5>Job seekers</h5><a href="#jobs">Browse jobs</a><a href="#tools">Salary tool</a><a href="#tools">Resume builder</a><a href="#seekers">Job alerts</a><a href="#tools">Skill tests</a></div>
+    <div><h5>Employers</h5><a href="#employers">Post a job</a><a href="#pricing">Pricing</a><a href="#employers">Talent search</a><a href="#">Verification</a></div>
+    <div><h5>Legal</h5><a href="#">Privacy policy</a><a href="#">Terms of service</a><a href="#">Cookie settings</a><a href="#">Accessibility</a></div>
+  </div>
+  <div class="fbot"><span>© 2026 Canopy Jobs Ltd. All rights reserved.</span><span>Made with care · v1.0</span></div>
+</div></footer>
+
+<div class="modal" id="applyModal"><div class="box">
+  <h3 id="applyTitle">Apply</h3>
+  <p class="small" style="margin:6px 0 16px">Using your Canopy profile (78% complete) + uploaded resume. Employer sees your contact info only after you’re shortlisted.</p>
+  <label class="small">Short note (optional)</label>
+  <textarea rows="3" style="width:100%;margin:6px 0 16px;padding:10px;border:1px solid var(--line);border-radius:8px;font-family:inherit">Hi — my profile and resume have everything, but happy to chat if useful.</textarea>
+  <div style="display:flex;gap:10px"><button class="btn btn-green" style="flex:1" onclick="closeApply(true)">Send application</button><button class="btn btn-line" onclick="closeApply(false)">Cancel</button></div>
+</div></div>
+<div class="toast" id="toastEl"></div>
+
+<script>
+function toast(m){const t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600);}
+function saveJob(b){b.classList.toggle('on');b.textContent=b.classList.contains('on')?'♥':'♡';toast(b.classList.contains('on')?'Saved to your jobs.':'Removed from saved jobs.');}
+function filterJobs(){const q=document.getElementById('q').value.toLowerCase();document.querySelectorAll('#jobGrid .job').forEach(j=>{j.style.display=j.textContent.toLowerCase().includes(q)?'':'none';});}
+function apply(t){document.getElementById('applyTitle').textContent='Apply — '+t;document.getElementById('applyModal').classList.add('open');}
+function closeApply(sent){document.getElementById('applyModal').classList.remove('open');if(sent)toast('Application sent — we’ll notify you at every status change. Good luck!');}
+</script>
+</body>
+</html>

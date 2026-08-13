@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Find Jobs — Canopy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#121512; --ink-soft:#4a514a; --paper:#f7f5f0; --card:#fff;
+  --hunter:#355e3b; --hunter-deep:#24422a; --hunter-tint:#e7efe5;
+  --line:#ddd8cd; --muted:#7a807a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
+h1,h2,h3{font-family:'Fraunces',serif}
+.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.btn{border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:.88rem;transition:.15s}
+.btn-green{background:var(--hunter);color:#fff}.btn-green:hover{background:var(--hunter-deep)}
+.btn-ghost{background:transparent;color:var(--paper);border:1px solid #555}.btn-ghost:hover{border-color:#999}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:#000}
+.btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-line:hover{border-color:var(--hunter)}
+.linky{background:none;border:none;color:var(--hunter);font-weight:600;font-size:.82rem;text-decoration:underline}
+
+header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50}
+.nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:650}
+.logo .mark{width:30px;height:30px;border-radius:50%;background:var(--hunter);display:grid;place-items:center;color:#fff;font-size:.8rem}
+.nav nav{display:flex;gap:22px;margin-left:auto;font-size:.9rem}
+.nav nav a{opacity:.85}.nav nav a:hover{opacity:1}
+.nav nav a.active{color:#a9c9a9;opacity:1;border-bottom:2px solid var(--hunter)}
+
+.pagehead{padding:56px 0 8px}
+.kicker{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hunter);font-weight:700}
+.pagehead h1{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.12;margin:12px 0 22px;max-width:720px}
+.pagehead h1 em{font-style:italic;color:var(--hunter)}
+.searchbar{background:var(--card);border:1px solid var(--line);border-radius:14px;display:flex;flex-wrap:wrap;box-shadow:0 8px 24px rgba(18,21,18,.07);max-width:820px}
+.searchbar input{border:none;outline:none;padding:15px 18px;font-size:.95rem;background:transparent;flex:1;min-width:140px}
+.searchbar input + input{border-left:1px solid var(--line)}
+.searchbar .btn{margin:8px;border-radius:10px}
+.ph-row{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:16px;font-size:.85rem;color:var(--ink-soft)}
+.switch{width:40px;height:22px;border-radius:99px;background:var(--line);position:relative;border:none;vertical-align:middle}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s}
+.switch.on{background:var(--hunter)}.switch.on::after{left:21px}
+.savedsearches{display:flex;gap:8px;flex-wrap:wrap}
+.ss{border:1px dashed var(--hunter);color:var(--hunter-deep);background:var(--hunter-tint);border-radius:999px;padding:5px 12px;font-size:.78rem;font-weight:600}
+.ss button{background:none;border:none;color:var(--hunter-deep);margin-left:6px;font-size:.8rem}
+
+.layout{display:grid;grid-template-columns:250px 1fr;gap:30px;padding:34px 0 70px;align-items:start}
+.filters{position:sticky;top:74px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.fhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.fhead h3{font-size:1.05rem}
+.fgroup{padding:14px 0;border-bottom:1px dashed var(--line)}
+.fgroup h4{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:9px}
+.fgroup label{display:flex;gap:9px;align-items:center;font-size:.87rem;padding:4px 0;color:var(--ink-soft);cursor:pointer}
+.fgroup input[type=checkbox],.fgroup input[type=radio]{accent-color:var(--hunter);width:15px;height:15px}
+.fgroup select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;font-size:.86rem;background:#fff}
+.fnote{font-size:.76rem;color:var(--muted);padding-top:14px}
+
+.rtop{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:12px}
+.count{font-size:.88rem;color:var(--ink-soft)}
+.count b{color:var(--ink)}
+.sortl{margin-left:auto;font-size:.83rem;color:var(--muted);display:flex;gap:8px;align-items:center}
+.sortl select{padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:#fff;font-size:.84rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.chips:empty{margin:0}
+.chipx{background:var(--hunter-tint);border:1px solid var(--hunter);color:var(--hunter-deep);border-radius:999px;padding:5px 12px;font-size:.78rem;font-weight:600}
+.chipx button{background:none;border:none;color:var(--hunter-deep);margin-left:6px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 15px;font-size:.82rem;color:var(--ink-soft)}
+.chip.on{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
+
+.jobs{display:grid;gap:16px}
+.job{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;transition:.15s}
+.job:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(18,21,18,.09);border-color:var(--hunter)}
+.job .top{display:flex;justify-content:space-between;align-items:start;gap:10px}
+.job h3{font-size:1.12rem}
+.job .co{font-size:.85rem;color:var(--ink-soft)}
+.save{background:none;border:none;font-size:1.15rem;color:var(--muted)}.save.on{color:var(--hunter)}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 8px}
+.tag{font-size:.74rem;border-radius:6px;padding:4px 9px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+.tag.green{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
+.salary{font-weight:700;font-size:.97rem}
+.salary span{font-weight:400;color:var(--muted);font-size:.78rem}
+.blurb{font-size:.87rem;color:var(--ink-soft);margin:6px 0 2px;max-width:640px}
+.foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+.ago{font-size:.78rem;color:var(--muted)}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:14px;padding:44px 26px;text-align:center}
+.empty h3{font-size:1.3rem;margin-bottom:8px}
+.empty p{color:var(--ink-soft);font-size:.9rem;margin-bottom:18px}
+.more{display:block;margin:22px auto 0}
+
+footer{background:var(--ink);color:#c9cec9}
+.fbot{padding:22px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.8rem;opacity:.75}
+footer a{color:#a9c9a9}
+
+.modal{position:fixed;inset:0;background:rgba(10,12,10,.55);display:none;place-items:center;z-index:100}
+.modal.open{display:grid}
+.modal .box{background:#fff;border-radius:16px;max-width:480px;width:92%;padding:28px}
+.small{font-size:.8rem;color:var(--muted)}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .filters{position:static;display:none}
+  body.show-filters .filters{display:block}
+  .nav nav{display:none}
+}
+@media(min-width:901px){.only-m{display:none}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="logo" href="index.html"><span class="mark">✦</span>Canopy</a>
+  <nav>
+    <a href="find-jobs.html" class="active">Find Jobs</a>
+    <a href="index.html#employers">Companies</a>
+    <a href="index.html#tools">Career Tools</a>
+    <a href="index.html#pricing">Pricing</a>
+  </nav>
+  <button class="btn btn-ghost" onclick="toast('Login & sign-up connect to your auth provider.')">Log in</button>
+  <button class="btn btn-green" onclick="toast('Employer sign-up opens here — then the Post a Job form.')">Post a Job</button>
+</div></header>
+
+<section class="pagehead"><div class="wrap">
+  <div class="kicker">Find jobs</div>
+  <h1>Every role shows its salary. <em>Every application gets an answer.</em></h1>
+  <div class="searchbar">
+    <input id="q" placeholder="Job title, company or skill" oninput="state.q=this.value.toLowerCase();render()">
+    <input id="loc" placeholder="City, country or ‘remote’" oninput="state.loc=this.value.toLowerCase();render()">
+    <button class="btn btn-green" onclick="render();toast('Search updated.')">Search</button>
+  </div>
+  <div class="ph-row">
+    <span>🔔 Job alerts for this search <button class="switch" id="alertSwitch" onclick="toggleAlert(this)"></button> <span class="small" id="alertNote">off</span></span>
+    <button class="linky" onclick="saveSearch()">☆ Save this search</button>
+    <div class="savedsearches" id="savedSearches"></div>
+  </div>
+</div></section>
+
+<div class="wrap layout">
+  <aside class="filters" id="filterPanel">
+    <div class="fhead"><h3>Filters</h3><button class="linky" onclick="clearAll()">Clear all</button></div>
+    <div class="fgroup"><h4>Job type</h4>
+      <label><input type="checkbox" data-f="type" value="Full-time">Full-time</label>
+      <label><input type="checkbox" data-f="type" value="Part-time">Part-time</label>
+      <label><input type="checkbox" data-f="type" value="Contract">Contract</label>
+      <label><input type="checkbox" data-f="type" value="Internship">Internship</label>
+    </div>
+    <div class="fgroup"><h4>Work setting</h4>
+      <label><input type="checkbox" data-f="mode" value="Remote">Remote</label>
+      <label><input type="checkbox" data-f="mode" value="Hybrid">Hybrid</label>
+      <label><input type="checkbox" data-f="mode" value="On-site">On-site</label>
+    </div>
+    <div class="fgroup"><h4>Experience</h4>
+      <label><input type="checkbox" data-f="lvl" value="Entry">Entry level</label>
+      <label><input type="checkbox" data-f="lvl" value="Mid">Mid level</label>
+      <label><input type="checkbox" data-f="lvl" value="Senior">Senior</label>
+      <label><input type="checkbox" data-f="lvl" value="Lead">Lead / Manager</label>
+    </div>
+    <div class="fgroup"><h4>Category</h4>
+      <select id="cat" onchange="state.cat=this.value;render()">
+        <option>Any</option><option>Technology</option><option>Design</option><option>Marketing</option>
+        <option>Finance</option><option>Healthcare</option><option>Education</option>
+        <option>Construction</option><option>Customer Support</option>
+      </select>
+    </div>
+    <div class="fgroup"><h4>Minimum salary</h4>
+      <select id="minSal" onchange="state.minSal=+this.value;render()">
+        <option value="0">Any</option><option value="40">$40k+</option><option value="60">$60k+</option>
+        <option value="80">$80k+</option><option value="100">$100k+</option><option value="120">$120k+</option>
+      </select>
+    </div>
+    <div class="fgroup"><h4>Date posted</h4>
+      <label><input type="radio" name="posted" value="1" onchange="state.posted=1;render()">Past 24 hours</label>
+      <label><input type="radio" name="posted" value="7" onchange="state.posted=7;render()">Past week</label>
+      <label><input type="radio" name="posted" value="30" onchange="state.posted=30;render()">Past month</label>
+      <label><input type="radio" name="posted" value="9999" checked onchange="state.posted=9999;render()">Any time</label>
+    </div>
+    <div class="fgroup" style="border:none"><label style="display:flex;gap:9px;font-size:.87rem;cursor:pointer">
+      <input type="checkbox" id="verOnly" style="accent-color:var(--hunter)" onchange="state.verOnly=this.checked;render()">Verified employers only</label></div>
+    <div class="fnote">🔒 Employers never see your profile or contact info until you apply or say yes.</div>
+  </aside>
+
+  <section>
+    <div class="rtop">
+      <button class="btn btn-line only-m" onclick="document.body.classList.toggle('show-filters')">Filters</button>
+      <span class="count" id="count"></span>
+      <button class="chip" id="savedOnlyBtn" onclick="state.savedOnly=!state.savedOnly;render()">♥ Saved (0)</button>
+      <label class="sortl">Sort
+        <select id="sort" onchange="state.sort=this.value;render()">
+          <option value="new">Newest</option><option value="hi">Salary: high → low</option><option value="lo">Salary: low → high</option>
+        </select>
+      </label>
+    </div>
+    <div class="chips" id="chips"></div>
+    <div class="jobs" id="list"></div>
+    <div class="empty" id="empty" hidden>
+      <h3>Nothing matches that combination — yet.</h3>
+      <p>Try removing a filter, or save this search and we’ll email you the moment a role fits.</p>
+      <button class="btn btn-green" onclick="saveSearch()">Save this search</button>
+      <button class="btn btn-line" onclick="clearAll()">Clear all filters</button>
+    </div>
+    <button class="btn btn-line more" id="more" onclick="visible+=10;render()">Load more roles</button>
+  </section>
+</div>
+
+<footer><div class="wrap fbot">
+  <span>© 2026 Canopy Jobs Ltd. · <a href="index.html">Home</a> · <a href="#">Privacy</a> · <a href="#">Terms</a></span>
+  <span>Good work, found properly.</span>
+</div></footer>
+
+<div class="modal" id="applyModal"><div class="box">
+  <h3 id="applyTitle">Apply</h3>
+  <p class="small" style="margin:6px 0 16px">Using your Canopy profile + resume. The employer only sees your contact details after you’re shortlisted.</p>
+  <textarea rows="3" style="width:100%;margin:0 0 16px;padding:10px;border:1px solid var(--line);border-radius:8px;font-family:inherit">Hi — my profile and resume have everything, but happy to chat if useful.</textarea>
+  <div style="display:flex;gap:10px">
+    <button class="btn btn-green" style="flex:1" onclick="closeApply(true)">Send application</button>
+    <button class="btn btn-line" onclick="closeApply(false)">Cancel</button>
+  </div>
+</div></div>
+<div class="toast" id="toastEl"></div>
+
+<script>
+const JOBS=[
+/* ---- Technology ---- */
+{id:1,t:"Senior Frontend Engineer",co:"Fern & Field Studio",loc:"Remote (US/EU)",mode:"Remote",type:"Full-time",lvl:"Senior",cat:"Technology",sal:"$120k – $150k",usd:150,days:2,ver:1,tags:["React","TypeScript"],bl:"Own the component library and ship calm, fast interfaces with a four-person team."},
+{id:2,t:"Backend Engineer (Node)",co:"Fern & Field Studio",loc:"Remote (EU)",mode:"Remote",type:"Full-time",lvl:"Mid",cat:"Technology",sal:"$95k – $120k",usd:120,days:1,ver:1,tags:["Node","Postgres","AWS"],bl:"APIs, queues and the occasional fun migration. Small team, kind code review."},
+{id:3,t:"DevOps Engineer",co:"Canopy Health",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Senior",cat:"Technology",sal:"$140k – $165k",usd:165,days:7,ver:1,tags:["Kubernetes","Terraform"],bl:"Harden and automate a compliant-by-design platform. On-call is rare and paid."},
+{id:4,t:"Junior Web Developer",co:"Brightrow Academy",loc:"Chicago, IL",mode:"Hybrid",type:"Internship",lvl:"Entry",cat:"Technology",sal:"$38k – $45k",usd:45,days:0,ver:1,tags:["HTML/CSS","JavaScript"],bl:"Paid 12-month internship that converts to full-time for most of our interns."},
+{id:5,t:"Mobile Engineer (React Native)",co:"Yarrow Labs",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Mid",cat:"Technology",sal:"$105k – $130k",usd:130,days:3,ver:1,tags:["React Native","GraphQL"],bl:"Ship weekly to 200k users; pair with design early and often."},
+{id:6,t:"QA Automation Engineer",co:"Umbra Security",loc:"Denver, CO",mode:"Hybrid",type:"Full-time",lvl:"Mid",cat:"Technology",sal:"$85k – $100k",usd:100,days:5,ver:1,tags:["Playwright","CI"],bl:"Build the test suite our release notes deserve."},
+{id:7,t:"Machine Learning Engineer",co:"Halcyon Robotics",loc:"Boston, MA",mode:"On-site",type:"Full-time",lvl:"Senior",cat:"Technology",sal:"$150k – $180k",usd:180,days:4,ver:1,tags:["Python","PyTorch"],bl:"Perception for warehouse robots that actually ship."},
+{id:8,t:"IT Support Specialist",co:"Brightrow Academy",loc:"Chicago, IL",mode:"On-site",type:"Full-time",lvl:"Entry",cat:"Technology",sal:"$45k – $55k",usd:55,days:6,ver:0,tags:["Helpdesk","MDM"],bl:"Keep 90 teachers and 600 laptops smiling."},
+{id:9,t:"Data Engineer",co:"Prairie Wind Energy",loc:"Remote (US)",mode:"Remote",type:"Contract",lvl:"Senior",cat:"Technology",sal:"$130k – $150k",usd:150,days:8,ver:1,tags:["dbt","Snowflake"],bl:"Six-month build of our metrics layer, with a view to permanent."},
+{id:10,t:"Security Analyst",co:"Umbra Security",loc:"Denver, CO",mode:"Hybrid",type:"Full-time",lvl:"Mid",cat:"Technology",sal:"$95k – $115k",usd:115,days:9,ver:1,tags:["SIEM","Incident response"],bl:"Join a four-person team that treats alerts like craft."},
+/* ---- Design ---- */
+{id:11,t:"Product Designer",co:"Mossworks",loc:"Berlin, DE",mode:"Hybrid",type:"Full-time",lvl:"Mid",cat:"Design",sal:"€70k – €85k",usd:92,days:0,ver:1,tags:["Figma","Prototyping"],bl:"End-to-end product work, from discovery to polished handoff."},
+{id:12,t:"Junior UX Researcher",co:"Paperbark",loc:"London, UK",mode:"Hybrid",type:"Full-time",lvl:"Entry",cat:"Design",sal:"£32k – £40k",usd:50,days:0,ver:1,tags:["Interviews","Usability testing"],bl:"Plan and run studies alongside a senior researcher who loves mentoring."},
+{id:13,t:"Brand Designer",co:"Trellis Farms",loc:"Remote (US)",mode:"Remote",type:"Contract",lvl:"Mid",cat:"Design",sal:"$70k – $85k",usd:85,days:3,ver:0,tags:["Identity","Packaging"],bl:"Three-month rebrand sprint with our founder and one very opinionated dog."},
+{id:14,t:"Senior Product Designer",co:"Juniper Finance",loc:"New York, NY",mode:"Hybrid",type:"Full-time",lvl:"Senior",cat:"Design",sal:"$135k – $160k",usd:160,days:2,ver:1,tags:["Design systems","Fintech"],bl:"Lead design on our payments surface; two designers, zero committees."},
+{id:15,t:"UX Writer",co:"Nightowl Media",loc:"Remote (EU)",mode:"Remote",type:"Part-time",lvl:"Mid",cat:"Design",sal:"$40k – $52k",usd:52,days:5,ver:1,tags:["Content design","Localization"],bl:"20 hrs/week making a streaming app sound like a human."},
+{id:16,t:"Graphic Designer",co:"Copperleaf Café Group",loc:"Portland, OR",mode:"On-site",type:"Full-time",lvl:"Entry",cat:"Design",sal:"$48k – $58k",usd:58,days:10,ver:0,tags:["Print","Social"],bl:"Menus, murals and merch for six neighbourhood cafés."},
+/* ---- Marketing ---- */
+{id:17,t:"Growth Marketing Manager",co:"Mossworks",loc:"Remote (EU)",mode:"Remote",type:"Contract",lvl:"Senior",cat:"Marketing",sal:"$60k – $75k",usd:75,days:6,ver:1,tags:["Lifecycle","Paid social"],bl:"Six-month contract with a real chance to convert, and a budget you control."},
+{id:18,t:"Content Strategist",co:"Canopy Health",loc:"New York, NY",mode:"Hybrid",type:"Part-time",lvl:"Mid",cat:"Marketing",sal:"$45k – $55k",usd:55,days:2,ver:1,tags:["Editorial","SEO"],bl:"25 hrs/week turning clinical topics into plain, warm language."},
+{id:19,t:"Social Media Coordinator",co:"Copperleaf Café Group",loc:"Portland, OR",mode:"On-site",type:"Full-time",lvl:"Entry",cat:"Marketing",sal:"$42k – $50k",usd:50,days:1,ver:0,tags:["Short-form","Community"],bl:"Shoot, edit and post; taste the product daily (literally)."},
+{id:20,t:"Product Marketing Lead",co:"Halcyon Robotics",loc:"Boston, MA",mode:"Hybrid",type:"Full-time",lvl:"Lead",cat:"Marketing",sal:"$125k – $150k",usd:150,days:12,ver:1,tags:["Positioning","Sales enablement"],bl:"Tell the story of robots that pay for themselves in a season."},
+{id:21,t:"Email & CRM Specialist",co:"Verdant Grocers",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Mid",cat:"Marketing",sal:"$65k – $80k",usd:80,days:4,ver:1,tags:["Klaviyo","Segmentation"],bl:"Own lifecycle for 300k shoppers; weekly send cadence, real tests."},
+{id:22,t:"SEO Manager",co:"Nightowl Media",loc:"Remote (EU)",mode:"Remote",type:"Full-time",lvl:"Senior",cat:"Marketing",sal:"$80k – $100k",usd:100,days:15,ver:1,tags:["Technical SEO","Editorial"],bl:"Build the organic engine behind three publications."},
+/* ---- Finance ---- */
+{id:23,t:"Data Analyst",co:"Greenline Logistics",loc:"Austin, TX",mode:"On-site",type:"Full-time",lvl:"Mid",cat:"Finance",sal:"$78k – $92k",usd:92,days:1,ver:1,tags:["SQL","Looker"],bl:"Turn messy freight data into decisions our ops team actually uses."},
+{id:24,t:"Payroll Specialist",co:"Greenline Logistics",loc:"Austin, TX",mode:"On-site",type:"Full-time",lvl:"Mid",cat:"Finance",sal:"$58k – $68k",usd:68,days:8,ver:1,tags:["ADP","Multi-state"],bl:"Own payroll for 240 employees across six states. Steady, precise work."},
+{id:25,t:"Financial Analyst",co:"Juniper Finance",loc:"New York, NY",mode:"Hybrid",type:"Full-time",lvl:"Entry",cat:"Finance",sal:"$70k – $85k",usd:85,days:3,ver:1,tags:["Excel","SQL"],bl:"First analyst hire on a new FP&A team; mentorship included."},
+{id:26,t:"Senior Accountant",co:"Stonebrook Senior Living",loc:"Phoenix, AZ",mode:"On-site",type:"Full-time",lvl:"Senior",cat:"Finance",sal:"$85k – $100k",usd:100,days:11,ver:1,tags:["GAAP","Month-end"],bl:"Own close for three communities; team of five, zero drama."},
+{id:27,t:"Bookkeeper (Part-time)",co:"Orchard Legal",loc:"Remote (US)",mode:"Remote",type:"Part-time",lvl:"Mid",cat:"Finance",sal:"$35k – $45k",usd:45,days:2,ver:0,tags:["QuickBooks","AP/AR"],bl:"15 hrs/week for a 12-lawyer firm that respects weekends."},
+{id:28,t:"Audit Associate",co:"Meridian Builds",loc:"Dallas, TX",mode:"On-site",type:"Full-time",lvl:"Entry",cat:"Finance",sal:"$60k – $72k",usd:72,days:14,ver:1,tags:["Internal audit"],bl:"Learn construction finance from the ground up."},
+/* ---- Healthcare ---- */
+{id:29,t:"Registered Nurse — Occupational Health",co:"Trellis Farms",loc:"Fresno, CA",mode:"On-site",type:"Full-time",lvl:"Mid",cat:"Healthcare",sal:"$82k – $96k",usd:96,days:5,ver:0,tags:["RN license","Spanish a plus"],bl:"Clinic of one, caring for a 120-person crew. Autonomy and respect."},
+{id:30,t:"Clinical Data Coordinator",co:"Willow Creek Clinic",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Mid",cat:"Healthcare",sal:"$68k – $82k",usd:82,days:1,ver:1,tags:["EHR","HIPAA"],bl:"Keep trial data clean for a 40-provider research network."},
+{id:31,t:"Medical Assistant",co:"Willow Creek Clinic",loc:"Madison, WI",mode:"On-site",type:"Full-time",lvl:"Entry",cat:"Healthcare",sal:"$40k – $48k",usd:48,days:3,ver:1,tags:["Phlebotomy","Rooming"],bl:"Four-day weeks. Yes, really."},
+{id:32,t:"Telehealth Therapist",co:"Canopy Health",loc:"Remote (US)",mode:"Remote",type:"Part-time",lvl:"Senior",cat:"Healthcare",sal:"$70k – $90k",usd:90,days:6,ver:1,tags:["LCSW","Telehealth"],bl:"Evening slots with admin fully handled; you just do the work."},
+{id:33,t:"Pharmacy Technician",co:"Verdant Grocers",loc:"Seattle, WA",mode:"On-site",type:"Full-time",lvl:"Mid",cat:"Healthcare",sal:"$48k – $58k",usd:58,days:9,ver:1,tags:["CPhT","Inventory"],bl:"Closed Sundays. Team of six and one very organised robot."},
+/* ---- Education ---- */
+{id:34,t:"STEM Teacher (Grades 6–8)",co:"Brightrow Academy",loc:"Chicago, IL",mode:"On-site",type:"Full-time",lvl:"Entry",cat:"Education",sal:"$52k – $61k",usd:61,days:9,ver:1,tags:["General science"],bl:"Small classes, a mentor in your first year, and a lab that actually gets used."},
+{id:35,t:"Curriculum Designer",co:"Brightrow Academy",loc:"Remote (US)",mode:"Remote",type:"Contract",lvl:"Senior",cat:"Education",sal:"$75k – $90k",usd:90,days:7,ver:1,tags:["STEM","Assessment"],bl:"Rewrite our middle-school science units for project-based learning."},
+{id:36,t:"ESL Tutor (Online)",co:"Quill & Query",loc:"Remote (Global)",mode:"Remote",type:"Part-time",lvl:"Entry",cat:"Education",sal:"$30k – $40k",usd:40,days:0,ver:0,tags:["CELTA a plus","Evenings"],bl:"Set your own hours; students in three time zones."},
+{id:37,t:"Librarian & Media Specialist",co:"Brightrow Academy",loc:"Chicago, IL",mode:"On-site",type:"Full-time",lvl:"Mid",cat:"Education",sal:"$50k – $60k",usd:60,days:13,ver:1,tags:["Cataloguing","Programs"],bl:"Run a beloved library with an actual budget."},
+{id:38,t:"Admissions Advisor",co:"Northgate College",loc:"Columbus, OH",mode:"Hybrid",type:"Full-time",lvl:"Mid",cat:"Education",sal:"$55k – $65k",usd:65,days:4,ver:1,tags:["CRM","Public speaking"],bl:"Guide first-gen students through enrolment; travel two weeks a year."},
+/* ---- Construction ---- */
+{id:39,t:"Field Operations Manager",co:"Trellis Farms",loc:"Fresno, CA",mode:"On-site",type:"Full-time",lvl:"Lead",cat:"Construction",sal:"$70k – $88k",usd:88,days:4,ver:0,tags:["Scheduling","Safety"],bl:"Run crews and schedules across two sites. Early mornings, real impact."},
+{id:40,t:"Site Supervisor",co:"Meridian Builds",loc:"Dallas, TX",mode:"On-site",type:"Full-time",lvl:"Senior",cat:"Construction",sal:"$90k – $110k",usd:110,days:2,ver:1,tags:["Ground-up","Multifamily"],bl:"Own a 120-unit build from slab to punch list."},
+{id:41,t:"Estimator",co:"Meridian Builds",loc:"Dallas, TX",mode:"Hybrid",type:"Full-time",lvl:"Mid",cat:"Construction",sal:"$75k – $92k",usd:92,days:10,ver:1,tags:["Takeoffs","Bluebeam"],bl:"Quote work you will later build with the same team."},
+{id:42,t:"Electrician (Journeyman)",co:"Redbud Realty",loc:"Phoenix, AZ",mode:"On-site",type:"Full-time",lvl:"Mid",cat:"Construction",sal:"$68k – $84k",usd:84,days:6,ver:1,tags:["Commercial","Service"],bl:"Service calls across 14 properties; van and tools provided."},
+{id:43,t:"Project Coordinator",co:"Prairie Wind Energy",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Entry",cat:"Construction",sal:"$55k – $68k",usd:68,days:1,ver:1,tags:["Scheduling","Permitting"],bl:"Shepherd solar permits across three counties; learn fast."},
+/* ---- Customer Support ---- */
+{id:44,t:"Customer Success Lead",co:"Canopy Health",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Lead",cat:"Customer Support",sal:"$65k – $80k",usd:80,days:3,ver:1,tags:["Healthcare","Onboarding"],bl:"Lead a small CS pod through onboarding and renewals for clinic customers."},
+{id:45,t:"Customer Support Specialist (Night)",co:"Paperbark",loc:"Remote (UK)",mode:"Remote",type:"Part-time",lvl:"Entry",cat:"Customer Support",sal:"£24k – £28k",usd:35,days:1,ver:1,tags:["Zendesk","20 hrs/week"],bl:"Evening shift, async-friendly team, and a real path into product or CS."},
+{id:46,t:"Support Team Lead",co:"Yarrow Labs",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Lead",cat:"Customer Support",sal:"$70k – $88k",usd:88,days:5,ver:1,tags:["Coaching","QA"],bl:"Coach six humans; keep CSAT at 97% without scripts."},
+{id:47,t:"Technical Support Engineer",co:"Umbra Security",loc:"Denver, CO",mode:"Hybrid",type:"Full-time",lvl:"Mid",cat:"Customer Support",sal:"$75k – $90k",usd:90,days:8,ver:1,tags:["APIs","Logs"],bl:"Debug real issues with engineering two desks away."},
+{id:48,t:"Client Onboarding Specialist",co:"Juniper Finance",loc:"Remote (US)",mode:"Remote",type:"Full-time",lvl:"Mid",cat:"Customer Support",sal:"$60k – $75k",usd:75,days:0,ver:1,tags:["KYC","Video calls"],bl:"Welcome new clients; the first-week experience is yours to own."}
+];
+
+let state={q:'',loc:'',type:new Set(),mode:new Set(),lvl:new Set(),cat:'Any',minSal:0,posted:9999,verOnly:false,savedOnly:false,sort:'new'};
+let visible=10;
+let saved=new Set(JSON.parse(localStorage.getItem('canopy_saved')||'[]'));
+let applied=new Set(JSON.parse(localStorage.getItem('canopy_applied')||'[]'));
+let searches=JSON.parse(localStorage.getItem('canopy_searches')||'[]');
+let current=null;
+
+document.querySelectorAll('.filters input[data-f]').forEach(i=>{
+  i.addEventListener('change',()=>{const s=state[i.dataset.f];
+    if(i.type==='checkbox'){i.checked?s.add(i.value):s.delete(i.value);}render();});
+});
+
+function matches(j){
+  if(state.q && !(j.t+' '+j.co+' '+j.tags.join(' ')).toLowerCase().includes(state.q))return false;
+  if(state.loc && !(j.loc+' '+j.mode).toLowerCase().includes(state.loc))return false;
+  if(state.type.size && !state.type.has(j.type))return false;
+  if(state.mode.size && !state.mode.has(j.mode))return false;
+  if(state.lvl.size && !state.lvl.has(j.lvl))return false;
+  if(state.cat!=='Any' && j.cat!==state.cat)return false;
+  if(j.usd < state.minSal)return false;
+  if(j.days > state.posted)return false;
+  if(state.verOnly && !j.ver)return false;
+  if(state.savedOnly && !saved.has(j.id))return false;
+  return true;
+}
+function render(){
+  let list=JOBS.filter(matches);
+  if(state.sort==='new')list.sort((a,b)=>a.days-b.days);
+  if(state.sort==='hi')list.sort((a,b)=>b.usd-a.usd);
+  if(state.sort==='lo')list.sort((a,b)=>a.usd-b.usd);
+  document.getElementById('count').innerHTML=`<b>${list.length}</b> of ${JOBS.length} roles · updated this morning`;
+  document.getElementById('savedOnlyBtn').classList.toggle('on',state.savedOnly);
+  document.getElementById('savedOnlyBtn').textContent=`♥ Saved (${saved.size})`;
+  renderChips();
+  document.getElementById('list').innerHTML=list.slice(0,visible).map(j=>`
+    <article class="job">
+      <div class="top"><div><h3>${j.t}</h3><div class="co">${j.co} · ${j.loc}</div></div>
+        <button class="save ${saved.has(j.id)?'on':''}" onclick="saveJob(${j.id},this)">${saved.has(j.id)?'♥':'♡'}</button></div>
+      <div class="meta">${j.ver?'<span class="tag green">✓ Verified employer</span>':''}
+        <span class="tag green">${j.mode}</span><span class="tag">${j.type}</span>
+        <span class="tag">${j.lvl} level</span><span class="tag">${j.cat}</span>
+        ${j.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="salary">${j.sal} <span>/ year</span></div>
+      <p class="blurb">${j.bl}</p>
+      <div class="foot"><span class="ago">${j.days===0?'Posted today':'Posted '+j.days+'d ago'}</span>
+        ${applied.has(j.id)
+          ?`<button class="btn btn-line" onclick="apply(${j.id})">Applied ✓</button>`
+          :`<button class="btn btn-dark" onclick="apply(${j.id})">Apply</button>`}</div>
+    </article>`).join('');
+  document.getElementById('empty').hidden=list.length!==0;
+  document.getElementById('more').style.display=list.length>visible?'block':'none';
+}
+function renderChips(){
+  const c=[];
+  state.type.forEach(v=>c.push(['type',v,v]));state.mode.forEach(v=>c.push(['mode',v,v]));
+  state.lvl.forEach(v=>c.push(['lvl',v,v+' level']));
+  if(state.cat!=='Any')c.push(['cat','Any',state.cat]);
+  if(state.minSal)c.push(['minSal',0,'$'+state.minSal+'k+']);
+  if(state.posted!==9999)c.push(['posted',9999,state.posted===1?'24h':state.posted===7?'this week':'this month']);
+  if(state.verOnly)c.push(['verOnly',false,'verified only']);
+  document.getElementById('chips').innerHTML=c.map(([k,v,l])=>
+    `<span class="chipx">${l}<button onclick="clearChip('${k}','${v}')">✕</button></span>`).join('');
+}
+function clearChip(k,v){
+  if(k==='type'||k==='mode'||k==='lvl'){state[k].delete(v);
+    document.querySelectorAll(`input[data-f=${k}]`).forEach(i=>{if(i.value===v)i.checked=false;});}
+  if(k==='cat'){state.cat='Any';document.getElementById('cat').value='Any';}
+  if(k==='minSal'){state.minSal=0;document.getElementById('minSal').value='0';}
+  if(k==='posted'){state.posted=9999;document.querySelector('input[name=posted][value="9999"]').checked=true;}
+  if(k==='verOnly'){state.verOnly=false;document.getElementById('verOnly').checked=false;}
+  render();
+}
+function clearAll(){
+  state={...state,q:'',loc:'',type:new Set(),mode:new Set(),lvl:new Set(),cat:'Any',minSal:0,posted:9999,verOnly:false};
+  document.getElementById('q').value='';document.getElementById('loc').value='';
+  document.getElementById('cat').value='Any';document.getElementById('minSal').value='0';
+  document.getElementById('verOnly').checked=false;
+  document.querySelector('input[name=posted][value="9999"]').checked=true;
+  document.querySelectorAll('.filters input[type=checkbox][data-f]').forEach(i=>i.checked=false);
+  visible=10;render();
+}
+function saveJob(id,b){saved.has(id)?saved.delete(id):saved.add(id);
+  localStorage.setItem('canopy_saved',JSON.stringify([...saved]));
+  b.classList.toggle('on');b.textContent=saved.has(id)?'♥':'♡';
+  toast(saved.has(id)?'Saved to your jobs.':'Removed from saved jobs.');render();}
+function apply(id){current=id;const j=JOBS.find(x=>x.id===id);
+  document.getElementById('applyTitle').textContent=(applied.has(id)?'Update application — ':'Apply — ')+j.t;
+  document.getElementById('applyModal').classList.add('open');}
+function closeApply(sent){document.getElementById('applyModal').classList.remove('open');
+  if(sent){const was=applied.has(current);applied.add(current);
+    localStorage.setItem('canopy_applied',JSON.stringify([...applied]));render();
+    toast(was?'Application updated — the employer sees your latest note.':'Application sent — we’ll notify you at every status change. Good luck!');}}
+function saveSearch(){
+  const name=(state.q||'Any role')+(state.loc?' · '+state.loc:'');
+  searches.push({name,q:state.q,loc:state.loc,cat:state.cat,minSal:state.minSal});
+  localStorage.setItem('canopy_searches',JSON.stringify(searches));
+  renderSearches();toast('Search saved — we’ll email you when a role fits.');
+}
+function renderSearches(){
+  document.getElementById('savedSearches').innerHTML=searches.map((s,i)=>
+    `<span class="ss" onclick="loadSearch(${i})" style="cursor:pointer">${s.name}<button onclick="event.stopPropagation();delSearch(${i})">✕</button></span>`).join('');
+}
+function loadSearch(i){const s=searches[i];state.q=s.q;state.loc=s.loc;state.cat=s.cat;state.minSal=s.minSal;
+  document.getElementById('q').value=s.q;document.getElementById('loc').value=s.loc;
+  document.getElementById('cat').value=s.cat;document.getElementById('minSal').value=s.minSal;render();}
+function delSearch(i){searches.splice(i,1);localStorage.setItem('canopy_searches',JSON.stringify(searches));renderSearches();}
+function toggleAlert(b){b.classList.toggle('on');const on=b.classList.contains('on');
+  document.getElementById('alertNote').textContent=on?'on — weekly email + WhatsApp':'off';
+  toast(on?'Job alerts on. First digest lands Friday morning.':'Job alerts paused.');}
+function toast(m){const t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600);}
+renderSearches();render();
+</script>
+</body>
+</html>

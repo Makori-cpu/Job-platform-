@@ -17,10 +17,10 @@ body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--in
 body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
 h1,h2,h3{font-family:'Fraunces',serif}
-.wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
 a{color:inherit;text-decoration:none}
 button{font-family:inherit;cursor:pointer}
-.btn{border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:.88rem;transition:.15s}
+.btn{border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:.88rem;transition:.15s;display:inline-block}
 .btn-green{background:var(--hunter);color:#fff}.btn-green:hover{background:var(--hunter-deep)}
 .btn-ghost{background:transparent;color:var(--paper);border:1px solid #555}.btn-ghost:hover{border-color:#999}
 .btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:#000}
@@ -36,6 +36,7 @@ header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50
 .nav nav a{opacity:.85}.nav nav a:hover{opacity:1}
 .nav nav a.active{color:#a9c9a9;opacity:1;border-bottom:2px solid var(--hunter)}
 
+/* ---- list view ---- */
 .pagehead{padding:56px 0 10px}
 .kicker{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hunter);font-weight:700}
 .pagehead h1{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.12;margin:12px 0 10px;max-width:760px}
@@ -49,7 +50,6 @@ header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50
 .toolbar input[type=checkbox]{accent-color:var(--hunter);width:15px;height:15px}
 .countline{font-size:.86rem;color:var(--ink-soft);margin:6px 0 22px}
 .countline b{color:var(--ink)}
-
 .comps{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding-bottom:70px}
 .comp{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;transition:.15s}
 .comp:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(18,21,18,.09);border-color:var(--hunter)}
@@ -64,9 +64,46 @@ header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50
 .cpill.quiet{background:var(--paper);border:1px solid var(--line);color:var(--muted)}
 .cjobs{margin:0 0 12px;display:grid;gap:6px}
 .cjob{display:flex;justify-content:space-between;gap:10px;font-size:.82rem;border-bottom:1px dashed var(--line);padding-bottom:6px}
-.cjob b{font-weight:600}
-.cjob span{color:var(--muted);white-space:nowrap}
+.cjob b{font-weight:600}.cjob span{color:var(--muted);white-space:nowrap}
 .cfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* ---- profile view ---- */
+.crumb{display:inline-block;margin:26px 0 0;font-size:.85rem;color:var(--hunter);font-weight:600}
+.cohero{display:flex;gap:18px;align-items:start;padding:18px 0 8px;flex-wrap:wrap}
+.cmark.big{width:64px;height:64px;font-size:1.2rem}
+.cohero h1{font-size:clamp(1.7rem,3.5vw,2.5rem);line-height:1.1}
+.mmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:.74rem;border-radius:6px;padding:4px 9px;background:#fff;border:1px solid var(--line);color:var(--ink-soft)}
+.tag.green{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 34px}
+.stat{background:var(--ink);color:var(--paper);border-radius:12px;padding:16px 18px}
+.stat b{font-family:'Fraunces',serif;font-size:1.6rem;display:block;color:#a9c9a9}
+.stat span{font-size:.76rem;opacity:.8}
+.cols{display:grid;grid-template-columns:1fr 350px;gap:30px;padding-bottom:70px;align-items:start}
+.sec{margin-bottom:34px}
+.sec h2{font-size:1.35rem;margin-bottom:12px}
+.sec h2 em{font-style:italic;color:var(--hunter)}
+.sec p{color:var(--ink-soft);font-size:.95rem;max-width:640px}
+.sec ul{margin:0 0 0 18px;color:var(--ink-soft);font-size:.92rem}
+.sec li{margin:7px 0}
+.quotes{display:grid;gap:14px}
+.quote{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.quote:nth-child(2){transform:rotate(.4deg)}
+.quote p{font-family:'Fraunces',serif;font-size:.98rem;line-height:1.5;color:var(--ink)}
+.quote .who{margin-top:12px;font-size:.8rem;color:var(--muted)}
+.quote .who b{color:var(--ink);display:block}
+.hiredvia{display:inline-block;margin-top:8px;font-size:.7rem;font-weight:700;color:var(--hunter-deep);background:var(--hunter-tint);border:1px solid var(--hunter);border-radius:6px;padding:3px 8px}
+.side{display:grid;gap:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.panel h3{font-size:1.05rem;margin-bottom:12px}
+.jrow{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.jrow .t{font-weight:600;font-size:.88rem}
+.jrow .s{font-size:.78rem;color:var(--muted)}
+.nojobs{border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;background:var(--paper)}
+.nojobs h4{font-family:'Fraunces',serif;margin-bottom:6px}
+.nojobs p{font-size:.84rem;color:var(--ink-soft);margin-bottom:14px}
+.facts div{display:flex;justify-content:space-between;font-size:.85rem;padding:8px 0;border-bottom:1px dashed var(--line)}
+.facts div:last-child{border:none}
 
 footer{background:var(--ink);color:#c9cec9}
 .fbot{padding:22px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.8rem;opacity:.75}
@@ -74,28 +111,10 @@ footer a{color:#a9c9a9}
 
 .modal{position:fixed;inset:0;background:rgba(10,12,10,.55);display:none;place-items:center;z-index:100;padding:20px}
 .modal.open{display:grid}
-.modal .box{background:#fff;border-radius:16px;max-width:640px;width:100%;padding:30px;max-height:86vh;overflow:auto}
-.mhead{display:flex;gap:14px;align-items:start;margin-bottom:6px}
-.mhead .cmark{width:52px;height:52px;font-size:1rem}
-.mmeta{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 14px}
-.tag{font-size:.74rem;border-radius:6px;padding:4px 9px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
-.tag.green{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
-.msec{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:18px 0 8px}
-.mbox p{font-size:.9rem;color:var(--ink-soft)}
-.mbox ul{margin:0 0 4px 18px;font-size:.88rem;color:var(--ink-soft)}
-.mbox li{margin:5px 0}
-.jrow{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
-.jrow .t{font-weight:600;font-size:.9rem}
-.jrow .s{font-size:.8rem;color:var(--muted)}
-.nojobs{border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;background:var(--paper)}
-.nojobs h4{font-family:'Fraunces',serif;margin-bottom:6px}
-.nojobs p{font-size:.85rem;color:var(--ink-soft);margin-bottom:14px}
-.close{float:right;background:none;border:none;font-size:1.2rem;color:var(--muted)}
-.close:hover{color:var(--ink)}
-
+.modal .box{background:#fff;border-radius:16px;max-width:480px;width:100%;padding:28px}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
 .toast.show{transform:translateX(-50%) translateY(0)}
-@media(max-width:900px){.nav nav{display:none}}
+@media(max-width:900px){.cols{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.nav nav{display:none}}
 </style>
 </head>
 <body>
@@ -112,33 +131,35 @@ footer a{color:#a9c9a9}
   <button class="btn btn-green" onclick="toast('Employer sign-up opens here — then the Post a Job form.')">Post a Job</button>
 </div></header>
 
-<section class="pagehead"><div class="wrap">
-  <div class="kicker">Companies</div>
-  <h1>Know who you're applying to. <em>Read their expectations first.</em></h1>
-  <p>Every employer on Canopy publishes what they do and what they expect from their people — before you spend a single click applying.</p>
-  <div class="toolbar">
-    <input type="text" id="q" placeholder="Search companies by name, industry or city" oninput="state.q=this.value.toLowerCase();render()">
-    <select id="ind" onchange="state.ind=this.value;render()"><option>Any industry</option></select>
-    <select id="sort" onchange="state.sort=this.value;render()">
-      <option value="az">A – Z</option><option value="roles">Most open roles</option>
-    </select>
-    <label><input type="checkbox" id="hiring" onchange="state.hiring=this.checked;render()">Hiring now</label>
-    <label><input type="checkbox" id="ver" onchange="state.ver=this.checked;render()">Verified only</label>
-  </div>
-  <div class="countline" id="countline"></div>
-</div></section>
+<!-- ============ LIST VIEW ============ -->
+<div id="listView">
+  <section class="pagehead"><div class="wrap">
+    <div class="kicker">Companies</div>
+    <h1>Know who you're applying to. <em>Read their expectations first.</em></h1>
+    <p>Every employer on Canopy publishes what they do and what they expect from their people — before you spend a single click applying.</p>
+    <div class="toolbar">
+      <input type="text" id="q" placeholder="Search companies by name, industry or city" oninput="state.q=this.value.toLowerCase();renderList()">
+      <select id="ind" onchange="state.ind=this.value;renderList()"><option>Any industry</option></select>
+      <select id="sort" onchange="state.sort=this.value;renderList()">
+        <option value="az">A – Z</option><option value="roles">Most open roles</option>
+      </select>
+      <label><input type="checkbox" id="hiring" onchange="state.hiring=this.checked;renderList()">Hiring now</label>
+      <label><input type="checkbox" id="ver" onchange="state.ver=this.checked;renderList()">Verified only</label>
+    </div>
+    <div class="countline" id="countline"></div>
+  </div></section>
+  <div class="wrap"><div class="comps" id="grid"></div></div>
+</div>
 
-<div class="wrap"><div class="comps" id="grid"></div></div>
+<!-- ============ PROFILE VIEW ============ -->
+<div id="profileView" hidden><div class="wrap" id="profileBox"></div></div>
 
 <footer><div class="wrap fbot">
   <span>© 2026 Canopy Jobs Ltd. · <a href="index.html">Home</a> · <a href="find-jobs.html">Find Jobs</a> · <a href="#">Privacy</a> · <a href="#">Terms</a></span>
   <span>Good work, found properly.</span>
 </div></footer>
 
-<!-- company profile modal -->
-<div class="modal" id="coModal"><div class="box mbox" id="coBox"></div></div>
-<!-- apply modal -->
-<div class="modal" id="applyModal"><div class="box" style="max-width:480px">
+<div class="modal" id="applyModal"><div class="box">
   <h3 id="applyTitle">Apply</h3>
   <p class="small" style="margin:6px 0 16px">Using your Canopy profile + resume. The employer only sees your contact details after you’re shortlisted.</p>
   <textarea rows="3" style="width:100%;margin:0 0 16px;padding:10px;border:1px solid var(--line);border-radius:8px;font-family:inherit">Hi — my profile and resume have everything, but happy to chat if useful.</textarea>
@@ -192,7 +213,7 @@ const CO=[
 ["Harvest Mutual","Finance","Des Moines, IA",150,1,"A 90-year-old mutual insurer that still answers its phones.",["Policyholders are owners","Steady beats flashy","Mentor the new hires"],[]],
 ["Starling HR","Finance","Remote (US)",34,1,"Fractional people-ops for companies that hate HR theater.",["Policy serves people","Confidential means confidential","Paperwork with a pulse"],[]],
 ["Cedar Ridge Medical","Healthcare","Spokane, WA",200,1,"A rural hospital network covering four counties and one loyal helicopter.",["Rural means resourceful","Every role touches care","Debrief after hard days"],[]],
-["Bluebell Pediatrics","Healthcare","Minneapolis, MN",65,1,"A pediatric practice with same-week sick visits and zero clipboard energy.",["Kids first, always","Parents are partners","Show up vaccinated, show up kind"],[["Pediatric RN","$75k – $90k","Full-time"]]],
+["Bluebell Pediatrics","Healthcare","Minneapolis, MN",65,1,"A pediatric practice with same-week sick visits and zero clipboard energy.",["Kids first, always","Parents are partners","Show up prepared, show up kind"],[["Pediatric RN","$75k – $90k","Full-time"]]],
 ["Sablewood Dental","Healthcare","Tucson, AZ",30,0,"A two-chair dental studio focused on anxious patients and honest pricing.",["Gentle is a technique","No upselling, ever","Sterile means sterile"],[]],
 ["Northstar Physio","Healthcare","Anchorage, AK",24,0,"Physio for people who work outdoors in weather that fights back.",["Progress notes on time","Celebrate small wins","Cold is a factor — plan for it"],[]],
 ["Elderflower Care Homes","Healthcare","Leeds, UK",210,1,"Five care homes rated outstanding, with staff meals cooked on site.",["Dignity, always","Families welcome anytime","Small signs matter"],[]],
@@ -224,19 +245,42 @@ const CO=[
 ["Ironquill Publishing","Media","Boston, MA",50,1,"An academic-to-public publisher that pays authors and fact-checkers properly.",["Citations or it did not happen","Respect the reader's time","Indexes are love letters"],[]]
 ];
 
+function initials(n){return n.split(' ').filter(w=>/^[A-Za-z]/.test(w)).slice(0,2).map(w=>w[0]).join('').toUpperCase();}
+function hiresFor(i){return 4+(i*7)%38;}
+function replyRate(i){return 82+(i*3)%17;}
+const T_FIRST=["Dana","Priya","Tomás","Amara","Kenji","Lina","Jonas","Ada","Maya","Sam","Noor","Felix","Ines","Kofi","Ruth","Leo","Zainab","Marco","Elena","Dev"];
+const T_LAST=["Okafor","Raman","Alvarez","Diallo","Tanaka","Sato","Meier","Obi","Chen","Kim","Haddad","Novak","Silva","Mensah","Osei","Berg","Ali","Rossi","Kovacs","Shah"];
+const T_DATE=["Jan 2026","Nov 2025","Aug 2025","May 2025","Feb 2026","Oct 2025","Jun 2025"];
+const T_ROLE={Technology:"Software Engineer",Design:"Designer",Marketing:"Marketer",Finance:"Analyst",Healthcare:"Clinician",Education:"Educator",Construction:"Site lead","Customer Support":"Support specialist",Hospitality:"Host",Retail:"Team member",Logistics:"Coordinator",Energy:"Engineer",Media:"Editor",Legal:"Associate"};
+const T_TEXT=[
+ n=>`Canopy showed me ${n}'s expectations before I applied, so I knew exactly what I was walking into. Hired within three weeks.`,
+ n=>`I applied with one click and had a human reply in two days. ${n} turned out to be exactly what the profile said.`,
+ n=>`The salary range on the listing saved me a month of back-and-forth. Best decision I made all year.`,
+ n=>`The expectations list was honest — down to the early mornings. No surprises after joining ${n}.`,
+ n=>`Saved the job on a Sunday, interviewed that week. No ghosting, real updates at every step.`,
+ n=>`What sold me was reading what ${n} expects from its people. I started prepared, and it showed.`
+];
+function testimonials(i){
+  const c=CO[i],out=[];
+  for(let k=0;k<3;k++){
+    out.push({name:T_FIRST[(i*3+k*5)%20]+" "+T_LAST[(i*5+k*7)%20],
+      role:c[7].length?c[7][k%c[7].length][0]:T_ROLE[c[1]],
+      hired:T_DATE[(i+k*2)%7],text:T_TEXT[(i+k*2)%6](c[0])});
+  }
+  return out;
+}
+
 let state={q:'',ind:'Any industry',sort:'az',hiring:false,ver:false};
 let notifySet=new Set(JSON.parse(localStorage.getItem('canopy_notify')||'[]'));
 let applied=new Set(JSON.parse(localStorage.getItem('canopy_applied')||'[]'));
-let applyTitle='';
+let applyKey='';
 
-/* build industry filter */
 [...new Set(CO.map(c=>c[1]))].sort().forEach(i=>{
   const o=document.createElement('option');o.textContent=i;document.getElementById('ind').appendChild(o);
 });
 
-function initials(n){return n.split(' ').filter(w=>/^[A-Za-z]/.test(w)).slice(0,2).map(w=>w[0]).join('').toUpperCase();}
-
-function render(){
+/* ---------- LIST ---------- */
+function renderList(){
   let list=CO.map((c,i)=>({c,i})).filter(({c})=>{
     if(state.q && !(c[0]+' '+c[1]+' '+c[2]).toLowerCase().includes(state.q))return false;
     if(state.ind!=='Any industry' && c[1]!==state.ind)return false;
@@ -246,9 +290,8 @@ function render(){
   });
   if(state.sort==='az')list.sort((a,b)=>a.c[0].localeCompare(b.c[0]));
   else list.sort((a,b)=>b.c[7].length-a.c[7].length);
-  const hiringCount=CO.filter(c=>c[7].length).length;
   document.getElementById('countline').innerHTML=
-    `<b>${CO.length}</b> companies · <b>${hiringCount}</b> hiring now · every profile lists employee expectations`;
+    `<b>${CO.length}</b> companies · <b>${CO.filter(c=>c[7].length).length}</b> hiring now · every profile lists employee expectations`;
   document.getElementById('grid').innerHTML=list.map(({c,i})=>`
     <article class="comp">
       <div class="chead"><span class="cmark">${initials(c[0])}</span>
@@ -258,54 +301,108 @@ function render(){
       ${c[7].length
         ?`<span class="cpill hiring">${c[7].length} open role${c[7].length>1?'s':''}</span>
           <div class="cjobs">${c[7].slice(0,2).map(j=>`<div class="cjob"><b>${j[0]}</b><span>${j[1]}</span></div>`).join('')}
-          ${c[7].length>2?`<div class="cjob"><span>+ ${c[7].length-2} more in profile</span></div>`:''}</div>`
+          ${c[7].length>2?`<div class="cjob"><span>+ ${c[7].length-2} more on the profile</span></div>`:''}</div>`
         :`<span class="cpill quiet">No open roles right now</span>`}
       <div class="cfoot">
-        <button class="btn btn-dark" onclick="openCo(${i})">View profile</button>
-        ${c[7].length===0?`<button class="linky" onclick="notify('${c[0].replace(/'/g,"\\'")}',this)">${notifySet.has(c[0])?'✓ We’ll notify you':'Notify me when a job opens'}</button>`:''}
+        <a class="btn btn-dark" href="#c${i}">View profile</a>
+        ${c[7].length===0?`<button class="linky" onclick="notifyList('${c[0].replace(/'/g,"\\'")}',this)">${notifySet.has(c[0])?'✓ We’ll notify you':'Notify me when a job opens'}</button>`:''}
       </div>
     </article>`).join('') || `<p class="small">No companies match that search.</p>`;
 }
 
-function openCo(i){
+/* ---------- PROFILE ---------- */
+function showProfile(i){
   const c=CO[i];
-  document.getElementById('coBox').innerHTML=`
-    <button class="close" onclick="document.getElementById('coModal').classList.remove('open')">✕</button>
-    <div class="mhead"><span class="cmark">${initials(c[0])}</span>
-      <div><h3>${c[0]} ${c[5]?'<span class="vbadge">✓ Verified</span>':''}</h3>
-      <div class="cmeta">${c[2]} · ${c[3]} people</div></div></div>
-    <div class="mmeta"><span class="tag green">${c[1]}</span>
-      ${c[5]?'<span class="tag green">✓ Verified employer</span>':'<span class="tag">Verification pending</span>'}
-      <span class="tag">${c[7].length?c[7].length+' open roles':'Not hiring right now'}</span></div>
-    <div class="msec">About the company</div><p>${c[6]}</p>
-    <div class="msec">What we expect from employees</div>
-    <ul>${c[7-2].map(e=>`<li>${e}</li>`).join('')}</ul>
-    <div class="msec">Open roles</div>
-    ${c[7].length
-      ? c[7].map(j=>`<div class="jrow"><div><div class="t">${j[0]}</div><div class="s">${j[1]} · ${j[2]}</div></div>
-          <button class="btn btn-green" onclick="applyFromCo('${j[0].replace(/'/g,"\\'")}')">Apply</button></div>`).join('')
-      : `<div class="nojobs"><h4>No jobs available right now.</h4>
-          <p>We post here first the moment a role opens. Leave a note and we’ll email you within the hour it happens.</p>
-          <button class="btn btn-green" onclick="notify('${c[0].replace(/'/g,"\\'")}',this,true)">${notifySet.has(c[0])?'✓ You’re on the list — notified':'Notify me when a job opens'}</button></div>`}`;
-  document.getElementById('coModal').classList.add('open');
+  if(!c){location.hash='';return;}
+  document.title=c[0]+' — Canopy';
+  const t=testimonials(i);
+  document.getElementById('profileBox').innerHTML=`
+  <a class="crumb" href="#">← All companies</a>
+  <section class="cohero">
+    <span class="cmark big">${initials(c[0])}</span>
+    <div>
+      <h1>${c[0]} ${c[5]?'<span class="vbadge">✓ Verified employer</span>':''}</h1>
+      <div class="mmeta">
+        <span class="tag green">${c[1]}</span><span class="tag">${c[2]}</span>
+        <span class="tag">${c[3]} people</span>
+        ${c[7].length?`<span class="tag green">${c[7].length} open role${c[7].length>1?'s':''}</span>`:'<span class="tag">No open roles right now</span>'}
+      </div>
+    </div>
+  </section>
+  <section class="stats">
+    <div class="stat"><b>${c[3]}</b><span>people work here</span></div>
+    <div class="stat"><b>${hiresFor(i)}</b><span>hired through Canopy</span></div>
+    <div class="stat"><b>${c[7].length}</b><span>open roles today</span></div>
+    <div class="stat"><b>${replyRate(i)}%</b><span>applications answered within a week</span></div>
+  </section>
+  <div class="cols">
+    <div>
+      <div class="sec"><h2>About <em>${c[0]}</em></h2><p>${c[6]}</p></div>
+      <div class="sec"><h2>What we expect from employees</h2>
+        <ul>${c[6].map(e=>`<li>${e}</li>`).join('')}</ul></div>
+      <div class="sec"><h2>Hired here <em>through Canopy</em></h2>
+        <div class="quotes">${t.map(q=>`
+          <div class="quote"><p>“${q.text}”</p>
+            <div class="who"><b>${q.name}</b>${q.role} · joined ${q.hired}</div>
+            <span class="hiredvia">✓ Hired via Canopy</span></div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="panel">
+        <h3>Open roles at ${c[0]}</h3>
+        ${c[7].length
+          ? c[7].map(j=>`<div class="jrow"><div><div class="t">${j[0]}</div><div class="s">${j[1]} · ${j[2]}</div></div>
+              <button class="btn ${applied.has(c[0]+'::'+j[0])?'btn-line':'btn-green'}" onclick="applyJob(${i},'${j[0].replace(/'/g,"\\'")}')">${applied.has(c[0]+'::'+j[0])?'Applied ✓':'Apply'}</button></div>`).join('')
+          : `<div class="nojobs"><h4>No jobs available right now.</h4>
+             <p>We post here first the moment a role opens. Leave a note and we’ll email you within the hour it happens.</p>
+             <button class="btn btn-green" onclick="notifyProfile(${i},this)">${notifySet.has(c[0])?'✓ You’re on the list':'Notify me when a job opens'}</button></div>`}
+      </div>
+      <div class="panel facts">
+        <h3 style="margin-bottom:6px">Company facts</h3>
+        <div><span>Industry</span><b>${c[1]}</b></div>
+        <div><span>Headquarters</span><b>${c[2]}</b></div>
+        <div><span>Team size</span><b>${c[3]} people</b></div>
+        <div><span>Verification</span><b>${c[5]?'✓ Verified':'Pending review'}</b></div>
+        <div><span>On Canopy since</span><b>${2024+(i%3)}</b></div>
+      </div>
+    </aside>
+  </div>`;
 }
 
-function notify(name,btn,inModal){
+/* ---------- routing: list <-> profile ---------- */
+function route(){
+  const m=location.hash.match(/^#c(\d+)$/);
+  if(m){
+    document.getElementById('listView').hidden=true;
+    document.getElementById('profileView').hidden=false;
+    showProfile(+m[1]);window.scrollTo(0,0);
+  }else{
+    document.title='Companies — Canopy';
+    document.getElementById('profileView').hidden=true;
+    document.getElementById('listView').hidden=false;
+    renderList();
+  }
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- actions ---------- */
+function notifyList(name,btn){toggleNotify(name);btn.textContent=notifySet.has(name)?'✓ We’ll notify you':'Notify me when a job opens';}
+function notifyProfile(i,btn){toggleNotify(CO[i][0]);btn.textContent=notifySet.has(CO[i][0])?'✓ You’re on the list':'Notify me when a job opens';}
+function toggleNotify(name){
   if(notifySet.has(name)){notifySet.delete(name);toast('Notification removed for '+name+'.');}
   else{notifySet.add(name);toast('Noted — we’ll email you the moment '+name+' posts a job.');}
   localStorage.setItem('canopy_notify',JSON.stringify([...notifySet]));
-  if(inModal){btn.textContent=notifySet.has(name)?'✓ You’re on the list — notified':'Notify me when a job opens';}
-  render();
 }
-function applyFromCo(t){applyTitle=t;
-  document.getElementById('applyTitle').textContent='Apply — '+t;
-  document.getElementById('coModal').classList.remove('open');
+function applyJob(i,t){applyKey=CO[i][0]+'::'+t;
+  document.getElementById('applyTitle').textContent='Apply — '+t+' at '+CO[i][0];
   document.getElementById('applyModal').classList.add('open');}
 function closeApply(sent){document.getElementById('applyModal').classList.remove('open');
-  if(sent)toast('Application sent — we’ll notify you at every status change. Good luck!');}
+  if(sent){applied.add(applyKey);localStorage.setItem('canopy_applied',JSON.stringify([...applied]));
+    toast('Application sent — we’ll notify you at every status change. Good luck!');route();}}
 function toast(m){const t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');
   clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600);}
-render();
+route();
 </script>
 </body>
 </html>

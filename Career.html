@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Career Tools — Canopy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#121512; --ink-soft:#4a514a; --paper:#f7f5f0; --card:#fff;
+  --hunter:#355e3b; --hunter-deep:#24422a; --hunter-tint:#e7efe5;
+  --line:#ddd8cd; --muted:#7a807a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
+h1,h2,h3{font-family:'Fraunces',serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.btn{border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:.88rem;transition:.15s;display:inline-block}
+.btn-green{background:var(--hunter);color:#fff}.btn-green:hover{background:var(--hunter-deep)}
+.btn-ghost{background:transparent;color:var(--paper);border:1px solid #555}.btn-ghost:hover{border-color:#999}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:#000}
+.btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-line:hover{border-color:var(--hunter)}
+.small{font-size:.8rem;color:var(--muted)}
+.tag{font-size:.74rem;border-radius:6px;padding:4px 9px;background:var(--paper);border:1px solid var(--line);color:var(--ink-soft)}
+.tag.green{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
+
+header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50}
+.nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:650}
+.logo .mark{width:30px;height:30px;border-radius:50%;background:var(--hunter);display:grid;place-items:center;color:#fff;font-size:.8rem}
+.nav nav{display:flex;gap:22px;margin-left:auto;font-size:.9rem}
+.nav nav a{opacity:.85}.nav nav a:hover{opacity:1}
+.nav nav a.active{color:#a9c9a9;opacity:1;border-bottom:2px solid var(--hunter)}
+
+.pagehead{padding:56px 0 10px}
+.kicker{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hunter);font-weight:700}
+.pagehead h1{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.12;margin:12px 0 10px;max-width:760px}
+.pagehead h1 em{font-style:italic;color:var(--hunter)}
+.pagehead p{color:var(--ink-soft);max-width:640px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
+.badge{background:var(--hunter);color:#fff;border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:700}
+.badges .small{align-self:center}
+
+.courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding:30px 0 70px}
+.course{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;transition:.15s}
+.course:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(18,21,18,.09);border-color:var(--hunter)}
+.course .top{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.course h3{font-size:1.15rem;margin-bottom:6px}
+.course .bl{font-size:.87rem;color:var(--ink-soft);margin-bottom:12px;flex:1}
+.skills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.course .meta{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
+.hasbadge{color:var(--hunter-deep);font-weight:700;font-size:.78rem}
+
+.crumb{display:inline-block;margin:26px 0 0;font-size:.85rem;color:var(--hunter);font-weight:600}
+.cohead{padding:16px 0 6px}
+.cohead h1{font-size:clamp(1.7rem,3.5vw,2.4rem);margin:8px 0 10px}
+.cohead .mmeta{display:flex;gap:8px;flex-wrap:wrap}
+.lesson{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin:16px 0}
+.lesson .n{font-family:'Fraunces',serif;color:var(--hunter);font-size:.9rem;font-weight:650}
+.lesson h3{font-size:1.1rem;margin:4px 0 8px}
+.lesson p{font-size:.9rem;color:var(--ink-soft)}
+.tip{margin-top:12px;background:var(--hunter-tint);border:1px dashed var(--hunter);border-radius:10px;padding:10px 14px;font-size:.83rem;color:var(--hunter-deep)}
+
+.quiz{background:var(--ink);color:var(--paper);border-radius:16px;padding:28px;margin:26px 0 70px}
+.quiz h2{color:#fff;font-size:1.4rem;margin-bottom:4px}
+.quiz .sub{font-size:.85rem;opacity:.8;margin-bottom:20px}
+.q{background:#1c211c;border-radius:12px;padding:18px;margin-bottom:14px}
+.q h4{font-size:.92rem;margin-bottom:10px;color:#fff}
+.q label{display:flex;gap:10px;align-items:center;font-size:.86rem;padding:6px 0;cursor:pointer;opacity:.9}
+.q input{accent-color:var(--hunter);width:15px;height:15px}
+.fb{font-size:.8rem;margin-top:8px;font-weight:600}
+.fb.ok{color:#a9c9a9}.fb.no{color:#e5b7b7}
+.result{margin-top:16px;font-size:.95rem;font-weight:700;color:#a9c9a9}
+.quiz .btn{margin-top:14px;margin-right:10px}
+
+footer{background:var(--ink);color:#c9cec9;border-top:1px solid #2c312c}
+.fbot{padding:22px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.8rem;opacity:.75}
+footer a{color:#a9c9a9}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.nav nav{display:none}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="logo" href="index.html"><span class="mark">✦</span>Canopy</a>
+  <nav>
+    <a href="find-jobs.html">Find Jobs</a>
+    <a href="companies.html">Companies</a>
+    <a href="career-tools.html" class="active">Career Tools</a>
+    <a href="index.html#pricing">Pricing</a>
+  </nav>
+  <button class="btn btn-ghost" onclick="toast('Login & sign-up connect to your auth provider.')">Log in</button>
+  <button class="btn btn-green" onclick="toast('Employer sign-up opens here — then the Post a Job form.')">Post a Job</button>
+</div></header>
+
+<div id="catalogView">
+  <section class="pagehead"><div class="wrap">
+    <div class="kicker">Career tools</div>
+    <h1>Learn the skills the jobs ask for. <em>Free with your profile.</em></h1>
+    <p>Every course is short, practical and matched to real roles on Canopy. Finish the lessons, pass the little assessment, and the badge appears on your profile and applications.</p>
+    <div class="badges" id="badgeStrip"></div>
+  </div></section>
+  <div class="wrap"><div class="courses" id="grid"></div></div>
+</div>
+
+<div id="courseView" hidden><div class="wrap" id="courseBox"></div></div>
+
+<footer><div class="wrap fbot">
+  <span>© 2026 Canopy Jobs Ltd. · <a href="index.html">Home</a> · <a href="find-jobs.html">Find Jobs</a> · <a href="companies.html">Companies</a></span>
+  <span>Good work, found properly.</span>
+</div></footer>
+<div class="toast" id="toastEl"></div>
+
+<script>
+/* [title, category, minutes, level, blurb, [skills], [[lesson title, body, try-it tip] x4], [[question, [4 options], correctIndex] x4]] */
+const COURSES=[
+["Working Remotely, Properly","Remote skills",40,"Beginner","The course for anyone applying to remote or hybrid roles: how to set up, communicate and stay visible without a desk.",["Async writing","Time-blocking","Slack & Zoom etiquette","Self-direction"],
+[["Your workspace is a tool","A dedicated corner — even a shelf — tells your brain work starts here. Light in front of you, not behind; chair over couch.","Photograph your desk and remove one thing that is not work."],
+["Async is a writing skill","Remote work runs on written updates. A good one says what you did, what is blocked and what is next — without being asked.","Write today's update in three bullets before lunch."],
+["Time-blocking beats to-do lists","A list is a wish; a calendar is a plan. Put deep work before meetings, and stop at a fixed time so work stops following you.","Block 90 minutes tomorrow and label it 'deep work'."],
+["Be visible without a desk","Remote presence means reliable delivery and clear communication. Share small wins weekly and ask early when stuck.","Send one 'here is what shipped this week' note on Friday."]],
+[["A good async update includes…",["How busy you feel","What you did, what is blocked, what is next","Your full to-do list","Only good news"],1],
+["Deep work is best scheduled…",["After all meetings","Whenever inspiration strikes","In a fixed block, before meetings","Never"],2],
+["You have been stuck for an hour. Best remote practice is to…",["Wait a full day","Ask early, with what you already tried","Stay quiet to look independent","Message a friend instead"],1],
+["The strongest remote-presence habit is…",["Longer hours","A weekly note on what shipped","More emojis in chat","Keeping your camera off"],1]],
+
+["Frontend Foundations","Technology",55,"Beginner","The shortest honest path from zero to 'can build a page', matched to our junior web and frontend roles.",["HTML & CSS","JavaScript basics","Git habits","Shipping a tiny project"],
+[["HTML is structure, CSS is layout","HTML says what things are; CSS says where they sit and how they feel. Learn them in that order, not mixed.","Rebuild the header of a site you like, from memory."],
+["JavaScript makes it respond","Start with variables, functions and one click handler. You do not need frameworks to understand frameworks.","Make a button change text on click."],
+["Git in small commits","Commit every time something works, with a message a stranger could read. Small commits are a paper trail of sanity.","Commit three times today with plain-English messages."],
+["Build one tiny thing this week","A personal page, a tip calculator, anything finished beats everything started. Employers hire finished.","Put one tiny project live, even if it is ugly."]],
+[["HTML describes…",["Colors","Structure and meaning","Animations","Servers"],1],
+["A good commit message is…",["'fix'","A sentence a stranger could understand","A single emoji","Left blank"],1],
+["The fastest way to learn CSS layout is…",["Memorising every property","Rebuilding pages you admire","Reading specs overnight","Avoiding flexbox"],1],
+["Employers hiring juniors most value…",["One finished tiny project","Fifty started tutorials","A perfect GitHub avatar","Knowing every framework"],0]],
+
+["Data & SQL Essentials","Finance",50,"Beginner","For analyst, payroll and finance roles: tidy spreadsheets, first SQL, and charts that answer questions.",["Spreadsheet hygiene","SQL SELECT & WHERE","Joins, simply","Chart judgement"],
+[["Tidy your spreadsheet first","One row per record, one column per fact, no merged cells. Most 'data problems' are tidying problems.","Unmerge every merged cell in one file you own."],
+["SQL is a polite request","SELECT the columns, FROM the table, WHERE the conditions. Ninety percent of analyst SQL is that sentence.","Write one SELECT with a WHERE on sample data."],
+["Joins are just matching","A join lines up rows that share a key, like matching names on two sign-in sheets. Pick the key first.","Match two small lists by email on paper."],
+["Charts answer questions","Pick the chart after the question: trend over time is a line, comparison is a bar. If it needs a paragraph to explain, redraw it.","Redo one chart at work with a title that states the answer."]],
+[["A tidy spreadsheet has…",["Merged cells everywhere","One row per record","Colors as the only system","Notes inside data cells"],1],
+["In SQL, WHERE is used to…",["Sort rows","Filter rows","Delete the table","Name columns"],1],
+["A join matches rows by…",["Row colour","A shared key","Alphabetical luck","File size"],1],
+["A trend over time is best shown as a…",["Pie chart","Line chart","Scatter of one point","Table"],1]],
+
+["UX Portfolio Sprint","Design",45,"Intermediate","Turn one project into a case study that gets interviews, matched to our product and UX design roles.",["Case-study structure","Figma prototyping","Usability testing","Presenting process"],
+[["One great case study beats six thin ones","Pick the project with a real constraint and a measurable result. Depth signals judgement.","Choose your one project today and write its constraint in a sentence."],
+["Show the messy middle","Interviews, dead ends, and why you changed direction. Employers hire judgement, not just polish.","Add one 'we tried X and it failed' slide."],
+["Test with five users","Five users find most usability problems. Watch, do not explain; note where they hesitate.","Run one 15-minute test this week, even with a friend."],
+["Present the process, then the pixels","Start with the problem and the result, then the decisions. Pixels last, because pixels are the easy part.","Rewrite your portfolio intro to lead with the problem."]],
+[["The strongest portfolio usually has…",["Many thin projects","One deep case study","Only final visuals","No results mentioned"],1],
+["Usability problems are best found by…",["Asking users what they like","Watching where they hesitate","Surveying 1,000 people","Debating internally"],1],
+["The 'messy middle' section shows…",["Poor judgement","Judgement and learning","Laziness","Too many meetings"],1],
+["A case study should start with…",["The colour palette","The problem and the result","Your résumé","The logo"],1]],
+
+["Customer Support Craft","Customer Support",35,"Beginner","De-escalation, human writing and product knowledge — the exact skills our support listings ask for.",["De-escalation","Empathetic writing","Product knowledge","Closing the loop"],
+[["De-escalate with the LEAP formula","Listen fully, Empathise once (not three times), Ask one clarifying question, Partner on the next step. Anger falls when people feel heard.","Rewrite one old reply using LEAP."],
+["Write like a human","'Hi Sam — yes, that's annoying, here's the fix.' Beats 'Dear Valued Customer' every time. Short, warm, specific.","Cut one template reply to two sentences."],
+["Know the product, not just the script","Reproduce the bug yourself before explaining it. Support engineers are trusted because they verify.","Reproduce one common issue end-to-end today."],
+["Close the loop","Follow up after the fix, even one line. Closed loops are why customers mention agents by name.","Follow up on one ticket you thought was done."]],
+[["In LEAP, the 'E' stands for…",["Escalate","Empathise","Explain","Evaluate"],1],
+["The best first line of a support reply is…",["'Dear Valued Customer'","'Hi Sam — yes, that's annoying, here's the fix'","'As per our policy'","'Please cal

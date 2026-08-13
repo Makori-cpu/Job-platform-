@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Companies — Canopy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#121512; --ink-soft:#4a514a; --paper:#f7f5f0; --card:#fff;
+  --hunter:#355e3b; --hunter-deep:#24422a; --hunter-tint:#e7efe5;
+  --line:#ddd8cd; --muted:#7a807a;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
+h1,h2,h3{font-family:'Fraunces',serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.btn{border:none;border-radius:999px;padding:10px 20px;font-weight:600;font-size:.88rem;transition:.15s;display:inline-block}
+.btn-green{background:var(--hunter);color:#fff}.btn-green:hover{background:var(--hunter-deep)}
+.btn-ghost{background:transparent;color:var(--paper);border:1px solid #555}.btn-ghost:hover{border-color:#999}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:#000}
+.btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-line:hover{border-color:var(--hunter)}
+.linky{background:none;border:none;color:var(--hunter);font-weight:600;font-size:.82rem;text-decoration:underline}
+.small{font-size:.8rem;color:var(--muted)}
+
+header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50}
+.nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:650}
+.logo .mark{width:30px;height:30px;border-radius:50%;background:var(--hunter);display:grid;place-items:center;color:#fff;font-size:.8rem}
+.nav nav{display:flex;gap:22px;margin-left:auto;font-size:.9rem}
+.nav nav a{opacity:.85}.nav nav a:hover{opacity:1}
+.nav nav a.active{color:#a9c9a9;opacity:1;border-bottom:2px solid var(--hunter)}
+
+/* ---- list view ---- */
+.pagehead{padding:56px 0 10px}
+.kicker{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hunter);font-weight:700}
+.pagehead h1{font-size:clamp(1.9rem,4vw,2.9rem);line-height:1.12;margin:12px 0 10px;max-width:760px}
+.pagehead h1 em{font-style:italic;color:var(--hunter)}
+.pagehead p{color:var(--ink-soft);max-width:600px}
+.toolbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:26px 0 8px}
+.toolbar input[type=text]{flex:1;min-width:220px;padding:13px 16px;border:1px solid var(--line);border-radius:12px;font-size:.92rem;background:#fff;outline:none}
+.toolbar input[type=text]:focus{border-color:var(--hunter)}
+.toolbar select{padding:12px 12px;border:1px solid var(--line);border-radius:10px;background:#fff;font-size:.86rem}
+.toolbar label{font-size:.84rem;color:var(--ink-soft);display:flex;gap:7px;align-items:center;cursor:pointer}
+.toolbar input[type=checkbox]{accent-color:var(--hunter);width:15px;height:15px}
+.countline{font-size:.86rem;color:var(--ink-soft);margin:6px 0 22px}
+.countline b{color:var(--ink)}
+.comps{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding-bottom:70px}
+.comp{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;transition:.15s}
+.comp:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(18,21,18,.09);border-color:var(--hunter)}
+.chead{display:flex;gap:12px;align-items:start}
+.cmark{width:44px;height:44px;border-radius:50%;background:var(--hunter-tint);border:1px solid var(--hunter);color:var(--hunter-deep);display:grid;place-items:center;font-weight:700;font-size:.9rem;flex:none}
+.chead h3{font-size:1.08rem;line-height:1.2}
+.vbadge{color:var(--hunter);font-size:.8rem}
+.cmeta{font-size:.8rem;color:var(--muted)}
+.cdesc{font-size:.87rem;color:var(--ink-soft);margin:12px 0 10px;flex:1}
+.cpill{align-self:flex-start;font-size:.74rem;font-weight:700;border-radius:6px;padding:4px 10px;margin-bottom:12px}
+.cpill.hiring{background:var(--hunter-tint);border:1px solid var(--hunter);color:var(--hunter-deep)}
+.cpill.quiet{background:var(--paper);border:1px solid var(--line);color:var(--muted)}
+.cjobs{margin:0 0 12px;display:grid;gap:6px}
+.cjob{display:flex;justify-content:space-between;gap:10px;font-size:.82rem;border-bottom:1px dashed var(--line);padding-bottom:6px}
+.cjob b{font-weight:600}.cjob span{color:var(--muted);white-space:nowrap}
+.cfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* ---- profile view ---- */
+.crumb{display:inline-block;margin:26px 0 0;font-size:.85rem;color:var(--hunter);font-weight:600}
+.cohero{display:flex;gap:18px;align-items:start;padding:18px 0 8px;flex-wrap:wrap}
+.cmark.big{width:64px;height:64px;font-size:1.2rem}
+.cohero h1{font-size:clamp(1.7rem,3.5vw,2.5rem);line-height:1.1}
+.mmeta{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.tag{font-size:.74rem;border-radius:6px;padding:4px 9px;background:#fff;border:1px solid var(--line);color:var(--ink-soft)}
+.tag.green{background:var(--hunter-tint);border-color:var(--hunter);color:var(--hunter-deep);font-weight:600}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 34px}
+.stat{background:var(--ink);color:var(--paper);border-radius:12px;padding:16px 18px}
+.stat b{font-family:'Fraunces',serif;font-size:1.6rem;display:block;color:#a9c9a9}
+.stat span{font-size:.76rem;opacity:.8}
+.cols{display:grid;grid-template-columns:1fr 350px;gap:30px;padding-bottom:70px;align-items:start}
+.sec{margin-bottom:34px}
+.sec h2{font-size:1.35rem;margin-bottom:12px}
+.sec h2 em{font-style:italic;color:var(--hunter)}
+.sec p{color:var(--ink-soft);font-size:.95rem;max-width:640px}
+.sec ul{margin:0 0 0 18px;color:var(--ink-soft);font-size:.92rem}
+.sec li{margin:7px 0}
+.quotes{display:grid;gap:14px}
+.quote{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.quote:nth-child(2){transform:rotate(.4deg)}
+.quote p{font-family:'Fraunces',serif;font-size:.98rem;line-height:1.5;color:var(--ink)}
+.quote .who{margin-top:12px;font-size:.8rem;color:var(--muted)}
+.quote .who b{color:var(--ink);display:block}
+.hiredvia{display:inline-block;margin-top:8px;font-size:.7rem;font-weight:700;color:var(--hunter-deep);background:var(--hunter-tint);border:1px solid var(--hunter);border-radius:6px;padding:3px 8px}
+.side{display:grid;gap:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px}
+.panel h3{font-size:1.05rem;margin-bottom:12px}
+.jrow{display:flex;justify-content:space-between;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.jrow .t{font-weight:600;font-size:.88rem}
+.jrow .s{font-size:.78rem;color:var(--muted)}
+.nojobs{border:2px dashed var(--line);border-radius:12px;padding:22px;text-align:center;background:var(--paper)}
+.nojobs h4{font-family:'Fraunces',serif;margin-bottom:6px}
+.nojobs p{font-size:.84rem;color:var(--ink-soft);margin-bottom:14px}
+.facts div{display:flex;justify-content:space-between;font-size:.85rem;padding:8px 0;border-bottom:1px dashed var(--line)}
+.facts div:last-child{border:none}
+
+footer{background:var(--ink);color:#c9cec9}
+.fbot{padding:22px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.8rem;opacity:.75}
+footer a{color:#a9c9a9}
+
+.modal{position:fixed;inset:0;background:rgba(10,12,10,.55);display:none;place-items:center;z-index:100;padding:20px}
+.modal.open{display:grid}
+.modal .box{background:#fff;border-radius:16px;max-width:480px;width:100%;padding:28px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.cols{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.nav nav{display:none}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="logo" href="index.html"><span class="mark">✦</span>Canopy</a>
+  <nav>
+    <a href="find-jobs.html">Find Jobs</a>
+    <a href="companies.html" class="active">Companies</a>
+    <a href="index.html#tools">Career Tools</a>
+    <a href="index.html#pricing">Pricing</a>
+  </nav>
+  <button class="btn btn-ghost" onclick="toast('Login & sign-up connect to your auth provider.')">Log in</button>
+  <button class="btn btn-green" onclick="toast('Employer sign-up opens here — then the Post a Job form.')">Post a Job</button>
+</div></header>
+
+<!-- ============ LIST VIEW ============ -->
+<div id="listView">
+  <section class="pagehead"><div class="wrap">
+    <div class="kicker">Companies</div>
+    <h1>Know who you're applying to. <em>Read their expectations first.</em></h1>
+    <p>Every employer on Canopy publishes what they do and what they expect from their people — before you spend a single click applying.</p>
+    <div class="toolbar">
+      <input type="text" id="q" placeholder="Search companies by name, industry or city" oninput="state.q=this.value.toLowerCase();renderList()">
+      <select id="ind" onchange="state.ind=this.value;renderList()"><option>Any industry</option></select>
+      <select id="sort" onchange="state.sort=this.value;renderList()">
+        <option value="az">A – Z</option><option value="roles">Most open roles</option>
+      </select>
+      <label><input type="checkbox" id="hiring" onchange="state.hiring=this.checked;renderList()">Hiring now</label>
+      <label><input type="checkbox" id="ver" onchange="state.ver=this.checked;renderList()">Verified only</label>
+    </div>
+    <div class="countline" id="countline"></div>
+  </div></section>
+  <div class="wrap"><div class="comps" id="grid"></div></div>
+</div>
+
+<!-- ============ PROFILE VIEW ============ -->
+<div id="profileView" hidden><div class="wrap" id="profileBox"></div></div>
+
+<footer><div class="wrap fbot">
+  <span>© 2026 Canopy Jobs Ltd. · <a href="index.html">Home</a> · <a href="find-jobs.html">Find Jobs</a> · <a href="#">Privacy</a> · <a href="#">Terms</a></span>
+  <span>Good work, found properly.</span>
+</div></footer>
+
+<div class="modal" id="applyModal"><div class="box">
+  <h3 id="applyTitle">Apply</h3>
+  <p class="small" style="margin:6px 0 16px">Using your Canopy profile + resume. The employer only sees your contact details after you’re shortlisted.</p>
+  <textarea rows="3" style="width:100%;margin:0 0 16px;padding:10px;border:1px solid var(--line);border-radius:8px;font-family:inherit">Hi — my profile and resume have everything, but happy to chat if useful.</textarea>
+  <div style="display:flex;gap:10px">
+    <button class="btn btn-green" style="flex:1" onclick="closeApply(true)">Send application</button>
+    <button class="btn btn-line" onclick="closeApply(false)">Cancel</button>
+  </div>
+</div></div>
+<div class="toast" id="toastEl"></div>
+
+<script>
+/* [name, industry, location, headcount, verified, description, [expectations], [[job title, salary, type], ...]] */
+const CO=[
+["Fern & Field Studio","Technology","Remote (US/EU)",38,1,"A remote product studio building calm, durable web tools for small creative teams.",["Ship small, ship often","Write things down","Leave code kinder than you found it"],[["Senior Frontend Engineer","$120k – $150k","Full-time"],["Backend Engineer (Node)","$95k – $120k","Full-time"]]],
+["Canopy Health","Healthcare","New York, NY",210,1,"Telehealth and clinic software that puts patients before paperwork.",["Protect patient privacy, always","Plain language in everything","Decide with data, act with heart"],[["DevOps Engineer","$140k – $165k","Full-time"],["Content Strategist","$45k – $55k","Part-time"],["Customer Success Lead","$65k – $80k","Full-time"],["Telehealth Therapist","$70k – $90k","Part-time"]]],
+["Brightrow Academy","Education","Chicago, IL",140,1,"A K-12 school where teachers have real budgets and a real say.",["Show up curious","Feedback is a gift","Families are partners"],[["Junior Web Developer","$38k – $45k","Internship"],["IT Support Specialist","$45k – $55k","Full-time"],["STEM Teacher (Grades 6–8)","$52k – $61k","Full-time"],["Librarian & Media Specialist","$50k – $60k","Full-time"]]],
+["Mossworks","Technology","Berlin, DE",120,1,"Logistics software that helps mid-size freight companies plan smarter routes.",["Talk to users weekly","Simple beats clever","Own outcomes, not tickets"],[["Product Designer","€70k – €85k","Full-time"],["Growth Marketing Manager","$60k – $75k","Contract"]]],
+["Paperbark","Design","London, UK",65,1,"A research-first design practice for public-sector and culture clients.",["Evidence over opinion","Craft in the details","Share what you learn"],[["Junior UX Researcher","£32k – £40k","Full-time"],["Customer Support Specialist (Night)","£24k – £28k","Part-time"]]],
+["Trellis Farms","Construction","Fresno, CA",300,0,"Family-run orchards supplying 400 grocers across the West since 1962.",["Safety before speed","Early mornings, honest work","Say it straight"],[["Brand Designer","$70k – $85k","Contract"],["Registered Nurse — Occupational Health","$82k – $96k","Full-time"],["Field Operations Manager","$70k – $88k","Full-time"]]],
+["Juniper Finance","Finance","New York, NY",95,1,"Modern payments and treasury tools for mid-market companies.",["Precision is respect","Question the default","Explain it simply"],[["Senior Product Designer","$135k – $160k","Full-time"],["Financial Analyst","$70k – $85k","Full-time"],["Client Onboarding Specialist","$60k – $75k","Full-time"]]],
+["Nightowl Media","Marketing","Remote (EU)",45,1,"Three niche publications and a streaming app, run by a fully async team.",["Async by default","Deadlines are promises","Audiences first"],[["UX Writer","$40k – $52k","Part-time"],["SEO Manager","$80k – $100k","Full-time"]]],
+["Copperleaf Café Group","Hospitality","Portland, OR",85,0,"Six neighbourhood cafés obsessed with good beans and good wages.",["Hospitality is a team sport","Taste everything","Regulars know our names"],[["Graphic Designer","$48k – $58k","Full-time"],["Social Media Coordinator","$42k – $50k","Full-time"]]],
+["Verdant Grocers","Retail","Seattle, WA",400,1,"A co-operative grocery chain with local shelves and living-wage jobs.",["Members come first","Reduce waste daily","Lift your teammates"],[["Email & CRM Specialist","$65k – $80k","Full-time"],["Pharmacy Technician","$48k – $58k","Full-time"]]],
+["Umbra Security","Technology","Denver, CO",70,1,"Boutique security ops for hospitals and utilities that cannot go down.",["Calm under pressure","Document everything","Trust, verify, then trust again"],[["QA Automation Engineer","$85k – $100k","Full-time"],["Security Analyst","$95k – $115k","Full-time"],["Technical Support Engineer","$75k – $90k","Full-time"]]],
+["Halcyon Robotics","Technology","Boston, MA",130,1,"Warehouse robots that pay for themselves in a season, not a decade.",["Hardware is hard — plan twice","Test on the real floor","Blameless by default"],[["Machine Learning Engineer","$150k – $180k","Full-time"],["Product Marketing Lead","$125k – $150k","Full-time"]]],
+["Prairie Wind Energy","Energy","Remote (US)",60,1,"Utility-scale solar and wind projects across the plains states.",["Measure twice, build once","Communities are partners","Weather is a colleague"],[["Data Engineer","$130k – $150k","Contract"],["Project Coordinator","$55k – $68k","Full-time"]]],
+["Yarrow Labs","Technology","Remote (US)",55,1,"A twelve-person team behind a habit-tracking app used by 200k people.",["Small team, big scope","Weekly shipping rhythm","Users over metrics"],[["Mobile Engineer (React Native)","$105k – $130k","Full-time"],["Support Team Lead","$70k – $88k","Full-time"]]],
+["Greenline Logistics","Logistics","Austin, TX",240,1,"Regional freight with a modern stack and a no-drama ops floor.",["Numbers do not lie","Communicate early","Own the outcome"],[["Data Analyst","$78k – $92k","Full-time"],["Payroll Specialist","$58k – $68k","Full-time"]]],
+["Stonebrook Senior Living","Healthcare","Phoenix, AZ",320,1,"Three senior communities that feel like homes, not hospitals.",["Dignity in every detail","Patience is a skill","Families are family"],[["Senior Accountant","$85k – $100k","Full-time"]]],
+["Orchard Legal","Legal","Remote (US)",12,0,"A 12-lawyer firm helping small businesses untangle contracts.",["Plain-language lawyering","Bill honestly","Weekends stay weekends"],[["Bookkeeper (Part-time)","$35k – $45k","Part-time"]]],
+["Meridian Builds","Construction","Dallas, TX",180,1,"Ground-up multifamily builder known for hitting punch lists on time.",["Safety is non-negotiable","Measure, do not guess","A handshake means something"],[["Audit Associate","$60k – $72k","Full-time"],["Site Supervisor","$90k – $110k","Full-time"],["Estimator","$75k – $92k","Full-time"]]],
+["Willow Creek Clinic","Healthcare","Madison, WI",90,1,"A 40-provider research network running a four-day-week pilot.",["Patients before paperwork","Curiosity counts","Cover for each other"],[["Clinical Data Coordinator","$68k – $82k","Full-time"],["Medical Assistant","$40k – $48k","Full-time"]]],
+["Quill & Query","Education","Remote (Global)",25,0,"Online language tutoring that pays tutors properly and plans lessons for you.",["Show up on time, on camera","Progress over perfection","Kind correction"],[["ESL Tutor (Online)","$30k – $40k","Part-time"]]],
+["Northgate College","Education","Columbus, OH",260,1,"A community college with a first-gen majority and real support staff.",["Meet students where they are","Paperwork with purpose","Door open, ego down"],[["Admissions Advisor","$55k – $65k","Full-time"]]],
+["Redbud Realty","Construction","Phoenix, AZ",40,1,"Property management for 14 communities, with in-house trades teams.",["Fix it right the first time","Respect tenants' homes","The van is your office"],[["Electrician (Journeyman)","$68k – $84k","Full-time"]]],
+["Kestrel Cloud","Technology","Remote (US)",30,1,"Edge hosting for indie developers; small, profitable, quiet.",["Write it down","Ship behind flags","On-call is shared"],[]],
+["Foghorn AI","Technology","Seattle, WA",48,1,"Speech models for maritime and aviation radio, built from real recordings.",["Benchmarks lie — test in the wild","Small models, big care","No demo-ware"],[["Research Engineer","$140k – $170k","Full-time"]]],
+["Grovebyte","Technology","Raleigh, NC",22,0,"A farming software co-op owned by the growers who use it.",["Growers decide","Offline-first always","Boring tech, reliable tools"],[]],
+["Dusklight Games","Technology","Montréal, CA",60,1,"A cozy-games studio shipping one small game a year, crunch-free.",["No crunch, ever","Playtest weekly","Finish things"],[["Gameplay Programmer","$85k – $105k","Full-time"]]],
+["Ondametric","Technology","Remote (EU)",18,0,"Privacy-first analytics for newsrooms and nonprofits.",["Default to private","Explain the math","Support the press"],[]],
+["Larkspur Data","Technology","Chicago, IL",35,1,"BI consulting that leaves dashboards clients can maintain alone.",["Document for the day you leave","Charts answer questions","Honest estimates"],[["BI Analyst","$70k – $88k","Full-time"]]],
+["Bellwether Analytics","Technology","Toronto, CA",42,1,"Demand forecasting for mid-size retailers; boring models, great results.",["Explainable beats exotic","Retail calendars rule","Error bars everywhere"],[]],
+["Studio Hemlock","Design","Portland, OR",14,1,"Motion and brand studio for outdoor and conservation clients.",["Story before style","Field trips are research","Credit everyone"],[["Motion Designer","$65k – $80k","Full-time"]]],
+["Atelier North","Design","Copenhagen, DK",9,0,"A tiny industrial-design atelier making furniture that repairs itself.",["Materials honesty","Prototype in real size","Sweep the workshop"],[]],
+["Fernweh Brand Co","Design","Remote (Global)",11,0,"Brand identity for travel companies that hate stock photos.",["Research on location","Type matters","Kill your darlings"],[]],
+["Twofold Studio","Design","Remote (EU)",7,0,"A two-person studio doing accessibility retrofits for public websites.",["Screen readers first","WCAG is the floor","Teach, do not shame"],[]],
+["Loudroot Media","Marketing","Nashville, TN",28,0,"Podcast production for regional brands and local newsrooms.",["Audio quality is sacred","Deadlines air on time","Credit the intern"],[]],
+["Marigold & Main","Marketing","Kansas City, MO",19,1,"Main-street marketing for independent retailers, retainer-free.",["Walk the shop floor","Report in dollars, not vibes","Small budgets, big care"],[["Community Manager","$48k – $58k","Full-time"]]],
+["Alder & Pine Accounting","Finance","Portland, OR",26,1,"Tax and bookkeeping for freelancers and one-truck businesses.",["No jargon, ever","Deadlines are sacred","Teach the client"],[]],
+["Stoneledger Finance","Finance","Remote (US)",75,1,"Back-office lending ops for community banks.",["Audit trails always","Slow is smooth, smooth is fast","Regulations are features"],[["Junior Analyst","$62k – $74k","Full-time"]]],
+["Harvest Mutual","Finance","Des Moines, IA",150,1,"A 90-year-old mutual insurer that still answers its phones.",["Policyholders are owners","Steady beats flashy","Mentor the new hires"],[]],
+["Starling HR","Finance","Remote (US)",34,1,"Fractional people-ops for companies that hate HR theater.",["Policy serves people","Confidential means confidential","Paperwork with a pulse"],[]],
+["Cedar Ridge Medical","Healthcare","Spokane, WA",200,1,"A rural hospital network covering four counties and one loyal helicopter.",["Rural means resourceful","Every role touches care","Debrief after hard days"],[]],
+["Bluebell Pediatrics","Healthcare","Minneapolis, MN",65,1,"A pediatric practice with same-week sick visits and zero clipboard energy.",["Kids first, always","Parents are partners","Show up prepared, show up kind"],[["Pediatric RN","$75k – $90k","Full-time"]]],
+["Sablewood Dental","Healthcare","Tucson, AZ",30,0,"A two-chair dental studio focused on anxious patients and honest pricing.",["Gentle is a technique","No upselling, ever","Sterile means sterile"],[]],
+["Northstar Physio","Healthcare","Anchorage, AK",24,0,"Physio for people who work outdoors in weather that fights back.",["Progress notes on time","Celebrate small wins","Cold is a factor — plan for it"],[]],
+["Elderflower Care Homes","Healthcare","Leeds, UK",210,1,"Five care homes rated outstanding, with staff meals cooked on site.",["Dignity, always","Families welcome anytime","Small signs matter"],[]],
+["Cinder & Sage Wellness","Healthcare","Sedona, AZ",16,0,"A wellness clinic blending licensed therapy with very good tea.",["Credentials on the wall, honesty in the room","No miracle claims","Boundaries are care"],[]],
+["Chalk & Compass School","Education","Burlington, VT",80,0,"An outdoor-learning charter school where half of class happens outside.",["Weather is curriculum","Lead with questions","Pack it in, pack it out"],[]],
+["Lantern Learning Co","Education","Remote (US)",15,1,"After-school math tutoring with human tutors and no streak-shaming.",["Mistakes are data","Parents get plain updates","Tutors rest between blocks"],[["Math Tutor","$35k – $45k","Part-time"]]],
+["Riverbend Montessori","Education","Sacramento, CA",45,0,"A 40-year-old Montessori house with waiting lists and worn-in floor mats.",["Follow the child","Prepare the environment","Speak softly, literally"],[]],
+["Granite & Grain Builders","Construction","Boise, ID",55,0,"Timber-frame homes and grain barns, built by the same crews for 20 years.",["Craft over haste","Tools get respect","Apprentices eat first"],[]],
+["Oakhill Contractors","Construction","Atlanta, GA",120,1,"Commercial fit-out specialist known for clean sites and on-time handovers.",["Clean site, safe site","Photos daily","Subs are partners"],[["Carpenter","$58k – $72k","Full-time"]]],
+["Bluegrain Roofing","Construction","Wichita, KS",35,0,"Storm-season roofing with straight quotes and no door-knock sales.",["Roofs are promises","Check ladders twice","No commission sales"],[]],
+["Terrafirm Civil","Construction","Reno, NV",90,1,"Civil works: culverts, curbs and the unglamorous stuff cities need.",["Specs are law","Public money, public care","Hot-weather protocol, always"],[]],
+["Greenhaven Landscaping","Construction","Eugene, OR",28,0,"Native-plant landscaping that lowers water bills and feeds pollinators.",["Right plant, right place","Leave sites cleaner","Bees are clients too"],[]],
+["Plumline Plumbing","Construction","Tulsa, OK",20,0,"Third-generation plumbers with upfront pricing and tidy vans.",["Photos before and after","Quote it, stick to it","Boot covers on, always"],[]],
+["Maple & Main Realty","Construction","Columbus, OH",33,0,"A brokerage that writes listings like humans and answers the phone.",["Disclose everything","Photos do not lie","Neighborhoods over transactions"],[]],
+["Echo & Ivy Support Co","Customer Support","Remote (Global)",40,0,"White-label support for indie SaaS; humans, not macros.",["No canned replies","Escalate honestly","Timezone overlap is team time"],[]],
+["Helpful Humans Ltd","Customer Support","Dublin, IE",55,1,"Support outsourcing that publishes its wages and its CSAT.",["Empathy is a skill — train it","Metrics serve humans","Breaks are sacred"],[["Support Agent","€38k – €46k","Full-time"]]],
+["The Wandering Fork","Hospitality","Santa Fe, NM",22,0,"A nine-table restaurant that changes the menu when the farm calls.",["Taste before service","Waste nothing","Tip-out includes dishwashers"],[]],
+["Hearthstone Inns","Hospitality","Burlington, VT",130,1,"Eight small inns that hire locally and promote from the front desk up.",["Guests remember feelings","Local first","Night audits matter"],[["Front Desk Lead","$45k – $52k","Full-time"]]],
+["Saltbush Kitchen","Hospitality","El Paso, TX",18,0,"A desert diner doing scratch cooking with a cult breakfast following.",["Mise en place or nothing","Regulars get their usual","Heat is a season — respect it"],[]],
+["Driftwood Coffee Roasters","Hospitality","Tacoma, WA",26,0,"A roastery that publishes its green-coffee costs and pays farms fairly.",["Cup every batch","Transparency is marketing","Clean hands, clean machines"],[]],
+["Honeystone Bakery","Hospitality","Lancaster, PA",15,1,"A wood-fired bakery sold out by 10am and closed Sundays, forever.",["Bread waits for no one","Sourdough is a schedule","Sunday is sacred"],[["Head Baker","$48k – $56k","Full-time"]]],
+["Thistle & Thread","Retail","Edinburgh, UK",12,0,"A mending-first clothing shop; we sell repairs before new garments.",["Repair is radical","Know your fabrics","Honest sizing"],[]],
+["Morningmarket Co-op","Retail","Madison, WI",60,1,"Member-owned grocery where staff vote on schedules and pay bands.",["Members own the place","Shelves tell stories","Shift swaps are a right"],[["Stock Coordinator","$42k – $50k","Full-time"]]],
+["Bramble & Birch Law","Legal","Portland, ME",8,0,"Estate planning for blended families, explained over tea, not jargon.",["Plain English, always","Grief-aware communication","Files tidy, always"],[]],
+["Foxglove Freight","Logistics","Memphis, TN",75,0,"A last-mile delivery co-op with driver-owners and route caps.",["Packages are promises","Routes have limits","Drivers set the pace"],[]],
+["Harbor & Lane","Logistics","Baltimore, MD",95,1,"Port logistics for small importers who hate surprise fees.",["Paperwork precision","Call before it is a problem","Weather changes plans"],[["Dispatcher","$52k – $64k","Full-time"]]],
+["Sunrow Solar","Energy","Albuquerque, NM",40,0,"Residential solar with honest payback math and 25-year service promises.",["No inflated savings claims","Roofs get respect","Service after the sale"],[]],
+["Papertrail Press","Media","Remote (US)",14,0,"A slow-journalism outlet publishing four long reads a month.",["Facts travel in pairs","Edit kindly, cut bravely","Bylines for all"],[]],
+["Ironquill Publishing","Media","Boston, MA",50,1,"An academic-to-public publisher that pays authors and fact-checkers properly.",["Citations or it did not happen","Respect the reader's time","Indexes are love letters"],[]]
+];
+
+function initials(n){return n.split(' ').filter(w=>/^[A-Za-z]/.test(w)).slice(0,2).map(w=>w[0]).join('').toUpperCase();}
+function hiresFor(i){return 4+(i*7)%38;}
+function replyRate(i){return 82+(i*3)%17;}
+const T_FIRST=["Dana","Priya","Tomás","Amara","Kenji","Lina","Jonas","Ada","Maya","Sam","Noor","Felix","Ines","Kofi","Ruth","Leo","Zainab","Marco","Elena","Dev"];
+const T_LAST=["Okafor","Raman","Alvarez","Diallo","Tanaka","Sato","Meier","Obi","Chen","Kim","Haddad","Novak","Silva","Mensah","Osei","Berg","Ali","Rossi","Kovacs","Shah"];
+const T_DATE=["Jan 2026","Nov 2025","Aug 2025","May 2025","Feb 2026","Oct 2025","Jun 2025"];
+const T_ROLE={Technology:"Software Engineer",Design:"Designer",Marketing:"Marketer",Finance:"Analyst",Healthcare:"Clinician",Education:"Educator",Construction:"Site lead","Customer Support":"Support specialist",Hospitality:"Host",Retail:"Team member",Logistics:"Coordinator",Energy:"Engineer",Media:"Editor",Legal:"Associate"};
+const T_TEXT=[
+ n=>`Canopy showed me ${n}'s expectations before I applied, so I knew exactly what I was walking into. Hired within three weeks.`,
+ n=>`I applied with one click and had a human reply in two days. ${n} turned out to be exactly what the profile said.`,
+ n=>`The salary range on the listing saved me a month of back-and-forth. Best decision I made all year.`,
+ n=>`The expectations list was honest — down to the early mornings. No surprises after joining ${n}.`,
+ n=>`Saved the job on a Sunday, interviewed that week. No ghosting, real updates at every step.`,
+ n=>`What sold me was reading what ${n} expects from its people. I started prepared, and it showed.`
+];
+function testimonials(i){
+  const c=CO[i],out=[];
+  for(let k=0;k<3;k++){
+    out.push({name:T_FIRST[(i*3+k*5)%20]+" "+T_LAST[(i*5+k*7)%20],
+      role:c[7].length?c[7][k%c[7].length][0]:T_ROLE[c[1]],
+      hired:T_DATE[(i+k*2)%7],text:T_TEXT[(i+k*2)%6](c[0])});
+  }
+  return out;
+}
+
+let state={q:'',ind:'Any industry',sort:'az',hiring:false,ver:false};
+let notifySet=new Set(JSON.parse(localStorage.getItem('canopy_notify')||'[]'));
+let applied=new Set(JSON.parse(localStorage.getItem('canopy_applied')||'[]'));
+let applyKey='';
+
+[...new Set(CO.map(c=>c[1]))].sort().forEach(i=>{
+  const o=document.createElement('option');o.textContent=i;document.getElementById('ind').appendChild(o);
+});
+
+/* ---------- LIST ---------- */
+function renderList(){
+  let list=CO.map((c,i)=>({c,i})).filter(({c})=>{
+    if(state.q && !(c[0]+' '+c[1]+' '+c[2]).toLowerCase().includes(state.q))return false;
+    if(state.ind!=='Any industry' && c[1]!==state.ind)return false;
+    if(state.hiring && c[7].length===0)return false;
+    if(state.ver && !c[5])return false;
+    return true;
+  });
+  if(state.sort==='az')list.sort((a,b)=>a.c[0].localeCompare(b.c[0]));
+  else list.sort((a,b)=>b.c[7].length-a.c[7].length);
+  document.getElementById('countline').innerHTML=
+    `<b>${CO.length}</b> companies · <b>${CO.filter(c=>c[7].length).length}</b> hiring now · every profile lists employee expectations`;
+  document.getElementById('grid').innerHTML=list.map(({c,i})=>`
+    <article class="comp">
+      <div class="chead"><span class="cmark">${initials(c[0])}</span>
+        <div><h3>${c[0]} ${c[5]?'<span class="vbadge" title="Verified employer">✓</span>':''}</h3>
+        <div class="cmeta">${c[1]} · ${c[2]} · ${c[3]} people</div></div></div>
+      <p class="cdesc">${c[6]}</p>
+      ${c[7].length
+        ?`<span class="cpill hiring">${c[7].length} open role${c[7].length>1?'s':''}</span>
+          <div class="cjobs">${c[7].slice(0,2).map(j=>`<div class="cjob"><b>${j[0]}</b><span>${j[1]}</span></div>`).join('')}
+          ${c[7].length>2?`<div class="cjob"><span>+ ${c[7].length-2} more on the profile</span></div>`:''}</div>`
+        :`<span class="cpill quiet">No open roles right now</span>`}
+      <div class="cfoot">
+        <a class="btn btn-dark" href="#c${i}">View profile</a>
+        ${c[7].length===0?`<button class="linky" onclick="notifyList('${c[0].replace(/'/g,"\\'")}',this)">${notifySet.has(c[0])?'✓ We’ll notify you':'Notify me when a job opens'}</button>`:''}
+      </div>
+    </article>`).join('') || `<p class="small">No companies match that search.</p>`;
+}
+
+/* ---------- PROFILE ---------- */
+function showProfile(i){
+  const c=CO[i];
+  if(!c){location.hash='';return;}
+  document.title=c[0]+' — Canopy';
+  const t=testimonials(i);
+  document.getElementById('profileBox').innerHTML=`
+  <a class="crumb" href="#">← All companies</a>
+  <section class="cohero">
+    <span class="cmark big">${initials(c[0])}</span>
+    <div>
+      <h1>${c[0]} ${c[5]?'<span class="vbadge">✓ Verified employer</span>':''}</h1>
+      <div class="mmeta">
+        <span class="tag green">${c[1]}</span><span class="tag">${c[2]}</span>
+        <span class="tag">${c[3]} people</span>
+        ${c[7].length?`<span class="tag green">${c[7].length} open role${c[7].length>1?'s':''}</span>`:'<span class="tag">No open roles right now</span>'}
+      </div>
+    </div>
+  </section>
+  <section class="stats">
+    <div class="stat"><b>${c[3]}</b><span>people work here</span></div>
+    <div class="stat"><b>${hiresFor(i)}</b><span>hired through Canopy</span></div>
+    <div class="stat"><b>${c[7].length}</b><span>open roles today</span></div>
+    <div class="stat"><b>${replyRate(i)}%</b><span>applications answered within a week</span></div>
+  </section>
+  <div class="cols">
+    <div>
+      <div class="sec"><h2>About <em>${c[0]}</em></h2><p>${c[6]}</p></div>
+      <div class="sec"><h2>What we expect from employees</h2>
+        <ul>${c[6].map(e=>`<li>${e}</li>`).join('')}</ul></div>
+      <div class="sec"><h2>Hired here <em>through Canopy</em></h2>
+        <div class="quotes">${t.map(q=>`
+          <div class="quote"><p>“${q.text}”</p>
+            <div class="who"><b>${q.name}</b>${q.role} · joined ${q.hired}</div>
+            <span class="hiredvia">✓ Hired via Canopy</span></div>`).join('')}
+        </div>
+      </div>
+    </div>
+    <aside class="side">
+      <div class="panel">
+        <h3>Open roles at ${c[0]}</h3>
+        ${c[7].length
+          ? c[7].map(j=>`<div class="jrow"><div><div class="t">${j[0]}</div><div class="s">${j[1]} · ${j[2]}</div></div>
+              <button class="btn ${applied.has(c[0]+'::'+j[0])?'btn-line':'btn-green'}" onclick="applyJob(${i},'${j[0].replace(/'/g,"\\'")}')">${applied.has(c[0]+'::'+j[0])?'Applied ✓':'Apply'}</button></div>`).join('')
+          : `<div class="nojobs"><h4>No jobs available right now.</h4>
+             <p>We post here first the moment a role opens. Leave a note and we’ll email you within the hour it happens.</p>
+             <button class="btn btn-green" onclick="notifyProfile(${i},this)">${notifySet.has(c[0])?'✓ You’re on the list':'Notify me when a job opens'}</button></div>`}
+      </div>
+      <div class="panel facts">
+        <h3 style="margin-bottom:6px">Company facts</h3>
+        <div><span>Industry</span><b>${c[1]}</b></div>
+        <div><span>Headquarters</span><b>${c[2]}</b></div>
+        <div><span>Team size</span><b>${c[3]} people</b></div>
+        <div><span>Verification</span><b>${c[5]?'✓ Verified':'Pending review'}</b></div>
+        <div><span>On Canopy since</span><b>${2024+(i%3)}</b></div>
+      </div>
+    </aside>
+  </div>`;
+}
+
+/* ---------- routing: list <-> profile ---------- */
+function route(){
+  const m=location.hash.match(/^#c(\d+)$/);
+  if(m){
+    document.getElementById('listView').hidden=true;
+    document.getElementById('profileView').hidden=false;
+    showProfile(+m[1]);window.scrollTo(0,0);
+  }else{
+    document.title='Companies — Canopy';
+    document.getElementById('profileView').hidden=true;
+    document.getElementById('listView').hidden=false;
+    renderList();
+  }
+}
+window.addEventListener('hashchange',route);
+
+/* ---------- actions ---------- */
+function notifyList(name,btn){toggleNotify(name);btn.textContent=notifySet.has(name)?'✓ We’ll notify you':'Notify me when a job opens';}
+function notifyProfile(i,btn){toggleNotify(CO[i][0]);btn.textContent=notifySet.has(CO[i][0])?'✓ You’re on the list':'Notify me when a job opens';}
+function toggleNotify(name){
+  if(notifySet.has(name)){notifySet.delete(name);toast('Notification removed for '+name+'.');}
+  else{notifySet.add(name);toast('Noted — we’ll email you the moment '+name+' posts a job.');}
+  localStorage.setItem('canopy_notify',JSON.stringify([...notifySet]));
+}
+function applyJob(i,t){applyKey=CO[i][0]+'::'+t;
+  document.getElementById('applyTitle').textContent='Apply — '+t+' at '+CO[i][0];
+  document.getElementById('applyModal').classList.add('open');}
+function closeApply(sent){document.getElementById('applyModal').classList.remove('open');
+  if(sent){applied.add(applyKey);localStorage.setItem('canopy_applied',JSON.stringify([...applied]));
+    toast('Application sent — we’ll notify you at every status change. Good luck!');route();}}
+function toast(m){const t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('show'),2600);}
+route();
+</script>
+</body>
+</html>

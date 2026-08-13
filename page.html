@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100 dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusWork — AI-Powered Online Jobs Platform</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#eff6ff',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              900: '#1e3a8a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.5);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="h-full font-sans antialiased flex flex-col bg-slate-950 text-slate-100 custom-scrollbar">
+
+  <!-- GLOBAL HEADER NAVIGATION -->
+  <header class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <!-- Logo -->
+      <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('browse')">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center font-black text-xl shadow-lg shadow-blue-500/20 text-white">
+          N
+        </div>
+        <div class="flex flex-col">
+          <span class="text-lg font-black tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">NexusWork</span>
+          <span class="text-[10px] text-blue-400 font-semibold tracking-wider -mt-1">AI JOBS PLATFORM</span>
+        </div>
+      </div>
+
+      <!-- Main Nav Links -->
+      <nav class="hidden md:flex items-center space-x-1 text-sm font-medium bg-slate-900/60 p-1.5 rounded-xl border border-slate-800">
+        <button onclick="switchTab('browse')" id="nav-browse" class="px-4 py-1.5 rounded-lg text-blue-400 bg-blue-500/10 font-semibold flex items-center gap-2 transition">
+          <i data-lucide="briefcase" class="w-4 h-4"></i> Browse Jobs
+        </button>
+        <button onclick="switchTab('ai-tools')" id="nav-ai-tools" class="px-4 py-1.5 rounded-lg text-slate-400 hover:text-white flex items-center gap-2 transition">
+          <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i> AI Career Suite
+        </button>
+        <button onclick="switchTab('employer')" id="nav-employer" class="px-4 py-1.5 rounded-lg text-slate-400 hover:text-white flex items-center gap-2 transition">
+          <i data-lucide="layout-dashboard" class="w-4 h-4 text-emerald-400"></i> Employer ATS
+        </button>
+      </nav>
+
+      <!-- Auth & Actions -->
+      <div class="flex items-center space-x-3">
+        <button class="hidden sm:inline-flex text-xs font-semibold text-slate-300 hover:text-white px-3 py-2 transition">Sign In</button>
+        <button onclick="switchTab('employer')" class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-semibold text-xs px-4 py-2.5 rounded-xl transition shadow-lg shadow-blue-600/25 flex items-center gap-1.5">
+          <i data-lucide="plus-circle" class="w-4 h-4"></i> Post a Job
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APPLICATION BODY -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- ========================================== -->
+    <!-- TAB 1: BROWSE JOBS (PUBLIC / SEEKER VIEW) -->
+    <!-- ========================================== -->
+    <section id="tab-browse" class="space-y-8">
+      
+      <!-- HERO HEADER & ADVANCED SEARCH -->
+      <div class="relative rounded-3xl p-8 overflow-hidden border border-slate-800/80 bg-gradient-to-b from-slate-900 via-slate-900/80 to-slate-950 shadow-2xl">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-3xl mx-auto text-center space-y-4 mb-8">
+          <span class="inline-flex items-center gap-1.5 bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs px-3 py-1 rounded-full font-medium">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i> Over 14,200+ AI & Remote Opportunities Live
+          </span>
+          <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+            Find Your Next High-Impact <span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-indigo-300 to-amber-300">Remote AI Job</span>
+          </h1>
+          <p class="text-slate-400 text-sm sm:text-base">
+            Verified high-paying opportunities in AI Engineering, Data Annotation, Software Development, and Remote Tech.
+          </p>
+        </div>
+
+        <!-- SEARCH BAR CONTAINER -->
+        <div class="relative z-10 glass-panel p-3 rounded-2xl border-slate-700/60 shadow-xl space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-3">
+            <div class="md:col-span-5 relative">
+              <i data-lucide="search" class="w-5 h-5 absolute left-3.5 top-3.5 text-slate-400"></i>
+              <input type="text" id="search-keyword" onkeyup="filterJobs()" placeholder="Job title, skill, or keyword..." class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:border-blue-500 text-white placeholder-slate-500 transition">
+            </div>
+            <div class="md:col-span-4 relative">
+              <i data-lucide="map-pin" class="w-5 h-5 absolute left-3.5 top-3.5 text-slate-400"></i>
+              <input type="text" id="search-location" onkeyup="filterJobs()" placeholder="Location (e.g. Remote, US, EU)" class="w-full bg-slate-900/90 border border-slate-700/80 rounded-xl pl-11 pr-4 py-3 text-sm focus:outline-none focus:border-blue-500 text-white placeholder-slate-500 transition">
+            </div>
+            <div class="md:col-span-3">
+              <button onclick="filterJobs()" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-600/30 flex items-center justify-center gap-2 text-sm">
+                <i data-lucide="search" class="w-4 h-4"></i> Search Jobs
+              </button>
+            </div>
+          </div>
+
+          <!-- CATEGORY TAG FILTER CHIPS -->
+          <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-800 text-xs">
+            <span class="text-slate-500 font-medium mr-1">Popular:</span>
+            <button onclick="selectCategory('All')" class="category-chip px-3 py-1.5 rounded-lg bg-blue-600 text-white font-medium transition">All Jobs</button>
+            <button onclick="selectCategory('AI Engineering')" class="category-chip px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-slate-600 transition">🤖 AI & LLMs</button>
+            <button onclick="selectCategory('Remote')" class="category-chip px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-slate-600 transition">🌍 100% Remote</button>
+            <button onclick="selectCategory('Data Annotation')" class="category-chip px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-slate-600 transition">🏷️ Data Annotation</button>
+            <button onclick="selectCategory('Full Stack')" class="category-chip px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 hover:border-slate-600 transition">💻 Full Stack</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MAIN CONTENT GRID: LISTINGS + SIDEBAR -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+
+        <!-- LEFT COLUMN: JOB LISTINGS (8 COLS) -->
+        <div class="lg:col-span-8 space-y-4">
+          <!-- Control Bar: Layout Toggle & Count -->
+          <div class="flex items-center justify-between pb-2">
+            <div class="text-xs text-slate-400 font-medium">
+              Showing <span id="job-count" class="text-white font-bold">4</span> verified opportunities
+            </div>
+
+            <!-- View Toggle Buttons -->
+            <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
+              <button onclick="setLayout('row')" id="btn-layout-row" class="px-3 py-1 rounded-lg bg-slate-800 text-blue-400 font-semibold flex items-center gap-1.5 transition">
+                <i data-lucide="list" class="w-3.5 h-3.5"></i> Rows
+              </button>
+              <button onclick="setLayout('grid')" id="btn-layout-grid" class="px-3 py-1 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition">
+                <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i> Grid
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Job Cards Container -->
+          <div id="job-cards-container" class="space-y-3">
+            <!-- Dynamic Injection via JavaScript -->
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: AI MATCH WIDGET & QUICK TOOLS (4 COLS) -->
+        <div class="lg:col-span-4 space-y-6">
+
+          <!-- INSTANT AI MATCH WIDGET -->
+          <div class="glass-panel p-6 rounded-2xl border-blue-500/30 space-y-4 relative overflow-hidden shadow-xl">
+            <div class="absolute -right-8 -bottom-8 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl"></div>
+            
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center">
+                  <i data-lucide="sparkles" class="w-4 h-4 text-amber-400"></i>
+                </div>
+                <h3 class="font-bold text-white text-sm">Instant AI Skill Matcher</h3>
+              </div>
+              <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">v2.4 AI</span>
+            </div>
+
+            <p class="text-xs text-slate-400">Paste your technical skills or resume overview to generate compatibility scores for all open listings.</p>
+
+            <textarea id="user-skills-input" rows="3" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 placeholder-slate-600 transition" placeholder="e.g. Python, PyTorch, LangChain, Next.js, TypeScript, PostgreSQL, AWS..."></textarea>
+
+            <button onclick="runAiSkillMatch()" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-extrabold py-2.5 rounded-xl text-xs transition shadow-lg shadow-amber-500/20 flex items-center justify-center gap-2">
+              <i data-lucide="cpu" class="w-4 h-4"></i> Evaluate Profile Match
+            </button>
+
+            <!-- Match Result Output Box -->
+            <div id="ai-match-output" class="hidden p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs space-y-1.5">
+              <!-- Injected by JS -->
+            </div>
+          </div>
+
+          <!-- SALARY ESTIMATOR BOX -->
+          <div class="glass-card p-5 rounded-2xl space-y-3">
+            <h4 class="font-bold text-xs text-slate-300 uppercase tracking-wider flex items-center gap-2">
+              <i data-lucide="dollar-sign" class="w-4 h-4 text-emerald-400"></i> AI Salary Intelligence
+            </h4>
+            <div class="space-y-2 text-xs">
+              <div class="flex justify-between text-slate-400">
+                <span>AI Engineering (Remote)</span>
+                <span class="text-white font-semibold">$155k - $220k</span>
+              </div>
+              <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
+                <div class="bg-emerald-500 h-full w-4/5"></div>
+              </div>
+              <p class="text-[11px] text-slate-500">Based on 1,420 real remote compensation data points updated today.</p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 2: AI CAREER SUITE                     -->
+    <!-- ========================================== -->
+    <section id="tab-ai-tools" class="hidden space-y-8 max-w-4xl mx-auto">
+      <div class="text-center space-y-2">
+        <h2 class="text-2xl font-black text-white">AI Career & Safety Suite</h2>
+        <p class="text-xs text-slate-400">Automated job scam detection, CV review, and salary analysis tools.</p>
+      </div>
+
+      <!-- SCAM DETECTOR WIDGET -->
+      <div class="glass-panel p-6 rounded-2xl space-y-4 border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center">
+            <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400"></i>
+          </div>
+          <div>
+            <h3 class="font-bold text-white text-base">AI Job Scam & Phishing Detector</h3>
+            <p class="text-xs text-slate-400">Paste any suspicious job posting text or offer email to check for fraudulent indicators.</p>
+          </div>
+        </div>
+
+        <textarea id="scam-check-input" rows="5" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-white focus:outline-none focus:border-blue-500 placeholder-slate-600" placeholder="Paste job description or email text here (e.g. 'We send you a check to purchase equipment...')" ></textarea>
+
+        <button onclick="analyzeScam()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-6 py-2.5 rounded-xl text-xs transition flex items-center gap-2 shadow-lg shadow-emerald-600/20">
+          <i data-lucide="scan" class="w-4 h-4"></i> Run Anti-Scam Audit
+        </button>
+
+        <!-- Result Card -->
+        <div id="scam-result" class="hidden p-4 rounded-xl text-xs space-y-2"></div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- TAB 3: EMPLOYER ATS & KANBAN BOARD        -->
+    <!-- ========================================== -->
+    <section id="tab-employer" class="hidden space-y-6">
+      <!-- Top Stats Header -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-slate-900/60 p-6 rounded-2xl border border-slate-800">
+        <div>
+          <h2 class="text-xl font-black text-white">Applicant Tracking System (ATS)</h2>
+          <p class="text-xs text-slate-400">Position: <span class="text-blue-400 font-semibold">Senior AI / LLM Engineer ($160k - $210k)</span></p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold px-4 py-2 rounded-xl transition border border-slate-700 flex items-center gap-1.5">
+            <i data-lucide="filter" class="w-3.5 h-3.5"></i> Filter Candidates
+          </button>
+          <button class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-4 py-2 rounded-xl transition shadow-lg shadow-blue-600/20 flex items-center gap-1.5">
+            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Post New Role
+          </button>
+        </div>
+      </div>
+
+      <!-- KANBAN COLUMNS -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+
+        <!-- Column 1: Applied -->
+        <div class="glass-panel p-4 rounded-2xl space-y-3">
+          <div class="flex justify-between items-center pb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-blue-500"></span> Applied
+            </span>
+            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-bold">2</span>
+          </div>
+
+          <!-- Card 1 -->
+          <div class="glass-card p-3 rounded-xl border-slate-800 space-y-2 hover:border-slate-700 cursor-grab">
+            <div class="flex justify-between items-start">
+              <h4 class="font-bold text-xs text-white">Alex Rivera</h4>
+              <span class="text-[10px] bg-emerald-500/10 text-emerald-400 font-bold px-1.5 py-0.5 rounded">94% AI Match</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Ex-OpenAI Contractor • 5 yrs PyTorch</p>
+            <div class="flex gap-1 pt-1">
+              <span class="text-[9px] bg-slate-900 text-slate-400 px-1.5 py-0.5 rounded">PyTorch</span>
+              <span class="text-[9px] bg-slate-900 text-slate-400 px-1.5 py-0.5 rounded">LangChain</span>
+            </div>
+          </div>
+
+          <!-- Card 2 -->
+          <div class="glass-card p-3 rounded-xl border-slate-800 space-y-2 hover:border-slate-700 cursor-grab">
+            <div class="flex justify-between items-start">
+              <h4 class="font-bold text-xs text-white">David Kim</h4>
+              <span class="text-[10px] bg-blue-500/10 text-blue-400 font-bold px-1.5 py-0.5 rounded">82% Match</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Senior Full Stack • React/Node</p>
+          </div>
+        </div>
+
+        <!-- Column 2: Reviewing -->
+        <div class="glass-panel p-4 rounded-2xl space-y-3">
+          <div class="flex justify-between items-center pb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-amber-500"></span> Reviewing
+            </span>
+            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-bold">1</span>
+          </div>
+
+          <div class="glass-card p-3 rounded-xl border-slate-800 space-y-2 hover:border-slate-700 cursor-grab">
+            <div class="flex justify-between items-start">
+              <h4 class="font-bold text-xs text-white">Sarah Jenkins</h4>
+              <span class="text-[10px] bg-emerald-500/10 text-emerald-400 font-bold px-1.5 py-0.5 rounded">91% Match</span>
+            </div>
+            <p class="text-[11px] text-slate-400">ML Infrastructure • AWS/Kubernetes</p>
+          </div>
+        </div>
+
+        <!-- Column 3: Interviewing -->
+        <div class="glass-panel p-4 rounded-2xl space-y-3">
+          <div class="flex justify-between items-center pb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-purple-500"></span> Interviewing
+            </span>
+            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-bold">1</span>
+          </div>
+
+          <div class="glass-card p-3 rounded-xl border-slate-800 space-y-2 hover:border-slate-700 cursor-grab">
+            <div class="flex justify-between items-start">
+              <h4 class="font-bold text-xs text-white">Elena Rostova</h4>
+              <span class="text-[10px] bg-purple-500/10 text-purple-400 font-bold px-1.5 py-0.5 rounded">Tech Round</span>
+            </div>
+            <p class="text-[11px] text-slate-400">Scheduled: Tomorrow at 2:00 PM</p>
+          </div>
+        </div>
+
+        <!-- Column 4: Offered -->
+        <div class="glass-panel p-4 rounded-2xl space-y-3">
+          <div class="flex justify-between items-center pb-2 border-b border-slate-800">
+            <span class="text-xs font-bold text-slate-300 flex items-center gap-2">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Offered
+            </span>
+            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-md font-bold">0</span>
+          </div>
+          <div class="text-center py-8 text-xs text-slate-600 border border-dashed border-slate-800 rounded-xl">
+            Drag candidate here to issue offer
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- JAVASCRIPT APPLICATION LOGIC -->
+  <script>
+    // Sample Job Database
+    const sampleJobs = [
+      {
+        id: "1",
+        title: "Senior AI / LLM Engineer",
+        company: "Cognitive Systems Inc.",
+        category: "AI Engineering",
+        location: "Remote (Worldwide)",
+        salary: "$160,000 - $210,000",
+        type: "Full-Time",
+        tags: ["PyTorch", "LangChain", "Python", "Vector DBs"],
+        aiBadge: true,
+        posted: "2 hours ago",
+        matchScore: 95
+      },
+      {
+        id: "2",
+        title: "Lead Full Stack Developer (Next.js)",
+        company: "Veloce SaaS",
+        category: "Full Stack",
+        location: "Remote (US/EU)",
+        salary: "$130,000 - $170,000",
+        type: "Full-Time",
+        tags: ["React", "TypeScript", "Node.js", "PostgreSQL"],
+        aiBadge: false,
+        posted: "5 hours ago",
+        matchScore: 84
+      },
+      {
+        id: "3",
+        title: "AI Data Annotation Specialist",
+        company: "DataTrain AI",
+        category: "Data Annotation",
+        location: "Worldwide Remote",
+        salary: "$45 - $65 / hr",
+        type: "Contract",
+        tags: ["NLP", "Data Labeling", "Python"],
+        aiBadge: true,
+        posted: "1 day ago",
+        matchScore: 78
+      },
+      {
+        id: "4",
+        title: "Senior Machine Learning Architect",
+        company: "Neural Cloud Labs",
+        category: "AI Engineering",
+        location: "Remote",
+        salary: "$180,000 - $240,000",
+        type: "Full-Time",
+        tags: ["TensorFlow", "Kubeflow", "AWS", "Python"],
+        aiBadge: true,
+        posted: "1 day ago",
+        matchScore: 91
+      }
+    ];
+
+    let currentLayout = 'row';
+    let currentCategory = 'All';
+
+    // RENDER JOBS LIST
+    function renderJobs(jobs) {
+      const container = document.getElementById('job-cards-container');
+      document.getElementById('job-count').innerText = jobs.length;
+
+      if (jobs.length === 0) {
+        container.innerHTML = `
+          <div class="glass-panel p-12 text-center rounded-2xl space-y-3">
+            <i data-lucide="search-x" class="w-10 h-10 text-slate-500 mx-auto"></i>
+            <h3 class="font-bold text-white">No job postings found</h3>
+            <p class="text-xs text-slate-400">Try adjusting your keyword search or active category filters.</p>
+          </div>
+        `;
+        lucide.createIcons();
+        return;
+      }
+
+      if (currentLayout === 'row') {
+        container.className = "space-y-3";
+        container.innerHTML = jobs.map(job => `
+          <div class="glass-panel p-5 rounded-2xl hover:border-slate-700 transition space-y-3 group">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <h3 class="font-bold text-base text-white group-hover:text-blue-400 cursor-pointer transition">${job.title}</h3>
+                  ${job.aiBadge ? '<span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] px-2 py-0.5 rounded-full font-bold">AI Featured</span>' : ''}
+                </div>
+                <p class="text-xs text-slate-400 font-medium">${job.company} • <span class="text-slate-300">${job.location}</span> • <span class="text-slate-400">${job.type}</span></p>
+              </div>
+              <div class="text-left sm:text-right">
+                <span class="text-sm font-bold text-emerald-400 block">${job.salary}</span>
+                <span class="text-[11px] text-slate-500">${job.posted}</span>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-800/80">
+              <div class="flex flex-wrap gap-1.5">
+                ${job.tags.map(t => `<span class="bg-slate-900 text-slate-300 border border-slate-800 text-[11px] px-2.5 py-0.5 rounded-md font-medium">${t}</span>`).join('')}
+              </div>
+              <button class="bg-blue-600/20 hover:bg-blue-600 text-blue-400 hover:text-white border border-blue-500/30 px-4 py-1.5 rounded-xl transition text-xs font-bold flex items-center gap-1.5 ml-auto">
+                Apply Now <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+        `).join('');
+      } else {
+        container.className = "grid grid-cols-1 md:grid-cols-2 gap-4";
+        container.innerHTML = jobs.map(job => `
+          <div class="glass-panel p-5 rounded-2xl hover:border-slate-700 transition flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex justify-between items-start">
+                <h3 class="font-bold text-sm text-white hover:text-blue-400 cursor-pointer transition line-clamp-1">${job.title}</h3>
+                ${job.aiBadge ? '<span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[9px] px-2 py-0.5 rounded-full font-bold">AI</span>' : ''}
+              </div>
+              <p class="text-xs text-slate-400 font-medium">${job.company}</p>
+              <p class="text-xs text-slate-300">${job.location}</p>
+              <p class="text-xs font-bold text-emerald-400">${job.salary}</p>
+            </div>
+
+            <div class="space-y-3 pt-2 border-t border-slate-800">
+              <div class="flex flex-wrap gap-1">
+                ${job.tags.map(t => `<span class="bg-slate-900 text-slate-300 border border-slate-800 text-[10px] px-2 py-0.5 rounded">${t}</span>`).join('')}
+              </div>
+              <button class="w-full bg-blue-600 hover:bg-blue-500 text-white py-2 rounded-xl text-xs font-bold transition">
+                View & Apply
+              </button>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      lucide.createIcons();
+    }
+
+    // FILTER FUNCTIONALITY
+    function filterJobs() {
+      const keyword = document.getElementById('search-keyword').value.toLowerCase();
+      const location = document.getElementById('search-location').value.toLowerCase();
+
+      const filtered = sampleJobs.filter(job => {
+        const matchesKeyword = job.title.toLowerCase().includes(keyword) || job.tags.some(t => t.toLowerCase().includes(keyword));
+        const matchesLocation = job.location.toLowerCase().includes(location);
+        const matchesCategory = currentCategory === 'All' || job.category === currentCategory || (currentCategory === 'Remote' && job.location.includes('Remote'));
+        return matchesKeyword && matchesLocation && matchesCategory;
+      });
+
+      renderJobs(filtered);
+    }
+
+    function selectCategory(cat) {
+      currentCategory = cat;
+      filterJobs();
+    }
+
+    function setLayout(layout) {
+      currentLayout = layout;
+      document.getElementById('btn-layout-row').className = layout === 'row' ? "px-3 py-1 rounded-lg bg-slate-800 text-blue-400 font-semibold flex items-center gap-1.5 transition" : "px-3 py-1 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition";
+      document.getElementById('btn-layout-grid').className = layout === 'grid' ? "px-3 py-1 rounded-lg bg-slate-800 text-blue-400 font-semibold flex items-center gap-1.5 transition" : "px-3 py-1 rounded-lg text-slate-400 hover:text-white flex items-center gap-1.5 transition";
+      renderJobs(sampleJobs);
+    }
+
+    // NAVIGATION TAB SWITCHER
+    function switchTab(tab) {
+      ['browse', 'ai-tools', 'employer'].forEach(t => {
+        document.getElementById(`tab-${t}`).classList.add('hidden');
+        document.getElementById(`nav-${t}`).classList.remove('text-blue-400', 'bg-blue-500/10', 'font-semibold');
+        document.getElementById(`nav-${t}`).classList.add('text-slate-400');
+      });
+
+      document.getElementById(`tab-${tab}`).classList.remove('hidden');
+      document.getElementById(`nav-${tab}`).classList.add('text-blue-400', 'bg-blue-500/10', 'font-semibold');
+      document.getElementById(`nav-${tab}`).classList.remove('text-slate-400');
+    }
+
+    // AI SKILL MATCH SIMULATOR
+    function runAiSkillMatch() {
+      const input = document.getElementById('user-skills-input').value;
+      const output = document.getElementById('ai-match-output');
+
+      if (!input.trim()) {
+        alert("Please enter a list of skills first.");
+        return;
+      }
+
+      output.classList.remove('hidden');
+      output.innerHTML = `
+        <div class="flex items-center justify-between text-amber-400 font-bold">
+          <span>Match Rating: High (88%)</span>
+          <i data-lucide="check-circle" class="w-4 h-4"></i>
+        </div>
+        <p class="text-[11px] text-slate-300">Strong alignment with <strong>Senior AI / LLM Engineer</strong>. You meet 4 of 5 core criteria.</p>
+      `;
+      lucide.createIcons();
+    }
+
+    // AI SCAM AUDITOR SIMULATOR
+    function analyzeScam() {
+      const text = document.getElementById('scam-check-input').value;
+      const res = document.getElementById('scam-result');
+
+      if (!text.trim()) {
+        alert("Please paste job text to audit.");
+        return;
+      }
+
+      res.classList.remove('hidden');
+      if (text.toLowerCase().includes('check') || text.toLowerCase().includes('equipment') || text.toLowerCase().includes('telegram')) {
+        res.className = "p-4 rounded-xl text-xs space-y-2 bg-rose-500/10 border border-rose-500/30 text-rose-300";
+        res.innerHTML = `
+          <strong class="text-sm font-bold block flex items-center gap-1.5"><i data-lucide="alert-triangle" class="w-4 h-4"></i> High Risk Scam Detected (Score: 0.92 / 1.0)</strong>
+          <p>Flags found: Fake check equipment purchasing request, unverified messaging channel usage.</p>
+        `;
+      } else {
+        res.className = "p-4 rounded-xl text-xs space-y-2 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300";
+        res.innerHTML = `
+          <strong class="text-sm font-bold block flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4"></i> Safe Opportunity (Score: 0.04 / 1.0)</strong>
+          <p>No wage theft, wire transfer requests, or scam patterns detected.</p>
+        `;
+      }
+      lucide.createIcons();
+    }
+
+    // INITIALIZATION
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      renderJobs(sampleJobs);
+    });
+  </script>
+</body>
+</html>

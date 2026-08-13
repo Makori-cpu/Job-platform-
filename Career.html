@@ -14,8 +14,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
-body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
 h1,h2,h3{font-family:'Fraunces',serif}
 .wrap{max-width:1100px;margin:0 auto;padding:0 24px}
 a{color:inherit;text-decoration:none}
@@ -44,7 +42,6 @@ header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50
 .pagehead p{color:var(--ink-soft);max-width:640px}
 .badges{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0 6px}
 .badge{background:var(--hunter);color:#fff;border-radius:999px;padding:6px 14px;font-size:.78rem;font-weight:700}
-.badges .small{align-self:center}
 
 .courses{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:18px;padding:30px 0 70px}
 .course{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;display:flex;flex-direction:column;transition:.15s}
@@ -54,7 +51,6 @@ header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50
 .course .bl{font-size:.87rem;color:var(--ink-soft);margin-bottom:12px;flex:1}
 .skills{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
 .course .meta{display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--muted);margin-bottom:14px}
-.hasbadge{color:var(--hunter-deep);font-weight:700;font-size:.78rem}
 
 .crumb{display:inline-block;margin:26px 0 0;font-size:.85rem;color:var(--hunter);font-weight:600}
 .cohead{padding:16px 0 6px}
@@ -78,7 +74,7 @@ header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50
 .result{margin-top:16px;font-size:.95rem;font-weight:700;color:#a9c9a9}
 .quiz .btn{margin-top:14px;margin-right:10px}
 
-footer{background:var(--ink);color:#c9cec9;border-top:1px solid #2c312c}
+footer{background:var(--ink);color:#c9cec9}
 .fbot{padding:22px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.8rem;opacity:.75}
 footer a{color:#a9c9a9}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
@@ -104,7 +100,7 @@ footer a{color:#a9c9a9}
   <section class="pagehead"><div class="wrap">
     <div class="kicker">Career tools</div>
     <h1>Learn the skills the jobs ask for. <em>Free with your profile.</em></h1>
-    <p>Every course is short, practical and matched to real roles on Canopy. Finish the lessons, pass the little assessment, and the badge appears on your profile and applications.</p>
+    <p>Every course is short, practical and matched to real roles on Canopy — including how to work remotely. Finish the lessons, pass the little assessment at the end, and the badge appears on your profile and applications.</p>
     <div class="badges" id="badgeStrip"></div>
   </div></section>
   <div class="wrap"><div class="courses" id="grid"></div></div>
@@ -119,8 +115,8 @@ footer a{color:#a9c9a9}
 <div class="toast" id="toastEl"></div>
 
 <script>
-/* [title, category, minutes, level, blurb, [skills], [[lesson title, body, try-it tip] x4], [[question, [4 options], correctIndex] x4]] */
-const COURSES=[
+/* [title, category, minutes, level, blurb, [skills], [[lesson, body, tip] x4], [[question, [4 options], answer] x4]] */
+var COURSES=[
 ["Working Remotely, Properly","Remote skills",40,"Beginner","The course for anyone applying to remote or hybrid roles: how to set up, communicate and stay visible without a desk.",["Async writing","Time-blocking","Slack & Zoom etiquette","Self-direction"],
 [["Your workspace is a tool","A dedicated corner — even a shelf — tells your brain work starts here. Light in front of you, not behind; chair over couch.","Photograph your desk and remove one thing that is not work."],
 ["Async is a writing skill","Remote work runs on written updates. A good one says what you did, what is blocked and what is next — without being asked.","Write today's update in three bullets before lunch."],
@@ -133,23 +129,23 @@ const COURSES=[
 
 ["Frontend Foundations","Technology",55,"Beginner","The shortest honest path from zero to 'can build a page', matched to our junior web and frontend roles.",["HTML & CSS","JavaScript basics","Git habits","Shipping a tiny project"],
 [["HTML is structure, CSS is layout","HTML says what things are; CSS says where they sit and how they feel. Learn them in that order, not mixed.","Rebuild the header of a site you like, from memory."],
-["JavaScript makes it respond","Start with variables, functions and one click handler. You do not need frameworks to understand frameworks.","Make a button change text on click."],
-["Git in small commits","Commit every time something works, with a message a stranger could read. Small commits are a paper trail of sanity.","Commit three times today with plain-English messages."],
-["Build one tiny thing this week","A personal page, a tip calculator, anything finished beats everything started. Employers hire finished.","Put one tiny project live, even if it is ugly."]],
+["JavaScript makes it respond","Start with variables, functions and one click handler. You do not need frameworks to understand frameworks.","Make a button change some text on click."],
+["Git in small commits","Commit every time something works, with a message a stranger could read. Small commits are a paper trail of sanity.","Make three commits today with plain-English messages."],
+["Build one tiny thing this week","A personal page, a tip calculator — anything finished beats everything started. Employers hire finished.","Put one tiny project live, even if it is ugly."]],
 [["HTML describes…",["Colors","Structure and meaning","Animations","Servers"],1],
 ["A good commit message is…",["'fix'","A sentence a stranger could understand","A single emoji","Left blank"],1],
 ["The fastest way to learn CSS layout is…",["Memorising every property","Rebuilding pages you admire","Reading specs overnight","Avoiding flexbox"],1],
-["Employers hiring juniors most value…",["One finished tiny project","Fifty started tutorials","A perfect GitHub avatar","Knowing every framework"],0]],
+["Employers hiring juniors most value…",["One finished tiny project","Fifty started tutorials","A perfect avatar","Knowing every framework"],0]],
 
 ["Data & SQL Essentials","Finance",50,"Beginner","For analyst, payroll and finance roles: tidy spreadsheets, first SQL, and charts that answer questions.",["Spreadsheet hygiene","SQL SELECT & WHERE","Joins, simply","Chart judgement"],
 [["Tidy your spreadsheet first","One row per record, one column per fact, no merged cells. Most 'data problems' are tidying problems.","Unmerge every merged cell in one file you own."],
 ["SQL is a polite request","SELECT the columns, FROM the table, WHERE the conditions. Ninety percent of analyst SQL is that sentence.","Write one SELECT with a WHERE on sample data."],
-["Joins are just matching","A join lines up rows that share a key, like matching names on two sign-in sheets. Pick the key first.","Match two small lists by email on paper."],
+["Joins are just matching","A join lines up rows that share a key, like matching names on two sign-in sheets. Pick the key first.","Match two small lists by email, on paper."],
 ["Charts answer questions","Pick the chart after the question: trend over time is a line, comparison is a bar. If it needs a paragraph to explain, redraw it.","Redo one chart at work with a title that states the answer."]],
 [["A tidy spreadsheet has…",["Merged cells everywhere","One row per record","Colors as the only system","Notes inside data cells"],1],
 ["In SQL, WHERE is used to…",["Sort rows","Filter rows","Delete the table","Name columns"],1],
 ["A join matches rows by…",["Row colour","A shared key","Alphabetical luck","File size"],1],
-["A trend over time is best shown as a…",["Pie chart","Line chart","Scatter of one point","Table"],1]],
+["A trend over time is best shown as a…",["Pie chart","Line chart","Single point","Table"],1]],
 
 ["UX Portfolio Sprint","Design",45,"Intermediate","Turn one project into a case study that gets interviews, matched to our product and UX design roles.",["Case-study structure","Figma prototyping","Usability testing","Presenting process"],
 [["One great case study beats six thin ones","Pick the project with a real constraint and a measurable result. Depth signals judgement.","Choose your one project today and write its constraint in a sentence."],
@@ -162,9 +158,199 @@ const COURSES=[
 ["A case study should start with…",["The colour palette","The problem and the result","Your résumé","The logo"],1]],
 
 ["Customer Support Craft","Customer Support",35,"Beginner","De-escalation, human writing and product knowledge — the exact skills our support listings ask for.",["De-escalation","Empathetic writing","Product knowledge","Closing the loop"],
-[["De-escalate with the LEAP formula","Listen fully, Empathise once (not three times), Ask one clarifying question, Partner on the next step. Anger falls when people feel heard.","Rewrite one old reply using LEAP."],
-["Write like a human","'Hi Sam — yes, that's annoying, here's the fix.' Beats 'Dear Valued Customer' every time. Short, warm, specific.","Cut one template reply to two sentences."],
+[["De-escalate with LEAP","Listen fully, Empathise once (not three times), Ask one clarifying question, Partner on the next step. Anger falls when people feel heard.","Rewrite one old reply using LEAP."],
+["Write like a human","'Hi Sam — yes, that is annoying, here is the fix.' beats 'Dear Valued Customer' every time. Short, warm, specific.","Cut one template reply down to two sentences."],
 ["Know the product, not just the script","Reproduce the bug yourself before explaining it. Support engineers are trusted because they verify.","Reproduce one common issue end-to-end today."],
 ["Close the loop","Follow up after the fix, even one line. Closed loops are why customers mention agents by name.","Follow up on one ticket you thought was done."]],
 [["In LEAP, the 'E' stands for…",["Escalate","Empathise","Explain","Evaluate"],1],
-["The best first line of a support reply is…",["'Dear Valued Customer'","'Hi Sam — yes, that's annoying, here's the fix'","'As per our policy'","'Please cal
+["The best first line of a support reply is…",["'Dear Valued Customer'","'Hi Sam — yes, that is annoying, here is the fix'","'As per our policy'","'Please calm down'"],1],
+["Before explaining a bug to a customer, you should…",["Guess the cause","Reproduce it yourself","Forward it immediately","Blame the update"],1],
+["'Closing the loop' means…",["Closing tickets faster","Following up after the fix","Using macros","Ending chats quickly"],1]],
+
+["Bookkeeping Basics","Finance",40,"Beginner","The calm-money course for bookkeeper and payroll roles: buckets, hygiene and weekly reconciliation.",["Income & expense tracking","QuickBooks habits","Reconciliation","Payroll basics"],
+[["Three buckets: in, out, owed","Every transaction is money in, money out, or money you owe or are owed. File everything into a bucket the day it happens.","Categorise one week of transactions today."],
+["Hygiene beats heroics","Receipts attached, no 'MISC', one bank account per purpose. Clean books are a habit, not a quarterly rescue.","Rename every 'MISC' entry in last month's books."],
+["Reconcile weekly, not yearly","Matching the bank statement to the books weekly turns a scary job into a 20-minute job.","Do one weekly reconciliation this week."],
+["Payroll is a promise","Payroll errors destroy trust instantly. Know your pay dates, tax deadlines and who to call when something looks off.","Write down your next three pay dates and deadlines."]],
+[["The three buckets are…",["In, out, owed","Big, small, medium","Red, amber, green","Cash, card, crypto"],0],
+["'MISC' entries should be…",["Encouraged","Renamed to real categories","Deleted","Hidden"],1],
+["Weekly reconciliation turns bookkeeping into…",["A yearly panic","A 20-minute habit","An audit","A hobby"],1],
+["The most damaging bookkeeping error is usually…",["A typo in a note","A payroll mistake","A missing logo","Slow invoices"],1]],
+
+["Clinical Communication","Healthcare",45,"Beginner","For RN, medical assistant and coordinator roles: listening, plain language and notes the next person can use.",["Active listening","Plain-language explanations","EHR notes","HIPAA habits"],
+[["Listen before you chart","The first two minutes uninterrupted tell you more than the form does. Patients correct themselves into the diagnosis.","In your next conversation, wait two full minutes before writing."],
+["Explain it to their cousin","If an explanation needs jargon, it is not finished. Plain first, term second.","Rewrite one discharge instruction at reading age 12."],
+["Notes for the next person","Write what changed, what you did, and what to watch for. Future-you at 6am is the reader.","End every note with 'watch for…'."],
+["HIPAA is everyone's job","Screens down, voices down, no names in hallways. Privacy is a team sport with no bench.","Do one privacy walk of your workspace today."]],
+[["The first two minutes of a patient conversation should be…",["Interrupted with forms","Uninterrupted listening","Recorded","Skipped"],1],
+["Plain-language explanations put…",["The term first","The plain meaning first","The billing code first","The disclaimer first"],1],
+["A useful clinical note ends with…",["A signature emoji","'Watch for…'","A blank line","The patient's address"],1],
+["HIPAA compliance is the job of…",["Only managers","Everyone","Only IT","Only doctors"],1]],
+
+["Site Safety & Supervision","Construction",50,"Beginner","For site supervisor, coordinator and trades roles: briefings that stick, walks that catch problems, schedules that hold.",["Safety briefings","Site walks","Crew communication","Apprentice coaching"],
+[["Briefings that stick","One hazard, one story, one question to the crew. A five-minute briefing remembered beats a thirty-minute one forgotten.","Ask one crew member to repeat today's main hazard back."],
+["Walk the site twice","Once for progress, once for hazards — never combined, because the eyes compete.","Do one hazards-only walk this week."],
+["Schedules are promises","Say the date you can keep, not the one they want. A missed promise costs more than a late start.","Replace one vague 'soon' with a real date today."],
+["Teach the apprentice","Explain why, let them do it once supervised, then own the check. Apprentices become your relief.","Spend 15 minutes teaching one task fully this week."]],
+[["The most memorable safety briefing is…",["Long and detailed","One hazard, one story, one question","Read from a PDF","Skipped when busy"],1],
+["Site walks should be done…",["Once for progress, once for hazards","Combined into one","Only after incidents","Only by new staff"],1],
+["When asked for a date, give…",["The date they want","The date you can keep","A shrug","'Soon'"],1],
+["The best apprentice teaching order is…",["Watch, do, check","Check, watch, do","Do, check, watch","Ignore, test"],0]],
+
+["Classroom Confidence","Education",40,"Beginner","For teacher, tutor and admissions roles: routines, checking understanding, and parents as partners.",["Routines","Checking understanding","Parent communication","Feedback over grades"],
+[["Start with routines","Routines are the curriculum's skeleton. Teach the routine before the content and rehearse it like content.","Write down your first-ten-minutes routine and rehearse it once."],
+["Check for understanding, not silence","Quiet faces are not data. Exit tickets and thumbs tell you what the room actually learned.","Use one exit ticket tomorrow and act on it the same day."],
+["Parents are partners","One positive note home per student per month changes every hard conversation later.","Send two positive notes home this week."],
+["Feedback over grades","'Add one example' teaches; '7/10' only ranks. Feedback should be a next step, not a verdict.","Turn one grade you planned into a next-step sentence."]],
+[["Routines should be taught…",["After content","Before content, and rehearsed","Never","Only in September"],1],
+["The best check for understanding is…",["Silent faces","An exit ticket","A nod","Finishing the worksheet"],1],
+["One positive note home per month…",["Wastes time","Improves later hard conversations","Annoys parents","Is against policy"],1],
+["The most teaching-powerful feedback is…",["'7/10'","'Add one example'","'Good job'","A rank in class"],1]],
+
+["Growth Marketing 101","Marketing",45,"Intermediate","For marketing, content and social roles: the funnel, lifecycle email, SEO that answers questions, and measuring in dollars.",["Funnel thinking","Lifecycle email","SEO basics","Reporting in revenue"],
+[["Know the funnel you are feeding","Awareness, consideration, conversion, retention — pick which stage the campaign serves before choosing the channel.","Label your current project with its funnel stage."],
+["Email is a conversation","Welcome, activate, retain, win back. Four emails, written once, work forever. Subject lines are promises.","Write your welcome email in under 60 words."],
+["SEO is answering questions","Rank by answering the question better, not by tricking the algorithm. One page, one question, one honest answer.","Find one question your audience asks and answer it on one page."],
+["Report in dollars, not vibes","'CTR up 2%' is a shrug; '12 trials from this post, $4k pipeline' is a story. Tie every report to revenue or retention.","Rewrite your last report to start with revenue."]],
+[["The funnel stages are…",["Awareness, consideration, conversion, retention","Plan, buy, use","Post, like, share","Q1, Q2, Q3, Q4"],0],
+["A subject line is…",["A trick","A promise","A formality","Spam bait"],1],
+["Good SEO means…",["One page answering one question well","Keyword stuffing","Ten pages per question","Ignoring search intent"],0],
+["The strongest marketing report starts with…",["CTR","Revenue or pipeline","Follower count","Logo size"],1]],
+
+["Interview Ready","Career skills",30,"Beginner","The course that makes every other course count: stories, questions to ask them, and follow-ups that land.",["STAR stories","Research habits","Questions to ask","Follow-up notes"],
+[["Prepare three STAR stories","Situation, Task, Action, Result. Three stories cover ninety percent of interview questions. Say them out loud.","Record yourself telling one STAR story in 90 seconds."],
+["Research like a member","Read their site, one review, one news item. Then say what you noticed and one question it raised.","Write one observation and one question before every interview."],
+["Ask questions that reveal culture","'What does a bad week look like here?' tells you more than 'what is the culture like?' ever will.","Ask what a bad week looks like, and listen carefully."],
+["Follow up within a day","Two sentences: what you enjoyed, and the answer you wish you had given. Specific beats polished.","Send one specific follow-up note within 24 hours."]],
+[["STAR stands for Situation, Task, Action and…",["Review","Result","Rating","Résumé"],1],
+["How many prepared stories cover most interviews?",["One","Three","Twenty","None"],1],
+["The question that reveals culture is…",["'What is the culture like?'","'What does a bad week look like here?'","'Do you have fun?'","'Is the office nice?'"],1],
+["The best follow-up note is…",["Generic and long","Specific, within a day","Sent after a week","Skipped"],1]],
+
+["Logistics & Dispatch Basics","Logistics",40,"Beginner","For freight, dispatcher and ops roles on Canopy: routes, early calls, clean logs and calm under delay.",["Route planning","Dispatch communication","Spreadsheet tracking","Calm under delay"],
+[["The route is a promise","A delivery window is a commitment to someone's day. Plan buffers for traffic and weather; promise what survives reality.","Add a 15-minute buffer to tomorrow's first route."],
+["Call before it's a problem","A 30-second early call beats a 30-minute apology. Dispatch trusts people who report delays the moment they know.","Write your escalation list: who to call, in order."],
+["Track it or it didn't happen","One spreadsheet: stop, status, exception. Clean rows make you the person managers rely on.","Log every stop for one shift, status included."],
+["Calm is contagious","When a route falls apart, the person who stays flat lowers the whole room's temperature.","Practice saying 'Here is the situation, here is the plan' out loud."]],
+[["A delivery window is best described as…",["A guess","A promise","A suggestion","A formality"],1],
+["When you learn of a delay, you should…",["Wait to see if it worsens","Call early","Hide it","Email at end of day"],1],
+["The dispatch log should have…",["One row per stop with status","Merged cells","Notes only","Colors only"],0],
+["During a disruption, the best tone is…",["Flat and clear","Loud","Silent","Joking"],0]],
+
+["Hospitality Host Craft","Hospitality",30,"Beginner","For café, inn and restaurant roles: welcomes, regulars, complaints and tip-outs that build culture.",["Warm welcomes","Reading regulars","Handling complaints","Team tip-outs"],
+[["The first 30 seconds decide the visit","Eyes up, greeting before the menu. People forgive slow kitchens but not invisible entrances.","Greet every guest within 30 seconds for one shift."],
+["Regulars are the business","Learn names and the usual. A regular who feels known brings three friends.","Write down five regulars' usuals this week."],
+["Complaints are gifts with receipts","Thank them, fix it, follow up. A recovered guest tells more people than a happy one.","Recover one complaint fully this week, then follow up."],
+["The team eats first","Tip-outs include dishwashers and runners; the floor wins together. Culture is how money moves.","Ask how tip-outs work and who is included."]],
+[["Guests should be greeted within…",["30 seconds","5 minutes","When seated","After ordering"],0],
+["A recovered complainer often…",["Never returns","Tells more people than a happy guest","Sues","Posts nothing"],1],
+["Learning regulars' usuals…",["Wastes time","Builds the business","Is nosy","Is against policy"],1],
+["A healthy tip-out…",["Excludes dishwashers","Includes the whole floor","Goes to one person","Is skipped when busy"],1]],
+
+["Retail Customer Care","Retail",30,"Beginner","For grocery, co-op and shop roles: approachable floor presence, honest selling and stock discipline.",["Floor presence","Honest selling","Stock discipline","Member-first thinking"],
+[["Be approachable, not pouncing","A nod and 'I'm here if you need me' beats hovering. Shoppers ask when it feels safe.","Use the greet-and-release line ten times this week."],
+["Honest selling keeps customers","'The cheaper one is fine for this' builds trust that outlives any margin.","Recommend the cheaper option once this week and note the reaction."],
+["Stock discipline is customer service","Facing, dates and full shelves are silent salespeople. Rotate like the customer checks.","Do one full date-rotation pass this week."],
+["Members own the place","In a co-op, the shopper is the owner. Explain decisions plainly and welcome the questions.","Learn one fact about how membership works and share it."]],
+[["The best first approach is…",["Hovering","A nod and 'I'm here if you need me'","Ignoring","Following"],1],
+["Recommending the cheaper fit…",["Loses trust","Builds trust","Is illegal","Wastes margin only"],1],
+["Date rotation matters because…",["It looks busy","It is customer service","It is optional","It hides stock"],1],
+["In a co-op, the customer is…",["A nuisance","An owner","A stranger","A statistic"],1]],
+
+["Field Energy & Solar Basics","Energy",45,"Beginner","For solar and wind project roles: site safety, honest payback math, permitting patience and neighbor talks.",["Site safety","Payback math","Permitting checklists","Community conversations"],
+[["Safety is the schedule","Lockout/tagout and harness checks are not delays; they are the job. Incidents stop projects longer than checks do.","Walk one lockout/tagout procedure start to finish."],
+["Honest payback math sells solar","Show the real numbers with weather and shade included. Overpromised savings kill referrals.","Recalculate one quote with conservative sun hours."],
+["Permits reward patience","Every county reads the code slightly differently. Keep a checklist per county and update it after every submission.","Start a one-page checklist for your county."],
+["Neighbors are stakeholders","A two-minute honest answer at the fence prevents a two-hour hearing. Bring the noise and glare facts.","Write plain answers to the three most common neighbor questions."]],
+[["Lockout/tagout checks are…",["Delays","The job itself","Optional","Only for new hires"],1],
+["Solar quotes should use…",["Best-case sun only","Conservative, real numbers","Round numbers","The neighbor's numbers"],1],
+["Permitting across counties needs…",["One universal form","A per-county checklist","Guesswork","Speed over care"],1],
+["A quick honest fence-chat prevents…",["Sales","A longer hearing","Questions","Weather"],1]]
+];
+
+var badges=new Set(JSON.parse(localStorage.getItem('canopy_badges')||'[]'));
+
+function renderCatalog(){
+  document.getElementById('badgeStrip').innerHTML=badges.size
+    ?'<span class="small">Your badges:</span>'+Array.from(badges).map(function(i){return '<span class="badge">✓ '+COURSES[i][0]+'</span>';}).join('')
+    :'<span class="small">No badges yet — pass a course assessment and it lands here (and on your profile).</span>';
+  document.getElementById('grid').innerHTML=COURSES.map(function(c,i){
+    return '<article class="course">'
+    +'<div class="top"><span class="tag green">'+c[1]+'</span><span class="tag">'+c[3]+'</span>'+(badges.has(i)?'<span class="tag green">✓ Badged</span>':'')+'</div>'
+    +'<h3>'+c[0]+'</h3>'
+    +'<p class="bl">'+c[4]+'</p>'
+    +'<div class="skills">'+c[5].map(function(s){return '<span class="tag">'+s+'</span>';}).join('')+'</div>'
+    +'<div class="meta"><span>4 short lessons · '+c[2]+' min</span><span>Assessment: 4 questions</span></div>'
+    +'<a class="btn '+(badges.has(i)?'btn-line':'btn-green')+'" href="#course'+i+'">'+(badges.has(i)?'Review course':'Start course')+'</a>'
+    +'</article>';
+  }).join('');
+}
+
+function showCourse(i){
+  var c=COURSES[i];
+  document.title=c[0]+' — Canopy Career Tools';
+  var html='<a class="crumb" href="#">← All courses</a>'
+  +'<section class="cohead"><div class="mmeta"><span class="tag green">'+c[1]+'</span><span class="tag">'+c[3]+'</span><span class="tag">4 lessons · '+c[2]+' min</span><span class="tag green">Assessment included</span></div>'
+  +'<h1>'+c[0]+'</h1>'
+  +'<p style="color:var(--ink-soft);max-width:640px">'+c[4]+'</p>'
+  +'<div class="skills" style="margin-top:14px"><span class="small" style="align-self:center">Skills you will learn:</span>'+c[5].map(function(s){return '<span class="tag green">'+s+'</span>';}).join('')+'</div></section>';
+  c[6].forEach(function(l,li){
+    html+='<div class="lesson"><div class="n">Lesson '+(li+1)+' of 4</div><h3>'+l[0]+'</h3><p>'+l[1]+'</p><div class="tip">✎ Try it: '+l[2]+'</div></div>';
+  });
+  html+='<div class="quiz"><h2>The little assessment</h2>'
+  +'<div class="sub">Answer all 4 — score 3 or more to earn the “'+c[0]+'” badge on your profile.</div>';
+  c[7].forEach(function(q,qi){
+    html+='<div class="q"><h4>'+(qi+1)+'. '+q[0]+'</h4>';
+    q[1].forEach(function(o,oi){
+      html+='<label><input type="radio" name="q'+qi+'" value="'+oi+'"> '+o+'</label>';
+    });
+    html+='<div class="fb" id="fb'+qi+'"></div></div>';
+  });
+  html+='<div class="result" id="result"></div>'
+  +'<button class="btn btn-green" onclick="checkQuiz('+i+')">Check my answers</button>'
+  +'<button class="btn btn-ghost" onclick="showCourse('+i+')">Retake</button>'
+  +'<div style="margin-top:18px"><a class="btn btn-line" href="find-jobs.html">See jobs this prepares you for →</a></div></div>';
+  document.getElementById('courseBox').innerHTML=html;
+}
+
+function checkQuiz(i){
+  var c=COURSES[i],score=0,unanswered=0;
+  c[7].forEach(function(q,qi){
+    var sel=document.querySelector('input[name="q'+qi+'"]:checked');
+    var fb=document.getElementById('fb'+qi);
+    if(!sel){unanswered++;fb.textContent='— Not answered yet';fb.className='fb no';return;}
+    if(+sel.value===q[2]){score++;fb.textContent='✓ Correct';fb.className='fb ok';}
+    else{fb.textContent='✗ Not quite — the answer is: '+q[1][q[2]];fb.className='fb no';}
+  });
+  var r=document.getElementById('result');
+  if(unanswered){r.textContent='Answer all questions first ('+(4-unanswered)+' left).';return;}
+  r.textContent='You scored '+score+' / 4.';
+  if(score>=3){
+    if(!badges.has(i)){badges.add(i);localStorage.setItem('canopy_badges',JSON.stringify(Array.from(badges)));}
+    r.textContent+=' Badge earned — “'+c[0]+'” now shows on your profile and applications.';
+    toast('Badge added to your profile: '+c[0]);
+  }else{
+    r.textContent+=' You need 3 to pass — skim the lessons and retake, it stays friendly.';
+  }
+}
+
+function route(){
+  var m=location.hash.match(/^#course(\d+)$/);
+  if(m && COURSES[+m[1]]!==undefined){
+    document.getElementById('catalogView').hidden=true;
+    document.getElementById('courseView').hidden=false;
+    showCourse(+m[1]);window.scrollTo(0,0);
+  }else{
+    document.title='Career Tools — Canopy';
+    document.getElementById('courseView').hidden=true;
+    document.getElementById('catalogView').hidden=false;
+    renderCatalog();
+  }
+}
+window.addEventListener('hashchange',route);
+function toast(m){var t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show');},2600);}
+route();
+</script>
+</body>
+</html>

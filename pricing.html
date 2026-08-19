@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pricing — Canopy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#121512;--ink-soft:#4a514a;--paper:#f7f5f0;--card:#fff;--hunter:#355e3b;--hunter-deep:#24422a;--hunter-tint:#e7efe5;--line:#ddd8cd;--muted:#7a807a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
+h1,h2,h3{font-family:'Fraunces',serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.btn{border:none;border-radius:999px;padding:11px 22px;font-weight:700;font-size:.88rem;transition:.15s;display:inline-block}
+.btn-green{background:var(--hunter);color:#fff}.btn-green:hover{background:var(--hunter-deep)}
+.btn-ghost{background:transparent;color:var(--paper);border:1px solid #555}.btn-ghost:hover{border-color:#999}
+.btn-dark{background:var(--ink);color:#fff}.btn-dark:hover{background:#000}
+.btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-line:hover{border-color:var(--hunter)}
+.small{font-size:.8rem;color:var(--muted)}
+header{position:sticky;top:0;background:var(--ink);color:var(--paper);z-index:50}
+.nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:650}
+.logo .mark{width:30px;height:30px;border-radius:50%;background:var(--hunter);display:grid;place-items:center;color:#fff;font-size:.8rem}
+.nav nav{display:flex;gap:22px;margin-left:auto;font-size:.9rem}
+.nav nav a{opacity:.85}.nav nav a:hover{opacity:1}
+.nav nav a.active{color:#a9c9a9;opacity:1;border-bottom:2px solid var(--hunter)}
+
+.pagehead{padding:64px 0 26px;text-align:left}
+.kicker{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--hunter);font-weight:700}
+.pagehead h1{font-size:clamp(2rem,4.5vw,3.1rem);line-height:1.1;margin:12px 0 12px;max-width:760px}
+.pagehead h1 em{font-style:italic;color:var(--hunter)}
+.pagehead p{color:var(--ink-soft);max-width:620px}
+
+.toggle{display:inline-flex;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px;margin:26px 0 8px}
+.toggle button{border:none;background:transparent;border-radius:999px;padding:9px 20px;font-weight:600;font-size:.86rem;color:var(--ink-soft)}
+.toggle button.on{background:var(--hunter);color:#fff}
+.toggle .save{font-size:.72rem;color:var(--hunter-deep);font-weight:700;margin-left:6px}
+.toggle button.on .save{color:#dfe9dd}
+
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;align-items:start;margin:26px 0 10px}
+.plan{background:#fff;border:1px solid var(--line);border-radius:16px;padding:28px;position:relative}
+.plan.hot{background:var(--hunter);color:#fff;border-color:var(--hunter);transform:rotate(.4deg)}
+.plan .pick{position:absolute;top:-12px;right:20px;background:var(--ink);color:#fff;font-size:.7rem;font-weight:700;border-radius:999px;padding:4px 12px}
+.plan h3{font-size:1.15rem}
+.plan .for{font-size:.8rem;color:var(--muted);margin:2px 0 14px}
+.plan.hot .for{color:#dfe9dd}
+.price{font-family:'Fraunces',serif;font-size:2.6rem;font-weight:650;line-height:1}
+.price span{font-size:.9rem;font-weight:400;color:var(--muted)}
+.plan.hot .price span{color:#dfe9dd}
+.billnote{font-size:.76rem;color:var(--muted);margin:4px 0 16px;min-height:1.2em}
+.plan.hot .billnote{color:#dfe9dd}
+.plan ul{list-style:none;margin:0 0 22px;font-size:.88rem}
+.plan li{padding:7px 0;border-bottom:1px dashed var(--line)}
+.plan.hot li{border-color:#4d7a52}
+.plan li::before{content:"✓  ";color:var(--hunter);font-weight:700}
+.plan.hot li::before{color:#a9c9a9}
+.plan li.no{opacity:.45}
+.plan li.no::before{content:"—  ";color:var(--muted)}
+
+.freeband{background:var(--ink);color:var(--paper);border-radius:18px;padding:30px;display:grid;grid-template-columns:1fr 1.3fr;gap:28px;margin:44px 0}
+.freeband h2{color:#fff;font-size:1.5rem;margin-bottom:8px}
+.freeband h2 em{color:#a9c9a9;font-style:italic}
+.freeband p{font-size:.9rem;opacity:.85}
+.freeband ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 22px;font-size:.87rem}
+.freeband li{padding:6px 0;border-bottom:1px solid #2c312c}
+.freeband li::before{content:"✓  ";color:#a9c9a9;font-weight:700}
+
+section{padding:40px 0}
+.sec-head h2{font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:8px}
+.sec-head .sub{color:var(--muted);font-size:.88rem;margin-bottom:22px;max-width:560px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:.87rem}
+th,td{padding:12px 14px;text-align:left;border-bottom:1px solid var(--paper)}
+thead th{background:var(--hunter-tint);font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--hunter-deep)}
+tbody tr:last-child td{border-bottom:none}
+td.yes{color:var(--hunter);font-weight:700}
+td.no{color:var(--muted)}
+td b{font-weight:700}
+
+details{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:10px}
+summary{font-weight:700;font-size:.95rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+summary::after{content:"+";color:var(--hunter);font-size:1.2rem;line-height:1}
+details[open] summary::after{content:"–"}
+details p{margin-top:10px;font-size:.88rem;color:var(--ink-soft)}
+
+.guarantee{display:flex;gap:26px;flex-wrap:wrap;justify-content:center;padding:26px 0 70px;font-size:.85rem;color:var(--ink-soft)}
+.guarantee b{color:var(--ink)}
+
+footer{background:var(--ink);color:#c9cec9}
+.fbot{padding:22px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.8rem;opacity:.75}
+footer a{color:#a9c9a9}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.plans,.freeband{grid-template-columns:1fr}.freeband ul{grid-template-columns:1fr}.nav nav{display:none}table{font-size:.78rem}th,td{padding:9px 8px}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="logo" href="index.html"><span class="mark">✦</span>Canopy</a>
+  <nav>
+    <a href="find-jobs.html">Find Jobs</a>
+    <a href="companies.html">Companies</a>
+    <a href="career-tools.html">Careers & Courses</a>
+    <a href="pricing.html" class="active">Pricing</a>
+  </nav>
+  <button class="btn btn-ghost" onclick="toast('Login & sign-up connect to your auth provider.')">Log in</button>
+  <button class="btn btn-green" onclick="toast('Employer sign-up opens here — then pick a plan.')">Post a Job</button>
+</div></header>
+
+<section class="pagehead"><div class="wrap">
+  <div class="kicker">Pricing</div>
+  <h1>Job seekers free, forever. <em>Employers, simple.</em></h1>
+  <p>We make money from employers who hire, never from people who need work. No listing fees hidden in salaries, no pay-to-apply, no surprises.</p>
+  <div class="toggle">
+    <button id="mBtn" class="on" onclick="setBilling('m')">Monthly</button>
+    <button id="aBtn" onclick="setBilling('a')">Annual<span class="save">2 months free</span></button>
+  </div>
+</div></section>
+
+<div class="wrap">
+  <div class="plans">
+    <div class="plan">
+      <h3>Free</h3><div class="for">for trying Canopy out</div>
+      <div class="price">$0<span> /month</span></div>
+      <div class="billnote">free means free</div>
+      <ul>
+        <li>1 job post per month</li>
+        <li>30-day listing</li>
+        <li>Basic applicant inbox</li>
+        <li>Email support</li>
+        <li class="no">Applicant pipeline & tracking</li>
+        <li class="no">Verified company badge</li>
+      </ul>
+      <button class="btn btn-line" style="width:100%" onclick="toast('Free employer account — post your first job in minutes.')">Start free</button>
+    </div>
+    <div class="plan hot">
+      <span class="pick">MOST PICKED</span>
+      <h3>Standard</h3><div class="for">for teams hiring every month</div>
+      <div class="price" id="pStd">$29<span> /month</span></div>
+      <div class="billnote" id="nStd">billed monthly</div>
+      <ul>
+        <li>5 job posts per month</li>
+        <li>60-day listings</li>
+        <li>Applicant pipeline & tracking</li>
+        <li>Resume downloads</li>
+        <li>Job alerts to matching candidates</li>
+        <li>Verified company badge</li>
+      </ul>
+      <button class="btn" style="width:100%;background:#fff;color:var(--hunter-deep)" onclick="toast('Checkout via Stripe / Paystack opens here.')">Choose Standard</button>
+    </div>
+    <div class="plan">
+      <h3>Premium</h3><div class="for">for agencies & busy hiring teams</div>
+      <div class="price" id="pPre">$59<span> /month</span></div>
+      <div class="billnote" id="nPre">billed monthly</div>
+      <ul>
+        <li>Unlimited job posts</li>
+        <li>Listings live until filled</li>
+        <li>Featured placement on homepage</li>
+        <li>Full candidate database search</li>
+        <li>Team accounts — 5 seats</li>
+        <li>Priority support</li>
+      </ul>
+      <button class="btn btn-dark" style="width:100%" onclick="toast('Checkout via Stripe / Paystack opens here.')">Choose Premium</button>
+    </div>
+  </div>
+
+  <div class="freeband">
+    <div>
+      <h2>Job seekers? <em>Always free.</em></h2>
+      <p>Every tool that helps you get hired costs nothing — that is the whole point of Canopy. If a site charges you to apply, leave.</p>
+    </div>
+    <ul>
+      <li>Profile & resume upload</li>
+      <li>One-click apply on any role</li>
+      <li>Saved jobs & saved searches</li>
+      <li>Job alerts (email & WhatsApp)</li>
+      <li>All 14 courses & badges</li>
+      <li>Salary comparison tool</li>
+      <li>Application status tracking</li>
+      <li>Your data stays private until you say yes</li>
+    </ul>
+  </div>
+
+  <section>
+    <div class="sec-head"><h2>Compare plans properly</h2>
+      <div class="sub">Every plan shows salary ranges on listings and answers every applicant — that part is not optional, it is the platform.</div></div>
+    <table>
+      <thead><tr><th>Feature</th><th>Free</th><th>Standard</th><th>Premium</th></tr></thead>
+      <tbody>
+        <tr><td>Job posts per month</td><td><b>1</b></td><td><b>5</b></td><td><b>Unlimited</b></td></tr>
+        <tr><td>Listing duration</td><td>30 days</td><td>60 days</td><td>Until filled</td></tr>
+        <tr><td>Applicant inbox</td><td>Basic</td><td><b>Pipeline</b></td><td><b>Pipeline + team</b></td></tr>
+        <tr><td>Resume downloads</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Job alerts to matching candidates</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Verified company badge</td><td class="no">—</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+        <tr><td>Featured placement on homepage</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Candidate database search</td><td class="no">—</td><td class="no">—</td><td class="yes">✓</td></tr>
+        <tr><td>Team seats</td><td>1</td><td>1</td><td><b>5</b></td></tr>
+        <tr><td>Support</td><td>Email</td><td>Email + chat</td><td><b>Priority</b></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Fair questions, straight answers</h2></div>
+    <details><summary>Do job seekers ever pay?</summary><p>Never. Not for applying, not for "premium profile", not for seeing salaries. Employers fund the platform because hiring is worth money to them; looking for work should never cost you.</p></details>
+    <details><summary>What happens if I use my posts before the month ends?</summary><p>On Free, you wait for the next month or upgrade. On Standard, you can top up a single post for $9 any time — no forced upgrades.</p></details>
+    <details><summary>Can I cancel any time?</summary><p>Yes, one click, no retention call. Your live listings stay up until their period ends, and annual plans are refunded pro-rata for unused months.</p></details>
+    <details><summary>How does the verified badge work?</summary><p>We check that the company is real (registration number or domain + a human review call). It takes about a day. Verified listings get roughly three times more applications.</p></details>
+    <details><summary>Do you discount for nonprofits or first hires?</summary><p>Nonprofits and schools get 40% off Standard, forever. A company's very first hire through Canopy is free on any plan — the first one should feel effortless.</p></details>
+    <details><summary>What payment methods do you take?</summary><p>Card via Stripe, plus Paystack and Flutterwave for African markets, and PayPal. Invoicing is available on Premium annual.</p></details>
+  </section>
+
+  <div class="guarantee">
+    <span><b>30-day money-back</b> on paid plans</span>
+    <span><b>No fees for job seekers,</b> ever</span>
+    <span><b>Cancel any time,</b> one click</span>
+    <span><b>Every applicant</b> gets an answer</span>
+  </div>
+</div>
+
+<footer><div class="wrap fbot">
+  <span>© 2026 Canopy Jobs Ltd. · <a href="index.html">Home</a> · <a href="find-jobs.html">Find Jobs</a> · <a href="companies.html">Companies</a> · <a href="career-tools.html">Careers & Courses</a></span>
+  <span>Good work, found properly.</span>
+</div></footer>
+<div class="toast" id="toastEl"></div>
+
+<script>
+function setBilling(mode){
+  var annual=mode==='a';
+  document.getElementById('mBtn').classList.toggle('on',!annual);
+  document.getElementById('aBtn').classList.toggle('on',annual);
+  document.getElementById('pStd').innerHTML=annual?'$24<span> /month</span>':'$29<span> /month</span>';
+  document.getElementById('pPre').innerHTML=annual?'$49<span> /month</span>':'$59<span> /month</span>';
+  document.getElementById('nStd').textContent=annual?'billed $288 once a year':'billed monthly';
+  document.getElementById('nPre').textContent=annual?'billed $588 once a year':'billed monthly';
+  toast(annual?'Annual pricing — two months free.':'Monthly pricing.');
+}
+function toast(m){var t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show');},2600);}
+</script>
+</body>
+</html>

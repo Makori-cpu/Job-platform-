@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Log in or sign up — Canopy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#121512;--ink-soft:#4a514a;--paper:#f7f5f0;--card:#fff;--hunter:#355e3b;--hunter-deep:#24422a;--hunter-tint:#e7efe5;--line:#ddd8cd;--muted:#7a807a}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Public Sans',sans-serif;background:var(--paper);color:var(--ink);line-height:1.55}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:999;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");}
+h1,h2,h3{font-family:'Fraunces',serif}
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+.btn{border:none;border-radius:999px;padding:12px 22px;font-weight:700;font-size:.9rem;transition:.15s;display:inline-block}
+.btn-green{background:var(--hunter);color:#fff}.btn-green:hover{background:var(--hunter-deep)}
+.btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}.btn-line:hover{border-color:var(--hunter)}
+.small{font-size:.8rem;color:var(--muted)}
+header{background:var(--ink);color:var(--paper)}
+.nav{display:flex;align-items:center;gap:28px;padding:14px 0}
+.logo{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-size:1.25rem;font-weight:650}
+.logo .mark{width:30px;height:30px;border-radius:50%;background:var(--hunter);display:grid;place-items:center;color:#fff;font-size:.8rem}
+
+.auth{display:grid;grid-template-columns:1fr 1fr;gap:0;max-width:1000px;margin:48px auto 70px;border-radius:20px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 50px rgba(18,21,18,.12)}
+.brand{background:var(--ink);color:var(--paper);padding:44px 40px;display:flex;flex-direction:column}
+.brand h1{font-size:clamp(1.7rem,3vw,2.4rem);line-height:1.15;margin:18px 0 12px}
+.brand h1 em{font-style:italic;color:#a9c9a9}
+.brand p{font-size:.9rem;opacity:.85;max-width:380px}
+.brand ul{list-style:none;margin:22px 0;font-size:.87rem}
+.brand li{padding:7px 0;border-bottom:1px solid #2c312c}
+.brand li::before{content:"✓  ";color:#a9c9a9;font-weight:700}
+.quote{margin-top:auto;background:#1c211c;border-radius:14px;padding:18px;font-size:.9rem}
+.quote p{font-family:'Fraunces',serif;font-size:1rem;line-height:1.5;opacity:1}
+.quote .who{margin-top:10px;font-size:.78rem;opacity:.7}
+
+.formcard{background:var(--card);padding:40px}
+.tabs{display:flex;border:1px solid var(--line);border-radius:999px;padding:4px;margin-bottom:24px}
+.tabs button{flex:1;border:none;background:transparent;border-radius:999px;padding:10px;font-weight:700;font-size:.88rem;color:var(--ink-soft)}
+.tabs button.on{background:var(--hunter);color:#fff}
+.roles{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.role{border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;font-size:.85rem;font-weight:600;text-align:left;background:#fff}
+.role small{display:block;font-weight:400;color:var(--muted);font-size:.75rem}
+.role.on{border-color:var(--hunter);background:var(--hunter-tint);color:var(--hunter-deep)}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.8rem;font-weight:600;margin-bottom:6px}
+.field input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;font-size:.9rem;background:#fff;outline:none}
+.field input:focus{border-color:var(--hunter)}
+.pw{position:relative}
+.pw button{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;font-size:.78rem;color:var(--hunter);font-weight:700}
+.err{font-size:.75rem;color:#a04343;margin-top:5px;min-height:1em}
+.row{display:flex;justify-content:space-between;align-items:center;margin:4px 0 16px;font-size:.82rem}
+.row a{color:var(--hunter);font-weight:600;text-decoration:underline}
+.check{display:flex;gap:9px;align-items:start;font-size:.8rem;color:var(--ink-soft);margin:4px 0 16px}
+.check input{accent-color:var(--hunter);margin-top:2px}
+.wide{width:100%}
+.divider{display:flex;align-items:center;gap:12px;color:var(--muted);font-size:.78rem;margin:18px 0}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.socials{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.privacy{margin-top:18px;font-size:.76rem;color:var(--muted)}
+footer{background:var(--ink);color:#c9cec9}
+.fbot{padding:22px 0;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:.8rem;opacity:.75}
+footer a{color:#a9c9a9}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:99px;font-size:.87rem;transition:.3s;z-index:101;border:1px solid var(--hunter)}
+.toast.show{transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.auth{grid-template-columns:1fr;margin:20px 16px 50px}.formcard{padding:28px}}
+</style>
+</head>
+<body>
+
+<header><div class="wrap nav">
+  <a class="logo" href="index.html"><span class="mark">✦</span>Canopy</a>
+</div></header>
+
+<div class="auth">
+  <div class="brand">
+    <a class="logo" href="index.html" style="color:#fff"><span class="mark">✦</span>Canopy</a>
+    <h1>Good work, found properly. <em>Start here.</em></h1>
+    <p>One account for everything: applying, saving jobs, earning course badges, and tracking every application until it's answered.</p>
+    <ul>
+      <li>Every listing shows its salary</li>
+      <li>Every application gets a status</li>
+      <li>Your profile stays private until you say yes</li>
+      <li>Job seekers never pay, ever</li>
+    </ul>
+    <div class="quote">
+      <p>"Applied on a Tuesday, interviewed Friday, signed the following week. No black hole — actual updates the whole way."</p>
+      <div class="who">Dana Okafor · Marketing Lead, hired through Canopy</div>
+    </div>
+  </div>
+
+  <div class="formcard">
+    <div class="tabs">
+      <button id="tabLogin" class="on" onclick="showTab('login')">Log in</button>
+      <button id="tabSignup" onclick="showTab('signup')">Sign up</button>
+    </div>
+
+    <!-- LOGIN -->
+    <form id="loginForm" onsubmit="return doLogin(event)">
+      <div class="field"><label for="liEmail">Email</label>
+        <input id="liEmail" type="text" placeholder="you@example.com" autocomplete="email">
+        <div class="err" id="liEmailErr"></div></div>
+      <div class="field"><label for="liPass">Password</label>
+        <div class="pw"><input id="liPass" type="password" placeholder="Your password" autocomplete="current-password">
+        <button type="button" onclick="togglePw('liPass',this)">Show</button></div>
+        <div class="err" id="liPassErr"></div></div>
+      <div class="row"><span class="small">New here? <a href="#" onclick="showTab('signup');return false;">Create an account</a></span>
+        <a href="#" onclick="forgot();return false;">Forgot password?</a></div>
+      <button class="btn btn-green wide" type="submit">Log in</button>
+      <div class="divider">or continue with</div>
+      <div class="socials">
+        <button type="button" class="btn btn-line" onclick="toast('Google sign-in connects here.')">Google</button>
+        <button type="button" class="btn btn-line" onclick="toast('LinkedIn sign-in connects here.')">LinkedIn</button>
+      </div>
+    </form>
+
+    <!-- SIGN UP -->
+    <form id="signupForm" style="display:none" onsubmit="return doSignup(event)">
+      <div class="roles">
+        <button type="button" class="role on" id="roleSeeker" onclick="setRole('seeker')">I'm looking for work<small>free forever</small></button>
+        <button type="button" class="role" id="roleEmployer" onclick="setRole('employer')">I'm hiring<small>post jobs, hire people</small></button>
+      </div>
+      <div class="field"><label for="suName">Full name</label>
+        <input id="suName" type="text" placeholder="e.g. Amara Diallo">
+        <div class="err" id="suNameErr"></div></div>
+      <div class="field" id="companyField" style="display:none"><label for="suCompany">Company name</label>
+        <input id="suCompany" type="text" placeholder="e.g. Mossworks GmbH">
+        <div class="err" id="suCompanyErr"></div></div>
+      <div class="field"><label for="suEmail">Email</label>
+        <input id="suEmail" type="text" placeholder="you@example.com">
+        <div class="err" id="suEmailErr"></div></div>
+      <div class="field"><label for="suPass">Password</label>
+        <div class="pw"><input id="suPass" type="password" placeholder="8+ characters">
+        <button type="button" onclick="togglePw('suPass',this)">Show</button></div>
+        <div class="err" id="suPassErr"></div></div>
+      <label class="check"><input type="checkbox" id="suTerms">
+        <span>I agree to the <a href="#" style="color:var(--hunter);text-decoration:underline">Terms</a> and <a href="#" style="color:var(--hunter);text-decoration:underline">Privacy Policy</a>, and I understand my profile stays private until I choose to share it.</span></label>
+      <div class="err" id="suTermsErr" style="margin-top:-8px;margin-bottom:10px"></div>
+      <button class="btn btn-green wide" type="submit">Create free account</button>
+      <div class="privacy">🔒 No spam, no selling your data. We email you when an application moves or a saved job changes — that's it.</div>
+    </form>
+  </div>
+</div>
+
+<footer><div class="wrap fbot">
+  <span>© 2026 Canopy Jobs Ltd. · <a href="index.html">Home</a> · <a href="find-jobs.html">Find Jobs</a> · <a href="companies.html">Companies</a> · <a href="pricing.html">Pricing</a></span>
+  <span>Good work, found properly.</span>
+</div></footer>
+<div class="toast" id="toastEl"></div>
+
+<script>
+var role='seeker';
+function showTab(t){
+  document.getElementById('tabLogin').classList.toggle('on',t==='login');
+  document.getElementById('tabSignup').classList.toggle('on',t==='signup');
+  document.getElementById('loginForm').style.display=t==='login'?'block':'none';
+  document.getElementById('signupForm').style.display=t==='signup'?'block':'none';
+}
+function setRole(r){
+  role=r;
+  document.getElementById('roleSeeker').classList.toggle('on',r==='seeker');
+  document.getElementById('roleEmployer').classList.toggle('on',r==='employer');
+  document.getElementById('companyField').style.display=r==='employer'?'block':'none';
+}
+function togglePw(id,btn){
+  var i=document.getElementById(id);
+  var show=i.type==='password';
+  i.type=show?'text':'password';
+  btn.textContent=show?'Hide':'Show';
+}
+function validEmail(v){return /.+@.+\..+/.test(v);}
+function doLogin(e){
+  e.preventDefault();
+  var ok=true;
+  var em=document.getElementById('liEmail').value.trim();
+  var pw=document.getElementById('liPass').value;
+  document.getElementById('liEmailErr').textContent=validEmail(em)?'':'Enter a valid email address.';
+  document.getElementById('liPassErr').textContent=pw?'':'Enter your password.';
+  if(!validEmail(em)||!pw)return false;
+  var saved=JSON.parse(localStorage.getItem('canopy_user')||'null');
+  if(saved && saved.email===em){
+    toast('Welcome back, '+saved.name+'!');
+  }else{
+    localStorage.setItem('canopy_user',JSON.stringify({name:em.split('@')[0],email:em,role:'seeker'}));
+    toast('Logged in — welcome back!');
+  }
+  setTimeout(function(){location.href='find-jobs.html';},1200);
+  return false;
+}
+function doSignup(e){
+  e.preventDefault();
+  var name=document.getElementById('suName').value.trim();
+  var company=document.getElementById('suCompany').value.trim();
+  var em=document.getElementById('suEmail').value.trim();
+  var pw=document.getElementById('suPass').value;
+  var terms=document.getElementById('suTerms').checked;
+  document.getElementById('suNameErr').textContent=name?'':'Tell us your name.';
+  document.getElementById('suCompanyErr').textContent=(role!=='employer'||company)?'':'Employers need a company name.';
+  document.getElementById('suEmailErr').textContent=validEmail(em)?'':'Enter a valid email address.';
+  document.getElementById('suPassErr').textContent=pw.length>=8?'':'Password needs 8+ characters.';
+  document.getElementById('suTermsErr').textContent=terms?'':'Please agree to the terms to continue.';
+  if(!name||(role==='employer'&&!company)||!validEmail(em)||pw.length<8||!terms)return false;
+  localStorage.setItem('canopy_user',JSON.stringify({name:name,email:em,role:role,company:company||null}));
+  toast(role==='seeker'
+    ?'Account created — welcome to Canopy, '+name.split(' ')[0]+'!'
+    :'Employer account created — welcome, '+company+'!');
+  setTimeout(function(){location.href=role==='seeker'?'find-jobs.html':'pricing.html';},1400);
+  return false;
+}
+function forgot(){toast('Password reset link sent — check your inbox (connects to your email provider).');}
+function toast(m){var t=document.getElementById('toastEl');t.textContent=m;t.classList.add('show');
+  clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show');},2600);}
+</script>
+</body>
+</html>
